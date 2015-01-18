@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{66E6071B-9E79-495B-9B4C-4AF484730D6A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>jwtDao</RootNamespace>
+    <AssemblyName>jwtDao</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\jwtResources\DbContextScope-master\DemoApplication\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\jwtResources\DbContextScope-master\DemoApplication\bin\Debug\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbContextScope\EntityFramework.Implementation\DbContextFactory.cs" />
+    <Compile Include="Service\BaseService.cs" />
+    <Compile Include="Service\BaseService2.cs" />
+    <Compile Include="DbContextScope\Repository\CrudRepository.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Implementation\AmbientContextSuppressor.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Implementation\AmbientDbContextLocator.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Implementation\DbContextCollection.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Implementation\DbContextReadOnlyScope.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Implementation\DbContextScope.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Implementation\DbContextScopeFactory.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Interfaces\DbContextScopeOption.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Interfaces\IAmbientDbContextLocator.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Interfaces\IDbContextCollection.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Interfaces\IDbContextFactory.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Interfaces\IDbContextReadOnlyScope.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Interfaces\IDbContextScope.cs" />
+    <Compile Include="DbContextScope\EntityFramework.Interfaces\IDbContextScopeFactory.cs" />
+    <Compile Include="Service\IBaseService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\PagedList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Code.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

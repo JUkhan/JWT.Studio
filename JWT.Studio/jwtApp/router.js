@@ -1,0 +1,4 @@
+
+stateprovider.state('layout1',{abstract:true, url:'/layout1',templateUrl:'home.aspx',controller:'homeCtrl.js',views:{'test':{controller:'mac', templateUrl:'/temp.html'},'test2':{controller:'mac2', templateUrl:'/temp22.html'}}});
+stateprovider.state('layout1.layout2.about',{url:'/about',templateUrl:'asa',controller:'asa',views:{'test':{controller:'mac', templateUrl:'/temp.html'},'test2':{controller:'mac2', templateUrl:'/temp22.html'}}});
+stateprovider.state('layout1.layout2',{abstract:true, url:'/layout2',templateUrl:'dddd',controller:'dddd',views:{'test':{controller:'mac', templateUrl:'/temp.html'},'test2':{controller:'mac2', templateUrl:'/temp22.html'}}});

@@ -1,0 +1,13 @@
+<div class="container" ng-hide="isGrid">
+	<input type="button" class="btn btn-link" value="Create New" ng-click="createNewItem()" />
+	<div id="grid-6f94a313-a8a0-4a5f-a0a4-5b82b80734ac" ui-grid="gridOpts" ui-grid-paging external-scopes="gridAction" class="grid"></div>
+</div>
+<div class="container" ng-hide="!isGrid">
+	<div class="col-sm-8 col-sm-offset-2">
+		<div class="page-header"><b>Enrollment</b></div>
+		<form name="EnrollmentForm" ng-submit="submitForm()" novalidate>
+			<button type="submit" class="btn btn-primary" ng-disabled="EnrollmentForm.$invalid">Submit</button>
+			<button type="button" class="btn btn-default" ng-click="isGrid=false">Cancel</button>
+		</form>
+	</div>
+</div>

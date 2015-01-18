@@ -1,0 +1,28 @@
+<div class="container" ng-hide="isGrid">
+	<input type="button" class="btn btn-link" value="Create New" ng-click="createNewItem()" />
+	<div id="grid-e10f6b67-442c-4dbc-9bf3-30a9f75abcdf" ui-grid="gridOpts" ui-grid-paging external-scopes="gridAction" class="grid"></div>
+</div>
+<div class="container" ng-hide="!isGrid">
+	<div class="col-sm-8 col-sm-offset-2">
+		<div class="page-header"><b>Instructor</b></div>
+		<form name="InstructorForm" ng-submit="submitForm()" novalidate>
+			 <div class="form-group" ng-class="{ 'has-error' : InstructorForm.LastName.$invalid && !InstructorForm.LastName.$pristine }">
+				<label>LastName</label>
+				<input type="text" name="LastName" class="form-control"  ng-model="model.LastName" required  />
+				<p ng-show="InstructorForm.LastName.$invalid && !InstructorForm.LastName.$pristine" class="help-block">dfsdfsd</p>
+			</div>
+			 <div class="form-group" ng-class="{ 'has-error' : InstructorForm.FirstName.$invalid && !InstructorForm.FirstName.$pristine }">
+				<label>FirstName</label>
+				<input type="text" name="FirstName" class="form-control"  ng-model="model.FirstName" required  />
+				<p ng-show="InstructorForm.FirstName.$invalid && !InstructorForm.FirstName.$pristine" class="help-block">sdfsdf</p>
+			</div>
+			 <div class="form-group" ng-class="{ 'has-error' : InstructorForm.HireDate.$invalid && !InstructorForm.HireDate.$pristine }">
+				<label>HireDate</label>
+				<input type="date" name="HireDate" class="form-control"  ng-model="model.HireDate" required  />
+				<p ng-show="InstructorForm.HireDate.$invalid && !InstructorForm.HireDate.$pristine" class="help-block">sfwerwe</p>
+			</div>
+			<button type="submit" class="btn btn-primary" ng-disabled="InstructorForm.$invalid">Submit</button>
+			<button type="button" class="btn btn-default" ng-click="isGrid=false">Cancel</button>
+		</form>
+	</div>
+</div>
