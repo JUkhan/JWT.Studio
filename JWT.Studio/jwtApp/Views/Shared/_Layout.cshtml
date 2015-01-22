@@ -7,6 +7,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+
+
 </head>
 <body ng-app="app">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,23 +23,26 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a href="#/Student">Student</a></li>
+                    <li><a href="#/Course">Course</a></li>
+                    <li><a href="#/Enrollment">Enrollment</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
-        <div ui-view>@RenderBody()</div> 
-          
+        <div ui-view>@RenderBody()</div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-    <div class="jwt-spinner btn-default"><i class="fa fa-refresh fa-spin"></i></i></div>
+    <div class="overlay">
+        <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></i></div>
+    </div>
+
+
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/uigrid")
     @Scripts.Render("~/bundles/jquery")

@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppScripts", "AppScripts\Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{DA953F1F-BC82-4BA1-9803-21D4F788C349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jac.Entities", "Jac.Entities\Jac.Entities.csproj", "{425B6F4A-30DC-47D3-B17B-5354A4957668}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConApp", "ConApp\ConApp.csproj", "{23452D7A-B86F-4295-AB9D-44A5841BD864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{DA953F1F-BC82-4BA1-9803-21D4F788C349}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA953F1F-BC82-4BA1-9803-21D4F788C349}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA953F1F-BC82-4BA1-9803-21D4F788C349}.Release|Any CPU.Build.0 = Release|Any CPU
-		{425B6F4A-30DC-47D3-B17B-5354A4957668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{425B6F4A-30DC-47D3-B17B-5354A4957668}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{425B6F4A-30DC-47D3-B17B-5354A4957668}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{425B6F4A-30DC-47D3-B17B-5354A4957668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23452D7A-B86F-4295-AB9D-44A5841BD864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23452D7A-B86F-4295-AB9D-44A5841BD864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23452D7A-B86F-4295-AB9D-44A5841BD864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23452D7A-B86F-4295-AB9D-44A5841BD864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

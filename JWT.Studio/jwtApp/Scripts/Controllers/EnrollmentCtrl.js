@@ -15,7 +15,7 @@ this.scope.courseList=[];
 
 this.scope.studentList=[];
 
-scope.gridOpts.columnDefs=[{name:"AC",width:50,enableSorting:false,cellTemplate:"<div style='text-align:center'><a ng-click=\"getExternalScopes().EditAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-pencil\"></i>  </a><a ng-click=\"getExternalScopes().RemoveAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-trash\"></i>  </a></div>"},{name:"Course",field:"Course_Title"},{name:"Student",field:"Student_LastName"},{name:"Grade"}];
+scope.gridOpts.columnDefs=[{name:"AC",width:50,enableSorting:false,cellTemplate:"<div style='text-align:center'><a ng-click=\"getExternalScopes().EditAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-pencil\"></i>  </a><a ng-click=\"getExternalScopes().RemoveAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-trash\"></i>  </a></div>"},{name:"Course",field:"Course_Title"},{name:"Student",field:"Student_FirstName"},{name:"Grade"}];
 
 scope.gridOpts.onRegisterApi=function(gridApi){gridApi.paging.on.pagingChanged(scope,function(newPage,pageSize){this.pageNo=newPage;
 
@@ -40,15 +40,6 @@ this.scope.list.remove(function(x){return x.EnrollmentID==item.EnrollmentID;}.bi
 
 
 },
-OnBeforeAddInList:function(item)
-{
-var courst=this.scope.courseList.Find(function(x){return x.CourseID==item.CourseID;}.bind(this));
-item.Course_Title = courst.Title;var student=this.scope.studentList.Find(function(x){return x.StudentID==item.StudentID;}.bind(this));
-item.Student_LastName = student.LastName;
-return item;
-
-
-},
 LoadRelationalData:function()
 {
 this.service.GetCourseList().then(function(p){this.scope.courseList=p.Data;
@@ -63,5 +54,5 @@ this.service.GetStudentList().then(function(p){this.scope.studentList=p.Data;
 }});
 namespace('Scripts.Controllers.EnrollmentCtrl',EnrollmentCtrl);
 
-angular.module('app').controller('enrollmentCtrl',['$scope','enrollmentService','$sce', EnrollmentCtrl]);
+angular.module('app').controller('EnrollmentCtrl',['$scope','EnrollmentService','$sce', EnrollmentCtrl]);
 })(window);

@@ -16,5 +16,5 @@ this.qService=qService;
 }});
 namespace('Scripts.Services.CourseService',CourseService);
 
-angular.module('app').factory('courseService',['$http','$q',function(http,qService){ return new CourseService(http,qService);}]);
+angular.module('app').factory('CourseService',['$http','$q',function(http,qService){ return new CourseService(http,qService);}]);
 })(window);

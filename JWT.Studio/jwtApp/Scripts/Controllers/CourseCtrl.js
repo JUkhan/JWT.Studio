@@ -42,5 +42,5 @@ LoadRelationalData:function()
 }});
 namespace('Scripts.Controllers.CourseCtrl',CourseCtrl);
 
-angular.module('app').controller('courseCtrl',['$scope','courseService','$sce', CourseCtrl]);
+angular.module('app').controller('CourseCtrl',['$scope','CourseService','$sce', CourseCtrl]);
 })(window);

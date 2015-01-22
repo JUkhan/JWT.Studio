@@ -1,11 +1,24 @@
 <div class="container" ng-hide="isGrid">
 	<input type="button" class="btn btn-link" value="Create New" ng-click="createNewItem()" />
-	<div id="grid-6f94a313-a8a0-4a5f-a0a4-5b82b80734ac" ui-grid="gridOpts" ui-grid-paging external-scopes="gridAction" class="grid"></div>
+	<div id="grid-ac886796-1918-47d8-a7a7-7a116bae3f09" ui-grid="gridOpts" ui-grid-paging external-scopes="gridAction" class="grid"></div>
 </div>
 <div class="container" ng-hide="!isGrid">
 	<div class="col-sm-8 col-sm-offset-2">
 		<div class="page-header"><b>Enrollment</b></div>
 		<form name="EnrollmentForm" ng-submit="submitForm()" novalidate>
+			 <div class="form-group" ng-class="{ 'has-error' : EnrollmentForm.CourseID.$invalid && !EnrollmentForm.CourseID.$pristine }">
+				<label>Course</label>
+				<select  name="CourseID" class="form-control"  ng-model="model.CourseID" required  ng-options="s.CourseID as s.Title for s in courseList" > <option value="">--select--</option></select>
+			</div>
+			 <div class="form-group" ng-class="{ 'has-error' : EnrollmentForm.StudentID.$invalid && !EnrollmentForm.StudentID.$pristine }">
+				<label>Student</label>
+				<select  name="StudentID" class="form-control"  ng-model="model.StudentID" required  ng-options="s.StudentID as s.FirstName for s in studentList" > <option value="">--select--</option></select>
+			</div>
+			 <div class="form-group" ng-class="{ 'has-error' : EnrollmentForm.Grade.$invalid && !EnrollmentForm.Grade.$pristine }">
+				<label>Grade</label>
+				<input type="number" name="Grade" class="form-control"  ng-model="model.Grade" required  />
+				<p ng-show="EnrollmentForm.Grade.$invalid && !EnrollmentForm.Grade.$pristine" class="help-block">Required</p>
+			</div>
 			<button type="submit" class="btn btn-primary" ng-disabled="EnrollmentForm.$invalid">Submit</button>
 			<button type="button" class="btn btn-default" ng-click="isGrid=false">Cancel</button>
 		</form>

@@ -1,6 +1,6 @@
 
-//opath=F:\projects\JWT.Studio\jwtApp\Scripts\Controllers\EnrollmentCtrl.js,ab=true
-using Jac.Entities.Entities;
+//opath=F:\JWT.Studio\JWT.Studio\jwtApp\Scripts\Controllers\EnrollmentCtrl.js,ab=true
+using EntityModule.Entities;
 using CSharp.Wrapper.Angular;
 using CSharp.Wrapper.JS;
 using Scripts.Services;
@@ -28,6 +28,9 @@ namespace Scripts.Controllers
 			this.scope.studentList=new List<Student>();
 			scope.gridOpts.columnDefs = new List<ColumnDef>{
 				new ColumnDef{ name="AC",  width=50, enableSorting=false, cellTemplate="<div style='text-align:center'><a ng-click=\"getExternalScopes().EditAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-pencil\"></i>  </a><a ng-click=\"getExternalScopes().RemoveAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-trash\"></i>  </a></div>"}
+				,new ColumnDef{ name="Course", field="Course_Title"}
+				,new ColumnDef{ name="Student", field="Student_FirstName"}
+				,new ColumnDef{ name="Grade"}
 			};
 			scope.gridOpts.onRegisterApi = gridApi => { 
 				gridApi.paging.on.pagingChanged(scope,(newPage, pageSize)=>{

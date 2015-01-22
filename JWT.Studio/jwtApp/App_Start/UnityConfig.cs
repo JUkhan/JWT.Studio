@@ -3,6 +3,8 @@ using Microsoft.Practices.Unity;
 using Unity.Mvc5;
 using Jwt.Dao.EntityFramework.Implementation;
 using Jwt.Dao.EntityFramework.Interfaces;
+using Services.Interfaces;
+using Services.Implementation;
 
 
 
@@ -21,7 +23,9 @@ namespace jwtApp
             //IDbContextFactory 
             container.RegisterType<IDbContextFactory, DbContextFactory>();
             container.RegisterType<IDbContextScopeFactory, DbContextScopeFactory>();
-           
+            container.RegisterType<IStudentService, StudentService>();
+            container.RegisterType<ICourseService, CourseService>();
+            container.RegisterType<IEnrollmentService, EnrollmentService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

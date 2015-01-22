@@ -44,8 +44,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Controllers\BaseController.cs" />
+    <Compile Include="Scripts\Controllers\CourseCtrl.cs" />
+    <Compile Include="Scripts\Controllers\EnrollmentCtrl.cs" />
     <Compile Include="Scripts\Controllers\GridOptions.cs" />
+    <Compile Include="Scripts\Controllers\StudentCtrl.cs" />
     <Compile Include="Scripts\Services\BaseService.cs" />
+    <Compile Include="Scripts\Services\CourseService.cs" />
+    <Compile Include="Scripts\Services\EnrollmentService.cs" />
+    <Compile Include="Scripts\Services\StudentService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

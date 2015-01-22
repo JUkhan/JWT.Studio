@@ -1,5 +1,5 @@
 
-using Jac.Entities.Entities;
+using EntityModule.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq; 
@@ -10,19 +10,15 @@ using System.Reflection;
 using Services.Interfaces;
 using Jwt.Core.Controllers; 
 namespace WebApp.Controllers {
-	public class DepartmentController : JwtController<Department, System.Int32>
+	public class StudentController : JwtController<Student, System.Int32>
 	{
 
 		//private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-		private readonly IDepartmentService service;
-		public DepartmentController(IDepartmentService service)
+		private readonly IStudentService service;
+		public StudentController(IStudentService service)
 		{
 			this.service=service;
 			SetService(service);
-		}
-		public JsonResult GetAdministratorList()
-		{
-			 return Json(service.GetAdministratorList(), JsonRequestBehavior.AllowGet);
 		}
 	}
 }

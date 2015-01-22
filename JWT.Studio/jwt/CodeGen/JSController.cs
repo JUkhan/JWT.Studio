@@ -56,7 +56,7 @@ namespace jwt.CodeGen
                     if (item.UiType == "date")
                     {
                         _res.AppendLine();
-                        _res.Append(TAB4 + ",new ColumnDef{ name=\"" + item.PropertyName + "\" ,cellFilter=\"date:'yyyy-MM-dd'\"}");
+                        _res.Append(TAB4 + ",new ColumnDef{ name=\"" + item.PropertyName + "\" ,cellFilter=\"jwtDate | date:'yyyy-MM-dd'\"}");
                     }
                     else if (item.UiType == "select")
                     {
@@ -120,7 +120,7 @@ namespace jwt.CodeGen
             _res.AppendLine();
             _res.Append(TAB2 + "}");
 
-            if (hasDatetime)
+           /* if (hasDatetime)
             {
                 _res.AppendLine();
                 _res.AppendFormat(TAB2 + "protected override List<{0}> OnPreLoad(List<{0}> dataList)", entity);
@@ -150,7 +150,7 @@ namespace jwt.CodeGen
                 _res.AppendFormat(TAB3 + "return item;");
                 _res.AppendLine();
                 _res.Append(TAB2 + "}");
-            }
+            }*/
 
             //loadRelationalData
             var list = _propList.Where(n => n.Details != null && n.Details.Count > 1);
@@ -216,12 +216,12 @@ namespace jwt.CodeGen
                     this.scopeInitialized.AppendFormat(TAB3 + "this.scope.{0}List=new List<{1}>();", item.PropertyName.ToLower(), item.Xtype.Substring(item.Xtype.LastIndexOf('.')+1));
                 }
 
-                if (item.UiType == "date")
+               /* if (item.UiType == "date")
                 {
                     hasDatetime = true;
                     dateResolved.AppendLine();
                     dateResolved.AppendFormat(TAB3 + "item.{0}=this.ParseDateTime(item.{0});", item.PropertyName);
-                }
+                }*/
             }
             _res.AppendLine();
             _res.Append(TAB1 + "}");

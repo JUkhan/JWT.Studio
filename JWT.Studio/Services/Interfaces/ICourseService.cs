@@ -1,5 +1,5 @@
 
-using Jac.Entities.Entities;
+using EntityModule.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq; 
@@ -8,6 +8,5 @@ namespace Services.Interfaces {
 	public interface ICourseService : IBaseService<Course>
 	{
 
-		PagedList GetDepartmentList();
 	}
 }

@@ -1,5 +1,5 @@
 
-using Jac.Entities.Entities;
+using EntityModule.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq; 
@@ -55,7 +55,7 @@ namespace Services.Implementation {
 			{
 				SchoolContext context = (SchoolContext)GetDbContext(dbContextScope.DbContexts);
 				var query = from u in context.Enrollments
-					select new {u.EnrollmentID};
+					select new {u.EnrollmentID,u.CourseID,u.StudentID,u.Grade,Course_Title=u.Course.Title,Student_FirstName=u.Student.FirstName};
 				res.Total = query.Count();
 				res.Data = query.OrderBy(x=>x.EnrollmentID).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
 			}
@@ -73,7 +73,7 @@ namespace Services.Implementation {
 			{
 				SchoolContext context = (SchoolContext)GetDbContext(dbContextScope.DbContexts);
 				var query = from u in context.Courses
-					select new {};
+					select new {CourseID=u.CourseID,Title=u.Title};
 				pagedList.Data=query.ToList();
 			}
 			return pagedList;
@@ -85,7 +85,7 @@ namespace Services.Implementation {
 			{
 				SchoolContext context = (SchoolContext)GetDbContext(dbContextScope.DbContexts);
 				var query = from u in context.Students
-					select new {};
+					select new {StudentID=u.StudentID,FirstName=u.FirstName};
 				pagedList.Data=query.ToList();
 			}
 			return pagedList;

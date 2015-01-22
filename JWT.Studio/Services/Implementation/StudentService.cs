@@ -7,36 +7,36 @@ using Jwt.Dao.Service;
 using Services.Interfaces;
  using Jwt.Dao.EntityFramework.Interfaces;
 namespace Services.Implementation {
-	public class CourseService : BaseService<Course>, ICourseService
+	public class StudentService : BaseService<Student>, IStudentService
 	{
 
-		public CourseService(IDbContextScopeFactory dbContextScopeFactory) : base(dbContextScopeFactory) { }
+		public StudentService(IDbContextScopeFactory dbContextScopeFactory) : base(dbContextScopeFactory) { }
 
-		public Course Insert(Course entity)
+		public Student Insert(Student entity)
 		{
 			 return BaseInsert(entity);
 		}
-		public ICollection<Course> InsertEntities(ICollection<Course> entities)
+		public ICollection<Student> InsertEntities(ICollection<Student> entities)
 		{
 			return BaseInsertEntities(entities);
 		}
-		public void Update(Course entity)
+		public void Update(Student entity)
 		{
 			BaseUpdate(entity);
 		}
-		public void UpdateEntities(ICollection<Course> entities)
+		public void UpdateEntities(ICollection<Student> entities)
 		{
 			 BaseUpdateEntities(entities);
 		}
-		 public Course Delete(Course entity)
+		 public Student Delete(Student entity)
 		{
 			return BaseDelete(entity);
 		}
-		public Course GetByID(dynamic id)
+		public Student GetByID(dynamic id)
 		{
 			return BaseGetByID(id);
 		}
-		 public ICollection<Course> GetAll()
+		 public ICollection<Student> GetAll()
 		{
 			 return BaseGetAll();
 		}
@@ -54,17 +54,17 @@ namespace Services.Implementation {
 			using (var dbContextScope = _dbContextScopeFactory.Create())
 			{
 				SchoolContext context = (SchoolContext)GetDbContext(dbContextScope.DbContexts);
-				var query = from u in context.Courses
-					select new {u.CourseID,u.Title,u.Credits};
+				var query = from u in context.Students
+					select new {u.StudentID,u.LastName,u.FirstName,u.EnrollmentDate};
 				res.Total = query.Count();
-				res.Data = query.OrderBy(x=>x.CourseID).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+				res.Data = query.OrderBy(x=>x.StudentID).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
 			}
 			return res;
 		}
-		 public PagedList GetPagedWhile(int pageNo, int pageSize, Course item)
+		 public PagedList GetPagedWhile(int pageNo, int pageSize, Student item)
 		{
-			Func<Course, bool> where = s => true;
-			return BaseGetPagedWhile(pageNo, pageSize, where, order => order.CourseID);
+			Func<Student, bool> where = s => true;
+			return BaseGetPagedWhile(pageNo, pageSize, where, order => order.StudentID);
 		}
 	}
 }

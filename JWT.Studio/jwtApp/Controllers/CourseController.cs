@@ -1,5 +1,5 @@
 
-using Jac.Entities.Entities;
+using EntityModule.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq; 
@@ -19,10 +19,6 @@ namespace WebApp.Controllers {
 		{
 			this.service=service;
 			SetService(service);
-		}
-		public JsonResult GetDepartmentList()
-		{
-			 return Json(service.GetDepartmentList(), JsonRequestBehavior.AllowGet);
 		}
 	}
 }

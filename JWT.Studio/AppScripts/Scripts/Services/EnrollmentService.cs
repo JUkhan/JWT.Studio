@@ -1,5 +1,5 @@
-//opath=F:\projects\JWT.Studio\jwtApp\Scripts\Services\EnrollmentService.js,ab=true
-using Jac.Entities.Entities;
+//opath=F:\JWT.Studio\JWT.Studio\jwtApp\Scripts\Services\EnrollmentService.js,ab=true
+using EntityModule.Entities;
 using CSharp.Wrapper.Angular;
 using CSharp.Wrapper.JS;
 using Scripts.Services;

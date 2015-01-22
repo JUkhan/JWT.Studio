@@ -173,7 +173,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\EnrollmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -183,10 +186,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\jwt.mdf" />
-    <Content Include="App_Data\jwt_log.ldf">
-      <DependentUpon>jwt.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -260,7 +259,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Router\AppRouter.js" />
     <Content Include="Scripts\Services\BaseService.js" />
     <Content Include="Scripts\Services\CourseService.js" />
     <Content Include="Scripts\Services\EnrollmentService.js" />
@@ -273,9 +271,9 @@
     <Content Include="Scripts\UI-Grid\ui-grid-unstable.min.js" />
     <Content Include="Scripts\UI-Grid\vfs_fonts.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Templates\Components\Course.html" />
     <Content Include="Templates\Components\Enrollment.html" />
     <Content Include="Templates\Components\Student.html" />
-    <Content Include="Templates\Layouts\layout.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -303,14 +301,7 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Student\Create.cshtml" />
-    <Content Include="Views\Student\Delete.cshtml" />
-    <Content Include="Views\Student\Details.cshtml" />
-    <Content Include="Views\Student\Edit.cshtml" />
-    <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="State.config" />
-    <Content Include="Views\Mac\Index.cshtml" />
     <Content Include="Scripts\UI-Grid\ui-grid.eot" />
     <Content Include="Scripts\UI-Grid\ui-grid.ttf" />
     <Content Include="Scripts\UI-Grid\ui-grid.woff" />
@@ -327,9 +318,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jac.Entities\Jac.Entities.csproj">
-      <Project>{425b6f4a-30dc-47d3-b17b-5354a4957668}</Project>
-      <Name>Jac.Entities</Name>
+    <ProjectReference Include="..\EntityModule\EntityModule.csproj">
+      <Project>{99eaa6d3-cd46-4a7a-a24d-35d68fcc0eff}</Project>
+      <Name>EntityModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\jwtCore\jwtCore.csproj">
       <Project>{a2cda2b6-433a-44ef-884d-3b840c2b2aba}</Project>
@@ -349,7 +340,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Enrollment\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Router\" />
+    <Folder Include="Templates\Layouts\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

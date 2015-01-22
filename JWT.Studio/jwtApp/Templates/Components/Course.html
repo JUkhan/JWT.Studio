@@ -1,6 +1,6 @@
 <div class="container" ng-hide="isGrid">
 	<input type="button" class="btn btn-link" value="Create New" ng-click="createNewItem()" />
-	<div id="grid-698cb75d-822c-448f-9e2b-df35aeacec6b" ui-grid="gridOpts" ui-grid-paging external-scopes="gridAction" class="grid"></div>
+	<div id="grid-ad728dd9-14d7-4691-a605-186f894ffc1d" ui-grid="gridOpts" ui-grid-paging external-scopes="gridAction" class="grid"></div>
 </div>
 <div class="container" ng-hide="!isGrid">
 	<div class="col-sm-8 col-sm-offset-2">
@@ -15,10 +15,6 @@
 				<label>Credits</label>
 				<input type="text" name="Credits" class="form-control"  ng-model="model.Credits" required  />
 				<p ng-show="CourseForm.Credits.$invalid && !CourseForm.Credits.$pristine" class="help-block">Required</p>
-			</div>
-			 <div class="form-group" ng-class="{ 'has-error' : CourseForm.DepartmentID.$invalid && !CourseForm.DepartmentID.$pristine }">
-				<label>Department</label>
-				<select  name="DepartmentID" class="form-control"  ng-model="model.DepartmentID" required  ng-options="s.DepartmentID as s.Name for s in departmentList" > <option value="">--select--</option></select>
 			</div>
 			<button type="submit" class="btn btn-primary" ng-disabled="CourseForm.$invalid">Submit</button>
 			<button type="button" class="btn btn-default" ng-click="isGrid=false">Cancel</button>
