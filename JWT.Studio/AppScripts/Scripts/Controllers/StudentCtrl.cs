@@ -42,6 +42,12 @@ namespace Scripts.Controllers
 		{
 			this.scope.list.remove(x => x.StudentID == item.StudentID);
 		}
+		protected override Student OnPreLoadForm(Student item)
+		{
+
+			item.EnrollmentDate=this.ParseDateTime(item.EnrollmentDate);
+			return item;
+		}
 		protected void LoadRelationalData()
 		{
 		}

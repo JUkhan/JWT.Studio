@@ -120,9 +120,9 @@ namespace jwt.CodeGen
             _res.AppendLine();
             _res.Append(TAB2 + "}");
 
-           /* if (hasDatetime)
+            if (hasDatetime)
             {
-                _res.AppendLine();
+               /* _res.AppendLine();
                 _res.AppendFormat(TAB2 + "protected override List<{0}> OnPreLoad(List<{0}> dataList)", entity);
                 _res.AppendLine();
                 _res.Append(TAB2 + "{");
@@ -136,11 +136,11 @@ namespace jwt.CodeGen
                 _res.AppendLine();
                 _res.Append(TAB3 + "return dataList;");
                 _res.AppendLine();
-                _res.Append(TAB2 + "}");
+                _res.Append(TAB2 + "}");*/
                 /////////////////
 
                 _res.AppendLine();
-                _res.AppendFormat(TAB2 + "protected override {0} OnBeforeAddInList({0} item)", entity);
+                _res.AppendFormat(TAB2 + "protected override {0} OnPreLoadForm({0} item)", entity);
                 _res.AppendLine();
                 _res.Append(TAB2 + "{");
 
@@ -150,7 +150,7 @@ namespace jwt.CodeGen
                 _res.AppendFormat(TAB3 + "return item;");
                 _res.AppendLine();
                 _res.Append(TAB2 + "}");
-            }*/
+            }
 
             //loadRelationalData
             var list = _propList.Where(n => n.Details != null && n.Details.Count > 1);
@@ -216,12 +216,12 @@ namespace jwt.CodeGen
                     this.scopeInitialized.AppendFormat(TAB3 + "this.scope.{0}List=new List<{1}>();", item.PropertyName.ToLower(), item.Xtype.Substring(item.Xtype.LastIndexOf('.')+1));
                 }
 
-               /* if (item.UiType == "date")
+                if (item.UiType == "date")
                 {
                     hasDatetime = true;
                     dateResolved.AppendLine();
                     dateResolved.AppendFormat(TAB3 + "item.{0}=this.ParseDateTime(item.{0});", item.PropertyName);
-                }*/
+                }
             }
             _res.AppendLine();
             _res.Append(TAB1 + "}");

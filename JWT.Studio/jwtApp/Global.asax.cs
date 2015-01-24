@@ -24,6 +24,7 @@ namespace jwtApp
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             UnityConfig.RegisterComponents();
             setLog4Net();
+           // JwtConfig.RegisterComponent();
         }
         private void setLog4Net()
         {

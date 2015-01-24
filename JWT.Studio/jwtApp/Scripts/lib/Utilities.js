@@ -50,8 +50,28 @@
         }
         target[tokens[tokens.length - 1]] = object;
     };
-
+   
 })(window);
+
+namespace('jwt', {
+    url: function (navName, paramValue) {
+        if (this._arr.hasOwnProperty(navName)) {
+            var val = this._arr[navName];
+            if (val[1]) {
+                return '/#/' + val[0] + '/' + (paramValue === undefined ? 'param_value_is_undefined' : paramValue);
+            }
+            return '/#/' + val[0];
+        }
+        return "Invalid_navName:" + navName;
+    }
+});
+namespace('app.controllers.baseCtrl', jsClass.extend({
+    scope: null,
+    init: function (scope) {
+        this.scope = scope;
+        console.log('base controller called...');
+    }
+}));
 Array.prototype.ForEach = function (callback) {
     for (var i = 0, len = this.length; i < len; i++) {
         callback(this[i], i);

@@ -63,5 +63,5 @@ input[type="checkbox"].input-validation-error {
     margin-top: -100px;   
     text-align: center;   
     z-index: 1001;
-    background-color:#989898;
+    background-color:silver;
 }

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="jwt" Class="jwtDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=F:\projects\JWT.Studio\jwtApp\App_Data\jwt.mdf;Integrated Security=True" SettingsObjectName="jwt.Properties.Settings" SettingsPropertyName="jwtConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Project" Member="Projects">
-    <Type Name="Project">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ProjectName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-</Database>

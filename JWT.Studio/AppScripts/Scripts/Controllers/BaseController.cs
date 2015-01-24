@@ -1,4 +1,5 @@
-﻿using CSharp.Wrapper.JS;
+﻿//opath=F:\JWT.Studio\JWT.Studio\jwtApp\Scripts\Controllers\BaseController.js,ab=true
+using CSharp.Wrapper.JS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace Scripts.Controllers
             this.scope.isGrid = false;
             this.scope.gridAction = new GridActionExternalScope
             {
-                EditAction = row => { this.scope.model = row.entity; this.scope.isGrid = true; this.isNewItem = false; },
+                EditAction = row => { this.scope.model = this.OnPreLoadForm(row.entity); this.scope.isGrid = true; this.isNewItem = false; },
                 RemoveAction = row => { if (confirm("Are you sure?")) {
                     this.Delete(row.entity); 
                     }
@@ -139,7 +140,7 @@ namespace Scripts.Controllers
               this.scope.message = res.Message;
               if (isValid(res.DataList))
               {
-                  this.scope.list = this.OnPreLoad(res.DataList);
+                  this.scope.list = this.OnPreLoadGrid(res.DataList);
               }
               this.ShowMessage(res.IsSuccess, res.Message);
               this.HideSpinner();
@@ -154,9 +155,13 @@ namespace Scripts.Controllers
             } $*/
           return data;
       }
-      protected virtual List<T> OnPreLoad(List<T> dataList)
+      protected virtual List<T> OnPreLoadGrid(List<T> dataList)
       {
           return dataList;
+      }
+      protected virtual T OnPreLoadForm(T item)
+      {
+          return item;
       }
       protected virtual void GetPagedWhile(T data)
       {
@@ -168,7 +173,7 @@ namespace Scripts.Controllers
               this.scope.message = res.Message;
               if (isValid(res.DataList))
               {
-                  this.scope.list = this.OnPreLoad(res.DataList);
+                  this.scope.list = this.OnPreLoadGrid(res.DataList);
               }
               this.ShowMessage(res.IsSuccess, res.Message);
               this.HideSpinner();

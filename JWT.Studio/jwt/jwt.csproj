@@ -56,11 +56,6 @@
     <Compile Include="CodeGen\CSController.cs" />
     <Compile Include="CodeGen\JSService.cs" />
     <Compile Include="CodeGen\TemplateCode.cs" />
-    <Compile Include="Data\jwtData.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>jwtData.dbml</DependentUpon>
-    </Compile>
     <Compile Include="JwtController.cs" />
     <Compile Include="JwtResourceRouteHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,11 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Data\jwtData.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>jwtData.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -90,11 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\jwtData.dbml.layout">
-      <DependentUpon>jwtData.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JwtResources\index.html" />

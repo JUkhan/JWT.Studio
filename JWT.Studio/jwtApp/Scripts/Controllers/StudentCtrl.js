@@ -36,6 +36,15 @@ this.scope.list.remove(function(x){return x.StudentID==item.StudentID;}.bind(thi
 
 
 },
+OnPreLoadForm:function(item)
+{
+item.EnrollmentDate=this.ParseDateTime(item.EnrollmentDate);
+
+
+return item;
+
+
+},
 LoadRelationalData:function()
 {
 
