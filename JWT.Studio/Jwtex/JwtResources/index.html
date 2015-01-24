@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jwtEx</title>
+    <link href="JwtEx/Resources/?file=bootstrap.css" rel="stylesheet" />
+    <link href="JwtEx/Resources/?file=Site.css" rel="stylesheet" />
+    <link href="JwtEx/Resources/?file=codemirror.lib.codemirror.css" rel="stylesheet" />
+    <link href="JwtEx/Resources/?file=codemirror.theme.rubyblue.css" rel="stylesheet" />
+
+</head>
+<body ng-app="app">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container mac">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" ng-controller="mainController">
+
+        <h5>{{msg}}</h5>
+        <hr />
+        <div ng-model="editorContent" ui-codemirror="{
+            lineNumbers: true,
+            theme:'rubyblue',
+            lineWrapping : true,
+            mode: 'javascript',
+           matchBrackets:true,
+           autoCloseBrackets:true,
+           enableSearchTools:true,
+           styleActiveLine:true
+          }"></div>
+      
+
+        <hr />
+        <footer>
+            <p>&copy; jwtEx Application</p>
+        </footer>
+    </div>  
+
+
+    <script src="JwtEx/Resources/?file=angular.js"></script>
+    <script src="JwtEx/Resources/?file=angular-resource.js"></script>   
+    <script src="JwtEx/Resources/?file=angularui.js"></script>
+    <script src="JwtEx/Resources/?file=angular-ui-router.js"></script>   
+    <script src="JwtEx/Resources/?file=app.js"></script>
+    <script src="JwtEx/Resources/?file=jwt.js"></script>
+    <script src="JwtEx/Resources/?file=mainController.js"></script>     
+    <script src="JwtEx/Resources/?file=codemirror.lib.codemirror.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.lib.ui-codemirror.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.mode.javascript.javascript.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.mode.htmlmixed.htmlmixed.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.mode.xml.xml.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.mode.css.css.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.edit.closebrackets.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.edit.closetag.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.edit.matchbrackets.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.edit.matchtags.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.fold.xml-fold.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.selection.active-line.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.search.match-highlighter.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.search.search.js"></script>
+</body>
+</html>
