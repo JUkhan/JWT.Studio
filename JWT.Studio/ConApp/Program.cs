@@ -12,7 +12,7 @@ namespace ConApp
     {
         static void Main(string[] args)
         {
-            Fluently.With(new App())
+            Fluently.With(new jwtApp())
                 .Do(app => app.Layout = new Layout { LayoutName = "layout1" })
                 .Do(app => app.Layout = new Layout { LayoutName = "layout2", Extend="layout1" })
                 .Do(app => app.Navigation = new Navigation { NavigationName="nav1", HasLayout="layout1", Widget="Student" })
