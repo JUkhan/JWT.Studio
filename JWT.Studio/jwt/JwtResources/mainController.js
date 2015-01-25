@@ -1,5 +1,5 @@
 ﻿
-var mainController = function ($scope, $http, $modal) {
+app.controller('mainController', ['$scope', '$http', '$modal', function ($scope, $http, $modal) {
     var scope = $scope;
     scope.msg = 'Main controller message...';
     scope.layoutList = [];
@@ -12,7 +12,7 @@ var mainController = function ($scope, $http, $modal) {
         res.layout.ForEach(function (u) { temp.push(u.StateName); });
         scope.parentList = temp;
         scope.stateList = res.state;
-        
+
     });
     $http.get('Jwt/GetTemplateList').success(function (res) { scope.tplList = res.data; });
     scope.getTemplateList = function () { $http.get('Jwt/GetTemplateList').success(function (res) { scope.tplList = res.data; }); };
@@ -56,20 +56,20 @@ var mainController = function ($scope, $http, $modal) {
         if (validate(scope.state)) {
             if (scope.state.Id) { updateState(scope.state); return; }
             if (scope.state.Parent === '--Select--') { scope.state.Parent = ''; }
-            scope.state.IsAbstract = false;            
+            scope.state.IsAbstract = false;
             $http.post('Jwt/AddState', scope.state)
            .success(function (res) {
                if (res.msg === 'Already Exist') { scope.msg = res.state; }
                else {
                    scope.state.id = res.msg;
-                   scope.stateList.push(scope.state);                   
-                   scope.state = {StateViews:[]};
+                   scope.stateList.push(scope.state);
+                   scope.state = { StateViews: [] };
                }
            });
         }
     };
     scope.$watch('state.TemplateUrl', function (newVal, oldVal) {
-       
+
         if (newVal) {
             newVal = newVal.replace('.html', '');
             scope.state.Url = '/' + newVal;
@@ -85,7 +85,7 @@ var mainController = function ($scope, $http, $modal) {
             $http.post('Jwt/Remove', u)
             .success(function (res) {
                 scope.msg = res.msg;
-                scope.stateList.remove(function (x) { return x.Id == u.Id; });                
+                scope.stateList.remove(function (x) { return x.Id == u.Id; });
             });
         }
     };
@@ -93,7 +93,7 @@ var mainController = function ($scope, $http, $modal) {
     scope.generateConfig = function () {
         $http.get('Jwt/GenerateConfig').success(function (res) { scope.msg = res.msg; alert(res.msg); });
     };
-    function updateState(u) {       
+    function updateState(u) {
         u.IsAbstract = false;
         $http.post('Jwt/Update', u)
        .success(function (res) {
@@ -171,7 +171,7 @@ var mainController = function ($scope, $http, $modal) {
     };
     ////////////////////////////////////
     scope.showViewsDialog = function (layout) {
-       
+
         $http.get('Jwt/GetViewList?stateName={0}&stateName2={1}'.format(layout.Parent, layout.StateName))
         .success(function (res) {
             if (res.success) {
@@ -182,16 +182,16 @@ var mainController = function ($scope, $http, $modal) {
                     size: 'lg',
                     resolve: {
                         data: function () {
-                            return {views:scope.state.StateViews, tplList:scope.tplList};
+                            return { views: scope.state.StateViews, tplList: scope.tplList };
                         }
                     }
                 });
             }
         });
-        
+
     }
     scope.$on('jwt-view-update', function (e, data) { scope.state.StateViews = data; });
-};
+}]);
 
 function ModalInstanceCtrl($scope, $rootScope, $modalInstance, data) {
     $scope.items = data.views;

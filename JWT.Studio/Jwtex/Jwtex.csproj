@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JwtResources\angular-resource.js" />
-    <EmbeddedResource Include="JwtResources\angular.js" />
     <EmbeddedResource Include="JwtResources\angularui.js" />
     <EmbeddedResource Include="JwtResources\app.js" />
     <EmbeddedResource Include="JwtResources\Site.css" />
@@ -66,6 +65,7 @@
     <EmbeddedResource Include="JwtResources\angular-ui-router.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closebrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closetag.js" />
+    <EmbeddedResource Include="JwtResources\angular.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />
