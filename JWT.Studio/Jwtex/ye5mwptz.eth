@@ -189,20 +189,13 @@ namespace Jwtex
                             sb.Append(",'" + item2.ViewName + "':{");
                         if (!string.IsNullOrEmpty(item2.WidgetName))
                         {
-                            PathString = Root + string.Format("Templates\\Widgets\\{0}.html", item2.WidgetName);
-                            if (!File.Exists(PathString))
-                            {
-                                File.WriteAllText(PathString, string.Format("<h3>widget Name : {0}</h3>", item2.WidgetName));
-                            }
-                            //sb.AppendFormat("templateUrl:'Templates/Widgets/{0}/{0}.html'", item2.WidgetName);
-                            sb.AppendFormat("templateUrl:'Templates/Widgets/{0}.html'", item2.WidgetName);
+                            sb.AppendFormat("templateUrl:'Templates/Widgets/{0}/{0}.html'", item2.WidgetName);
                         }
                         PathString = Root + "Scripts\\Controllers\\" + item2.WidgetName + "Ctrl.js";
-                        if (!File.Exists(PathString))
+                        if (File.Exists(PathString))
                         {
-                            File.WriteAllText(PathString, getEmptyController(item2.WidgetName));
+                            sb.AppendFormat(",controller:'{0}Ctrl'", item2.WidgetName);
                         }
-                        sb.AppendFormat(",controller:'{0}Ctrl'", item2.WidgetName);
                         sb.Append("}");
                         isFirst = false;
                     }
@@ -217,30 +210,15 @@ namespace Jwtex
                     {
                         File.WriteAllText(PathString, string.Format("<h3>widget Name : {0}</h3>", item.WidgetName));
                     }
-                    //sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}/{0}.html'", item.WidgetName);
-                    sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}.html'", item.WidgetName);
-                    PathString = Root + "Scripts\\Controllers\\" + item.WidgetName + "Ctrl.js";
-                    if (!File.Exists(PathString))
-                    {
-                        File.WriteAllText(PathString, getEmptyController(item.WidgetName));
-                    }
+                    sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}/{0}.html'", item.WidgetName);
+                }
+                PathString = Root + "Scripts\\Controllers\\"+ item.WidgetName + "Ctrl.js";
+                if (File.Exists(PathString))
+                {
                     sb.AppendFormat(",controller:'{0}Ctrl'", item.WidgetName);
                 }
-                
                 sb.Append("});");
             }
-        }
-        public string getEmptyController(string name)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("namespace('app.controllers.{0}Ctrl', jwt.controllers.baseCtrl.extend(", name);
-            sb.Append("{");
-            sb.Append(Environment.NewLine + TAB1 + "init: function (scope, sce) {");
-            sb.Append(Environment.NewLine + TAB2 + "this._super(scope, sce);");
-            sb.Append(Environment.NewLine + TAB1 + "}");
-            sb.Append(Environment.NewLine +  "}));");
-            sb.AppendFormat(Environment.NewLine + "angular.module('app').controller('{0}Ctrl', ['$scope', '$sce', app.controllers.{0}Ctrl]);", name);
-            return sb.ToString();
         }
 
         private string GetStateName(Navigation navigation)

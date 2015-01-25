@@ -219,14 +219,13 @@ namespace Jwtex
                     }
                     //sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}/{0}.html'", item.WidgetName);
                     sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}.html'", item.WidgetName);
-                    PathString = Root + "Scripts\\Controllers\\" + item.WidgetName + "Ctrl.js";
-                    if (!File.Exists(PathString))
-                    {
-                        File.WriteAllText(PathString, getEmptyController(item.WidgetName));
-                    }
-                    sb.AppendFormat(",controller:'{0}Ctrl'", item.WidgetName);
                 }
-                
+                PathString = Root + "Scripts\\Controllers\\"+ item.WidgetName + "Ctrl.js";
+                if (!File.Exists(PathString))
+                {
+                    File.WriteAllText(PathString, getEmptyController(item.WidgetName));
+                }
+                sb.AppendFormat(",controller:'{0}Ctrl'", item.WidgetName);
                 sb.Append("});");
             }
         }

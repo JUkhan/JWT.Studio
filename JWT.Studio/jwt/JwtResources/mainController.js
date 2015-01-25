@@ -35,7 +35,9 @@ var mainController = function ($scope, $http, $modal) {
            });
         }
     };
-
+    scope.layoutNameChanged = function (name) {
+        scope.layout.Url = '/' + name;
+    };
     scope.update = function (u) {
         scope.layout = u;
     };

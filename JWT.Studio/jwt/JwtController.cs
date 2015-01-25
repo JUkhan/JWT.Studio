@@ -110,6 +110,8 @@ namespace Jwt.Controller
                 sm.RootPath = Config.Root;
                 sm.Deserialize();
                 StringBuilder strBuilder = new StringBuilder();
+                StringBuilder jwt = new StringBuilder();
+                jwt.Append("jwt._arr={"); bool isFirst = true;
                 foreach (var item in sm.StateList)
                 {
                     strBuilder.AppendLine();
@@ -119,11 +121,14 @@ namespace Jwt.Controller
                     }
                     else
                     {
-                        strBuilder.AppendFormat("stateprovider.state('{0}',{1}url:'{2}'", GetStateName(item, sm.StateList), "{", item.Url);
+                        var stateName=GetStateName(item, sm.StateList);
+                        jwt.AppendFormat((isFirst?"":",")+"'{0}':['{1}','']", item.StateName, stateName);
+                        strBuilder.AppendFormat("stateprovider.state('{0}',{1}url:'{2}'", stateName, "{", item.Url);
                         if (!string.IsNullOrEmpty(item.TemplateUrl))
                         {
                             strBuilder.AppendFormat(",templateUrl:root + 'Templates/Components/{0}'", item.TemplateUrl);
                         }
+                        isFirst = false;
                     }                   
 
                     if (!string.IsNullOrEmpty(item.StateController))
@@ -133,7 +138,7 @@ namespace Jwt.Controller
 
                     if (item.StateViews != null && item.StateViews.Count > 0)
                     {
-                        bool isFirst = true;
+                        isFirst = true;
                         string comma = "";
                         strBuilder.Append(",views:{");
                         foreach (StateView item2 in item.StateViews)
@@ -146,6 +151,7 @@ namespace Jwt.Controller
                     }
                     strBuilder.Append("});");
                 }
+                jwt.Append("};");
                 string router = Config.Root + "Scripts\\Router";
                 if (!Directory.Exists(router))
                 {
@@ -154,7 +160,7 @@ namespace Jwt.Controller
                 string fLine = "angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (stateprovider, routeProvider) {" + Environment.NewLine;
                 fLine += "var root = '';";
                 string lLine = Environment.NewLine + "}]);" + Environment.NewLine;
-                System.IO.File.WriteAllText(router + "\\AppRouter.js", string.Format("{0}{1}{2}", fLine, strBuilder, lLine));
+                System.IO.File.WriteAllText(router + "\\AppRouter.js", string.Format("{0}{1}{2}{3}", fLine, strBuilder, lLine, Environment.NewLine+jwt.ToString()));
 
             }
             catch (Exception ex)

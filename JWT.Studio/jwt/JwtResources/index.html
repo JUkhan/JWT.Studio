@@ -44,8 +44,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="alert alert-success">Layout</div>
-                            <div><label class="xlabel">Name</label><input type="text" ng-model="layout.StateName" /></div>
-                            <div><label class="xlabel">Url</label><input type="text" ng-model="layout.Url" /></div>
+                            <div><label class="xlabel">Name</label><input type="text" ng-change="layoutNameChanged(layout.StateName)" ng-model="layout.StateName" /></div>
+                            <div><label class="xlabel">Url</label><input type="text" disabled ng-model="layout.Url" /></div>
                             <div><label class="xlabel">Template </label><input type="text" ng-model="layout.TemplateUrl" /></div>
                             <div><label class="xlabel">Controller </label><input type="text" ng-model="layout.StateController" /></div>
                             <div><label class="xlabel">Parent </label><select ng-model="layout.Parent" ng-options="label for label in parentList"></select></div>

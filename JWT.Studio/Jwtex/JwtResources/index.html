@@ -10,53 +10,54 @@
     <link href="JwtEx/Resources/?file=codemirror.theme.rubyblue.css" rel="stylesheet" />
 
 </head>
-<body ng-app="app">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container mac">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
-
-            </div>
-        </div>
-    </div>
+<body ng-app="jwt2">
     <div class="container body-content" ng-controller="mainController">
+       
+        <tabset>
+            <tab heading="Javascript">
+                <div>
+                    <div class="btn-group" >
+                        <label class="btn btn-success" ng-click="jsSearch('Controllers')" ng-model="jsModel" btn-radio="'Controllers'">Controllers</label>
+                        <label class="btn btn-success" ng-click="jsSearch('Services')" ng-model="jsModel" btn-radio="'Services'">Services</label>
+                    </div>
 
-        <h5>{{msg}}</h5>
-        <hr />
-        <div ng-model="editorContent" ui-codemirror="{
-            lineNumbers: true,
-            theme:'rubyblue',
-            lineWrapping : true,
-            mode: 'javascript',
-           matchBrackets:true,
-           autoCloseBrackets:true,
-           enableSearchTools:true,
-           styleActiveLine:true
-          }"></div>
-      
+                    <input type="text" ng-model="jsFileName" typeahead="name for name in jsList" class="form-control" placeholder="{{jsModel}}" />
+                    <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />  
+                    <input class="btn btn-success" type="button" value="Save" ng-click="saveJsFile()" />  
+                </div>
+                <textarea id="jsEditor" name="jsEditor" style="display:block; width:100%;height:500px"></textarea>
+               
+            </tab>
+            <tab heading="Html">
+                <div>
+                    <div class="btn-group">
+                        <label ng-click="htmlSearch('Layouts')" class="btn btn-success" ng-model="htmlModel" btn-radio="'Layouts'">Layouts</label>
+                        <label ng-click="htmlSearch('Widgets')" class="btn btn-success" ng-model="htmlModel" btn-radio="'Widgets'">Widgets</label>
+                        <label ng-click="htmlSearch('Components')" class="btn btn-success" ng-model="htmlModel" btn-radio="'Components'">Components</label>
+                    </div>
+
+                    <input type="text" ng-model="htmlFileName" typeahead="name for name in htmlList" class="form-control" placeholder="{{htmlModel}}" />
+                    <input class="btn btn-success" type="button" ng-click="htmlLoad(htmlFileName)" value="Load" />
+                    <input class="btn btn-success" type="button" value="Save" ng-click="saveHtmlFile()" />  
+                </div>
+                <textarea id="htmlEditor" name="jsEditor" style="display:block; width:100%;height:500px"></textarea>
+            </tab>
+        </tabset>
 
         <hr />
         <footer>
             <p>&copy; jwtEx Application</p>
         </footer>
-    </div>  
+    </div>
 
 
     <script src="JwtEx/Resources/?file=angular.js"></script>
-    <script src="JwtEx/Resources/?file=angular-resource.js"></script>   
+    <script src="JwtEx/Resources/?file=angular-resource.js"></script>
     <script src="JwtEx/Resources/?file=angularui.js"></script>
-    <script src="JwtEx/Resources/?file=angular-ui-router.js"></script>   
+    <script src="JwtEx/Resources/?file=angular-ui-router.js"></script>
     <script src="JwtEx/Resources/?file=app.js"></script>
     <script src="JwtEx/Resources/?file=jwt.js"></script>
-    <script src="JwtEx/Resources/?file=mainController.js"></script>     
+    <script src="JwtEx/Resources/?file=mainController.js"></script>
     <script src="JwtEx/Resources/?file=codemirror.lib.codemirror.js"></script>
     <script src="JwtEx/Resources/?file=codemirror.lib.ui-codemirror.js"></script>
     <script src="JwtEx/Resources/?file=codemirror.mode.javascript.javascript.js"></script>
