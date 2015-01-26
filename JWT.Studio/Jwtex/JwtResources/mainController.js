@@ -1,7 +1,11 @@
 ﻿
 angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal', '$q', function (scope, http, modal, qService) {
     
-    scope.msg = 'Main controller message...';
+    toastr.options.extendedTimeOut = 1000;
+    toastr.options.timeOut = 1000;
+    toastr.options.fadeOut = 250;
+    toastr.options.fadeIn = 250;
+    toastr.options.positionClass = "toast-top-right";
    
     scope.jsModel = '';
     scope.htmlModel = '';
@@ -15,35 +19,38 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.jsSearch = function (val) {
         if (val !== scope.jsModel) {
             http.get('JwtEx/GetFileList/?directory=' + val).success(function (data) {
-                if (data.isSuccess) { scope.jsList = data.data; console.log(data); } else { alert(data.msg); }
+                if (data.isSuccess) { scope.jsList = data.data; scope.jsEditor.setValue(''); scope.jsFileName = '';} else { info(data.msg); }
             });
         }
         scope.jsModel = val;
     };    
     scope.jsLoad = function (fileName) {
         scope.jsFileName = fileName;
+        if (!fileName) { info('{0} file name is required.'.format(scope.jsModel)); return; }
         http.get('JwtEx/GetFileContent/?fileName={0}&key={1}'.format(fileName, scope.jsModel))
            .success(function (data) {
+               console.log(data);
                scope.jsEditor.setValue(data.data);
            });
 
     }
     scope.saveJsFile = function () {
-
+        if (!scope.jsFileName) { info('There is no file to be saved.'); return; }
         http.post('JwtEx/SaveFile', { key: scope.jsModel, fileName: scope.jsFileName, content: scope.jsEditor.getValue() })
-        .success(function (data) { console.log(data); });
+        .success(function (data) { if (data.isSuccess) { success('Saved successfully.'); } });
     }
     //tab_html
     scope.htmlSearch = function (val) {
         if (val !== scope.htmlModel) {
             http.get('JwtEx/GetFileList/?directory=' + val).success(function (data) {
-                if (data.isSuccess) { scope.htmlList = data.data; } else { alert(data.msg); }
+                if (data.isSuccess) { scope.htmlList = data.data; scope.htmlEditor.setValue(''); scope.htmlFileName = null; } else { info(data.msg); }
             });
         }
         scope.htmlModel = val;
     };   
     scope.htmlLoad = function (fileName) {
         scope.htmlFileName = fileName;
+        if (!fileName) { info('{0} file name is required.'.format(scope.htmlModel)); return; }
         http.get('JwtEx/GetFileContent/?fileName={0}&key={1}'.format(fileName, scope.htmlModel))
            .success(function (data) {
                scope.htmlEditor.setValue(data.data);
@@ -51,12 +58,19 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
 
     }
     scope.saveHtmlFile = function () {
-
+        if (!scope.htmlFileName) { info('There is no file to be saved.'); return; }
         http.post('JwtEx/SaveFile', { key: scope.htmlModel, fileName: scope.htmlFileName, content: scope.htmlEditor.getValue() })
-        .success(function (data) { console.log(data); });
+        .success(function (data) { if (data.isSuccess) { success('Saved successfully.'); } });
     }
     scope.jsSearch('Controllers');
     scope.htmlSearch('Layouts');
+    info('Welcome to jwt.');
+    function success(msg) {
+        toastr['success'](msg);
+    }
+    function info(msg) {
+        toastr['info'](msg);
+    }
 }]);
 
 

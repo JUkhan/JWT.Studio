@@ -62,6 +62,9 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\jquery.js" />
+    <EmbeddedResource Include="JwtResources\toastr\toastr.css" />
+    <EmbeddedResource Include="JwtResources\toastr\toastr.js" />
     <EmbeddedResource Include="JwtResources\angular-ui-router.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closebrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closetag.js" />

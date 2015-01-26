@@ -70,11 +70,13 @@
         init: function (scope, sce) {
             this.scope = scope;
             this.sce = sce;
-            toastr.options.extendedTimeOut = 1000;
-            toastr.options.timeOut = 1000;
-            toastr.options.fadeOut = 250;
-            toastr.options.fadeIn = 250;
-            toastr.options.positionClass = "toast-top-right";
+            if (toastr) {
+                toastr.options.extendedTimeOut = 1000;
+                toastr.options.timeOut = 1000;
+                toastr.options.fadeOut = 250;
+                toastr.options.fadeIn = 250;
+                toastr.options.positionClass = "toast-top-right";
+            }
             scope.model = {};
             scope.trustAsHtml = this.trustAsHtml.bind(this);
             scope.$on("FilterValueChange", function (e, obj) { this.onFilterValueChange(e, obj.name, obj.newValue, obj.oldValue); }.bind(this));
@@ -99,15 +101,7 @@
         },
         error: function (message) {
             toastr["error"](message);
-        },
-        showMessage: function (isSuccess, message) {
-            if (isSuccess) {
-                this.success(message);
-            }
-            else {
-                this.warning(message);
-            }
-        },
+        },        
         showSpinner: function () {
             jQuery(".overlay").show();
         },

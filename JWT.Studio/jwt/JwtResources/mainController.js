@@ -1,5 +1,6 @@
 ﻿
 app.controller('mainController', ['$scope', '$http', '$modal', function ($scope, $http, $modal) {
+   
     var scope = $scope;
     scope.msg = 'Main controller message...';
     scope.layoutList = [];
@@ -191,6 +192,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function ($scope,
 
     }
     scope.$on('jwt-view-update', function (e, data) { scope.state.StateViews = data; });
+   
 }]);
 
 function ModalInstanceCtrl($scope, $rootScope, $modalInstance, data) {
