@@ -2,8 +2,7 @@ namespace('app.controllers.mainCtrl', jwt.controllers.baseCtrl.extend({
     scope: null,
     init: function (scope, sce) {
         this._super(scope, sce);
-        scope.url = this.url.bind(this);
-        scope.msg = ' well-come jwt';
+        scope.url = this.url.bind(this);       
 
     },
     url: function (navName, paramValue) {

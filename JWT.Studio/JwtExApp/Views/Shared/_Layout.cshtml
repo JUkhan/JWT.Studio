@@ -23,16 +23,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{url('nav1')}}">Nav1</a></li>
+                    @*<li><a href="{{url('nav1')}}">Nav1</a></li>
                     <li><a href="{{url('nav2')}}">Nav2</a></li>
-                    <li><a href="{{url('nav3')}}">Nav3</a></li>
+                    <li><a href="{{url('nav3')}}">Nav3</a></li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
-        <div ui-view>@RenderBody()</div>
+        <div >@RenderBody()</div>
+        <b>{{1+4}}</b>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
@@ -41,12 +42,27 @@
     <div class="overlay">       
         <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></i></div>
     </div>
+    
+    <script src="JwtEx/Resources/?file=jquery.js"></script>
+    
+  
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-ui-router.js"></script>
+    <script src="JwtEx/Resources/?file=angular-sanitize.js"></script>
+    <script src="JwtEx/Resources/?file=toastr.toastr.js"></script>
 
+    @*<script src="JwtEx/Resources/?file=angular-resource.js"></script>
+    <script src="JwtEx/Resources/?file=angularui.js"></script>
+    <script src="JwtEx/Resources/?file=angular-ui-router.js"></script>
+    <script src="JwtEx/Resources/?file=angular-sanitize.js"></script>*@  
+    @*<script src="JwtEx/Resources/?file=jwt.js"></script>*@
+    @*@Scripts.Render("~/bundles/controllers")*@
+    <script src="~/Scripts/app.js"></script>
+    <script src="JwtEx/Resources/?file=jwt.js"></script>
+    @Scripts.Render("~/bundles/controllers")
 
-    @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/uigrid")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/router.js"></script>
+   
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -9,6 +9,7 @@
     <link href="JwtEx/Resources/?file=codemirror.lib.codemirror.css" rel="stylesheet" />
     <link href="JwtEx/Resources/?file=codemirror.theme.rubyblue.css" rel="stylesheet" />
     <link href="JwtEx/Resources/?file=toastr.toastr.css" rel="stylesheet" />
+    <link href="JwtEx/Resources/?file=codemirror.addon.hint.show-hint.css" rel="stylesheet" />
 </head>
 <body ng-app="jwt2">
     <div class="container body-content" ng-controller="mainController">
@@ -25,7 +26,8 @@
                     <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />  
                     <input class="btn btn-success" type="button" value="Save" ng-click="saveJsFile()" />  
                 </div>
-                <textarea id="jsEditor" name="jsEditor" style="display:block; width:100%;height:500px"></textarea>
+                <textarea id="jsEditor" name="jsEditor" style="display:block; width:100%;height:500px">                   
+                </textarea>
                
             </tab>
             <tab heading="Html">
@@ -55,6 +57,7 @@
     <script src="JwtEx/Resources/?file=angular-resource.js"></script>
     <script src="JwtEx/Resources/?file=angularui.js"></script>
     <script src="JwtEx/Resources/?file=angular-ui-router.js"></script>
+    <script src="JwtEx/Resources/?file=angular-sanitize.js"></script>   
     <script src="JwtEx/Resources/?file=app.js"></script>
     <script src="JwtEx/Resources/?file=jwt.js"></script>
     <script src="JwtEx/Resources/?file=mainController.js"></script>
@@ -73,5 +76,8 @@
     <script src="JwtEx/Resources/?file=codemirror.addon.search.match-highlighter.js"></script>
     <script src="JwtEx/Resources/?file=codemirror.addon.search.search.js"></script>
     <script src="JwtEx/Resources/?file=toastr.toastr.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.hint.show-hint.js"></script>
+    <script src="JwtEx/Resources/?file=codemirror.addon.hint.javascript-hint.js"></script>
+        
 </body>
 </html>

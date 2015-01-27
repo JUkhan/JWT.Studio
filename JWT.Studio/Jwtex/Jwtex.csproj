@@ -69,6 +69,7 @@
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closebrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closetag.js" />
     <EmbeddedResource Include="JwtResources\angular.js" />
+    <EmbeddedResource Include="JwtResources\angular-sanitize.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />
@@ -82,6 +83,9 @@
     <Content Include="JwtResources\codemirror\addon\fold\markdown-fold.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\fold\xml-fold.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\search\match-highlighter.js" />
+    <EmbeddedResource Include="JwtResources\codemirror\addon\hint\javascript-hint.js" />
+    <EmbeddedResource Include="JwtResources\codemirror\addon\hint\show-hint.css" />
+    <EmbeddedResource Include="JwtResources\codemirror\addon\hint\show-hint.js" />
     <Content Include="JwtResources\codemirror\addon\search\matchesonscrollbar.css" />
     <Content Include="JwtResources\codemirror\addon\search\matchesonscrollbar.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\search\search.js" />

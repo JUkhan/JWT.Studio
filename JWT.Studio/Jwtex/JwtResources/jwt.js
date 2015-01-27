@@ -51,7 +51,6 @@
         }
         target[tokens[tokens.length - 1]] = object;
     };
-
     namespace('jwt', {
         url: function (navName, paramValue) {
             if (this._arr.hasOwnProperty(navName)) {
@@ -64,6 +63,34 @@
             return "Invalid_navName:" + navName;
         }
     });
+   angular.module("jwt", [])
+    .filter('jwtDate', function () {
+        return function (input) {
+            var len = 0;
+            if (input && (len = input.length) > 8) {
+                return input.substring(6, input.length - 2);
+            }
+            return input;
+        };
+    })
+    .directive('jwtFilter', ['$rootScope', function (rootScope) {
+        function setVal(prop, val) {
+            var ob = window.sessionStorage.getItem("jwtFilter") || "{}",
+            data = angular.fromJson(ob);
+            data[prop] = val;
+            window.sessionStorage.setItem("jwtFilter", angular.toJson(data));
+        }
+        return {
+            restrict: 'A',
+            link: function (scope, jquery, attrs, ctrl) {
+                var filterNaame = attrs.dbFilter || attrs.ngModel;
+                scope.$watch(filterNaame, function (newVal, oldVal) {
+                    rootScope.$broadcast("FilterValueChange", { name: filterNaame, newValue: newVal, oldValue: oldVal });
+                    setVal(filterNaame, newVal);
+                });
+            }
+        }
+    }]);
     namespace('jwt.controllers.baseCtrl', jsClass.extend({
         scope: null,
         sce:null,
@@ -109,6 +136,7 @@
             jQuery(".overlay").hide();
         }
     }));
+    
     //extention Methods
     Function.method = Array.method = String.method = Object.method = function (name, fn) {
         this.prototype[name] = fn;
@@ -380,3 +408,4 @@
     Function.prototype.bind = Function.prototype.bind || function (b) { if (typeof this !== "function") { throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable"); } var a = Array.prototype.slice, f = a.call(arguments, 1), e = this, c = function () { }, d = function () { return e.apply(this instanceof c ? this : b || window, f.concat(a.call(arguments))); }; c.prototype = this.prototype; d.prototype = new c(); return d; };
 
 })(window);
+

@@ -8,19 +8,8 @@ namespace JwtExApp
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                            "~/Scripts/lib/angular.js",
-                            "~/Scripts/lib/angular-ui-router.js",
-                            "~/Scripts/lib/angular-resource.js",
-                            "~/Scripts/lib/angular-sanitize.js",
-                            "~/Scripts/lib/angular-animate.js",
-                            "~/Scripts/lib/app.js",
-                            "~/Scripts/lib/jwt.js",
-                            "~/Scripts/router.js",
-                            //"~/Scripts/Services/*.js",
-                            //"~/Scripts/Directives/*.js",
-                            "~/Scripts/Controllers/*.js",
-                            "~/Scripts/lib/angularui.js"
+            bundles.Add(new ScriptBundle("~/bundles/controllers").Include(                
+                            "~/Scripts/Controllers/*.js"
                        ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
@@ -35,16 +24,14 @@ namespace JwtExApp
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js",
-                       "~/Content/toastr/toastr.js"
+                      "~/Scripts/respond.js"
+                      
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/font-awesome/css/font-awesome.css",
-                     "~/Content/toastr/toastr.css",
-                     "~/Scripts/UI-Grid/ui-grid-unstable.css"
+                      "~/Content/site.css"
+                   
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/uigrid").Include(

@@ -13,13 +13,15 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.jsFileName = '';
     scope.htmlList = [];
     scope.htmlFileName = '';
+    scope.jsEditor = null;
+    scope.htmlEditor = null;
     setJsEditor(scope);
     setHtmlEditor(scope);
     //tab_javascript
     scope.jsSearch = function (val) {
         if (val !== scope.jsModel) {
             http.get('JwtEx/GetFileList/?directory=' + val).success(function (data) {
-                if (data.isSuccess) { scope.jsList = data.data; scope.jsEditor.setValue(''); scope.jsFileName = '';} else { info(data.msg); }
+                if (data.isSuccess) { scope.jsList = data.data; if (scope.jsEditor) { scope.jsEditor.setValue(''); } scope.jsFileName = ''; } else { info(data.msg); }
             });
         }
         scope.jsModel = val;
@@ -28,8 +30,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         scope.jsFileName = fileName;
         if (!fileName) { info('{0} file name is required.'.format(scope.jsModel)); return; }
         http.get('JwtEx/GetFileContent/?fileName={0}&key={1}'.format(fileName, scope.jsModel))
-           .success(function (data) {
-               console.log(data);
+           .success(function (data) {              
                scope.jsEditor.setValue(data.data);
            });
 
@@ -43,7 +44,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.htmlSearch = function (val) {
         if (val !== scope.htmlModel) {
             http.get('JwtEx/GetFileList/?directory=' + val).success(function (data) {
-                if (data.isSuccess) { scope.htmlList = data.data; scope.htmlEditor.setValue(''); scope.htmlFileName = null; } else { info(data.msg); }
+                if (data.isSuccess) { scope.htmlList = data.data; if (scope.htmlEditor) { scope.htmlEditor.setValue(''); }scope.htmlFileName = null; } else { info(data.msg); }
             });
         }
         scope.htmlModel = val;
@@ -80,9 +81,10 @@ function setJsEditor(scope) {
             lineNumbers: true,
             theme: 'rubyblue',
             lineWrapping: true,
-            mode: 'javascript',
+            mode:{name: 'javascript',globalVars: true},
             matchBrackets: true,
             autoCloseBrackets: true,
+            extraKeys: { "Ctrl-Space": "autocomplete" },           
             enableSearchTools: true,
             styleActiveLine: true
         });

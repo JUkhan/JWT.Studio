@@ -185,6 +185,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -226,28 +228,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\lib\angular-animate.js" />
-    <Content Include="Scripts\lib\angular-messages.js" />
-    <Content Include="Scripts\lib\angular-resource.js" />
-    <Content Include="Scripts\lib\angular-sanitize.js" />
-    <Content Include="Scripts\lib\angular-ui-router.js" />
-    <Content Include="Scripts\lib\angular.js" />
-    <Content Include="Scripts\lib\angularui.js" />
-    <Content Include="Scripts\lib\app.js" />
-    <Content Include="Scripts\lib\bootstrap-datetimepicker.js" />
-    <Content Include="Scripts\lib\jwt.js" />
-    <Content Include="Scripts\lib\ui-bootstrap-tpls-0.12.0.js" />
-    <Content Include="Scripts\lib\Utilities.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\UI-Grid\csv.js" />
-    <Content Include="Scripts\UI-Grid\pdfmake.js" />
-    <Content Include="Scripts\UI-Grid\ui-grid-unstable.css" />
-    <Content Include="Scripts\UI-Grid\ui-grid-unstable.js" />
-    <Content Include="Scripts\UI-Grid\ui-grid-unstable.min.css" />
-    <Content Include="Scripts\UI-Grid\ui-grid-unstable.min.js" />
-    <Content Include="Scripts\UI-Grid\vfs_fonts.js" />
+    <Content Include="Scripts\router.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Templates\Layouts\layout1.html" />
     <Content Include="Templates\Layouts\layout2.html" />
@@ -277,9 +262,6 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Scripts\UI-Grid\ui-grid.eot" />
-    <Content Include="Scripts\UI-Grid\ui-grid.ttf" />
-    <Content Include="Scripts\UI-Grid\ui-grid.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

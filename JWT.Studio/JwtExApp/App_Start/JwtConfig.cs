@@ -16,9 +16,9 @@ namespace JwtExApp
                .Do(app => app.Navigation =
                      Fluently.With(new Navigation { NavigationName = "nav1", HasLayout = "layout1" })
                      .Do(nav => nav.View = new View { ViewName = "col1", WidgetName = "widget1" })
-                     .Do(nav => nav.View = new View { ViewName = "col2", WidgetName = "widget1" })
+                     .Do(nav => nav.View = new View { ViewName = "col2", WidgetName = "widget2" })
                      .Done())
-                .Do(app => app.Navigation = new Navigation { NavigationName = "nav2", WidgetName = "widget2", HasLayout = "layout2" })
+                .Do(app => app.Navigation = new Navigation { NavigationName = "nav2", WidgetName = "widget3", HasLayout = "layout2" })
                .Done()
                .Execute();
         }
