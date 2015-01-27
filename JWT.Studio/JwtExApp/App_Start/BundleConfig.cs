@@ -8,9 +8,8 @@ namespace JwtExApp
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/controllers").Include(                
-                            "~/Scripts/Controllers/*.js"
-                       ));
+            bundles.Add(new ScriptBundle("~/bundles/controllers").Include(
+                       "~/Scripts/Controllers/*.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -24,22 +23,11 @@ namespace JwtExApp
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"
-                      
-                      ));
+                      "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"
-                   
-                      ));
-
-            bundles.Add(new ScriptBundle("~/bundles/uigrid").Include(
-                     "~/Scripts/UI-Grid/csv.js",
-                      "~/Scripts/UI-Grid/pdfmake.js",
-                       "~/Scripts/UI-Grid/vfs_fonts.js",
-                        "~/Scripts/UI-Grid/ui-grid-unstable.js"
-                     ));
+                      "~/Content/site.css"));
         }
     }
 }

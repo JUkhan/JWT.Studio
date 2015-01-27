@@ -63,41 +63,14 @@
             return "Invalid_navName:" + navName;
         }
     });
-   angular.module("jwt", [])
-    .filter('jwtDate', function () {
-        return function (input) {
-            var len = 0;
-            if (input && (len = input.length) > 8) {
-                return input.substring(6, input.length - 2);
-            }
-            return input;
-        };
-    })
-    .directive('jwtFilter', ['$rootScope', function (rootScope) {
-        function setVal(prop, val) {
-            var ob = window.sessionStorage.getItem("jwtFilter") || "{}",
-            data = angular.fromJson(ob);
-            data[prop] = val;
-            window.sessionStorage.setItem("jwtFilter", angular.toJson(data));
-        }
-        return {
-            restrict: 'A',
-            link: function (scope, jquery, attrs, ctrl) {
-                var filterNaame = attrs.dbFilter || attrs.ngModel;
-                scope.$watch(filterNaame, function (newVal, oldVal) {
-                    rootScope.$broadcast("FilterValueChange", { name: filterNaame, newValue: newVal, oldValue: oldVal });
-                    setVal(filterNaame, newVal);
-                });
-            }
-        }
-    }]);
+   
     namespace('jwt.controllers.baseCtrl', jsClass.extend({
         scope: null,
         sce:null,
         init: function (scope, sce) {
             this.scope = scope;
             this.sce = sce;
-            if (toastr) {
+            if (toastr!==undefined && toastr) {
                 toastr.options.extendedTimeOut = 1000;
                 toastr.options.timeOut = 1000;
                 toastr.options.fadeOut = 250;
@@ -143,7 +116,7 @@
         return this;
     };
     Array
-    .method('ForEach', function (callback) {
+    .method('each', function (callback) {
         for (var i = 0, len = this.length; i < len; i++) {
             callback(this[i], i);
         }
@@ -155,7 +128,7 @@
         }
         return this;
     })
-    .method('Where', function (callback) {
+    .method('where', function (callback) {
         var res = [];
         for (var i = 0, len = this.length; i < len; i++) {
             if (callback(this[i])) { res.push(this[i]); }
@@ -169,28 +142,14 @@
         }
         return res;
     })
-    .method('First', function (callback) {
+    .method('first', function (callback) {
 
         for (var i = 0, len = this.length; i < len; i++) {
             if (callback(this[i])) { return this[i]; }
         }
         return null;
-    })
-    .method('Find', function (callback) {
-
-        for (var i = 0, len = this.length; i < len; i++) {
-            if (callback(this[i])) { return this[i]; }
-        }
-        return null;
-    })
-    .method('Last', function (callback) {
-        var obj = null;
-        for (var i = 0, len = this.length; i < len; i++) {
-            if (callback(this[i])) { obj = this[i]; }
-        }
-        return obj;
-    })
-    .method('FindLast', function (callback) {
+    })   
+    .method('last', function (callback) {
         var obj = null;
         for (var i = 0, len = this.length; i < len; i++) {
             if (callback(this[i])) { obj = this[i]; }
@@ -234,67 +193,24 @@
     .method('paging', function (pageno, size) {
         pageno--;
         return this.slice(pageno * size, (pageno * size) + size);
-    })
-    .method('ToList', function () { return this; })
-     .method('Insert', function (index, item) {
+    })   
+     .method('insertAt', function (index, item) {
          return this.splice(index, 0, item);
-     })
-     .method('Add', function (item) { return this.push(item); })
-     .method('Join', function (str) { return this.join(str); });
-    Object.defineProperty(Array.prototype, 'Count', {
-        get: function () {
-            return this.length;
-        }
-    });
-    Object.defineProperty(String.prototype, 'Length', {
-        get: function () {
-            return this.length;
-        }
-    });
-
-    String
-     .method('StartsWith', function (str) {
-         return (this.indexOf(str) == 0);
-     })
-     .method('Substring', function (a, b) { return this.substring(a, b); })
-     .method('ToCharArray', function () { return this; })
-     .method('ToLower', function () { return this.toLowerCase(); })
-     .method('ToUpper', function () { return this.toUpperCase(); })
-     .method('Trim', function () { return this.trim(); })
-     .method('Split', function (str) { return this.split(str); })
-     .method('Replace', function (oldStr, newStr) { return this.replace(oldStr, newStr); })
-     .method('IndexOf', function (str) { return this.indexOf(str); })
-     .method('LastIndexOf', function (str) { return this.lastIndexOf(str); })
-     .method('format', function () {
+     });
+     
+    String.method('format', function () {
          var str = this;
          for (var i = 0; i < arguments.length; i++) {
              str = str.replace(new RegExp('\\{' + i + '\\}', 'g'), arguments[i]);
          }
          return str;
-     });
-    window.string = String;
-    string.IsNullOrEmpty = function (str) {
-        if (str) { return false; }
-        return true;
-    }
-    string.IsNullOrWhiteSpace = function (str) {
+     });    
+    String.isNullOrWhiteSpace = function (str) {
         if (str) {
             return new RegExp("^\\s+$").test(str);
         }
         return true;
-    }
-    window.isValid = function (obj) {
-        if (obj) { return true; }
-        return false;
-    }
-    window.propLoop = function (obj, callback) {
-        for (var prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-                callback(prop, obj[prop]);
-            }
-        }
-    };
-
+    }   
     this.SQLight = jsClass.extend({
         init: function () {
             var ops = SQLight.dbOptions;
@@ -376,34 +292,7 @@
                 if (this.hasOwnProperty(item)) { delete this[item]; }
             }
         }
-    });
-    Object.defineProperty(Dictionary.prototype, 'Keys', {
-        get: function () {
-            var temo = [];
-            for (var key in this) {
-                if (this.hasOwnProperty(key)) { temo.push(key); }
-            }
-            return temo;
-        }
-    });
-    Object.defineProperty(Dictionary.prototype, 'Values', {
-        get: function () {
-            var temo = [];
-            for (var key in this) {
-                if (this.hasOwnProperty(key)) { temo.push(this[key]); }
-            }
-            return temo;
-        }
-    });
-    Object.defineProperty(Dictionary.prototype, 'Count', {
-        get: function () {
-            var count = 0;
-            for (var key in this) {
-                if (this.hasOwnProperty(key)) { count++; }
-            }
-            return count;
-        }
-    });
+    });   
 
     Function.prototype.bind = Function.prototype.bind || function (b) { if (typeof this !== "function") { throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable"); } var a = Array.prototype.slice, f = a.call(arguments, 1), e = this, c = function () { }, d = function () { return e.apply(this instanceof c ? this : b || window, f.concat(a.call(arguments))); }; c.prototype = this.prototype; d.prototype = new c(); return d; };
 
