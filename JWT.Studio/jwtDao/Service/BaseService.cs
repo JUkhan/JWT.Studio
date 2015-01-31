@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Jwt.Dao.Service
 {
-    public abstract class BaseService<T>
+    public abstract class BaseService<T> where T : class
     {
         protected readonly IDbContextScopeFactory _dbContextScopeFactory;
 
@@ -21,16 +21,18 @@ namespace Jwt.Dao.Service
 
         }
         protected abstract DbContext GetDbContext(IDbContextCollection dbContextCollection);
-        private DbSet GetDbSet(DbContext context)
+        private DbSet<T> GetDbSet(DbContext context)
         {
-            return context.Set(typeof(T));
+           
+            return context.Set<T>();
+            
         }
         public virtual ICollection<T> BaseGetAll()
         {
             using (var dbContextScope = _dbContextScopeFactory.Create())
             {
-                var context = GetDbContext(dbContextScope.DbContexts);
-                return GetDbSet(context).AsQueryable().Cast<T>().ToList();                
+                var context = GetDbContext(dbContextScope.DbContexts);                
+                return context.Set<T>().ToList<T>();
             }
         }
 
@@ -42,7 +44,7 @@ namespace Jwt.Dao.Service
             using (var dbContextScope = _dbContextScopeFactory.Create())
             {
                 var context = GetDbContext(dbContextScope.DbContexts);
-                var data = GetDbSet(context).AsQueryable().Cast<T>();
+                var data = GetDbSet(context).AsQueryable<T>();
                 res.Total = data.Count();
                 res.Data = data.OrderBy(orderBy).Skip((pageNo - 1)*pageSize).Take(pageSize).ToList();
             }
@@ -58,7 +60,7 @@ namespace Jwt.Dao.Service
             using (var dbContextScope = _dbContextScopeFactory.Create())
             {
                 var context = GetDbContext(dbContextScope.DbContexts);
-                var data = GetDbSet(context).AsQueryable().Cast<T>().Where(wherePredicate);
+                var data = GetDbSet(context).AsQueryable<T>().Where(wherePredicate);
                 res.Total = data.Count();
                 res.Data = data.OrderBy(orderBy).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
             }
@@ -79,7 +81,7 @@ namespace Jwt.Dao.Service
             using (var dbContextScope = _dbContextScopeFactory.Create())
             {
                 var context = GetDbContext(dbContextScope.DbContexts);
-                obj = (T)this.GetDbSet(context).Add(entity);
+                obj =this.GetDbSet(context).Add(entity);
                 dbContextScope.SaveChanges();
             }
             return obj;

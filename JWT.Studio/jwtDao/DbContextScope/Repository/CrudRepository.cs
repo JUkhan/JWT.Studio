@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Jwt.Dao.Repository
 {
-    public abstract class CrudRepository<T>
+    public abstract class CrudRepository<T> where T : class
     {
         protected readonly IAmbientDbContextLocator _ambientDbContextLocator;
 
@@ -21,9 +21,9 @@ namespace Jwt.Dao.Repository
             this._ambientDbContextLocator = new AmbientDbContextLocator();
 
         }
-        private DbSet GetDbSet()
+        private DbSet<T> GetDbSet()
         {
-            return this.DbContext.Set(typeof(T));
+            return this.DbContext.Set<T>();
         }
         protected abstract DbContext DbContext
         {
@@ -38,33 +38,32 @@ namespace Jwt.Dao.Repository
 
         public virtual T GetByID(dynamic id)
         {
-            dynamic dbResult = this.GetDbSet().Find(id);
-            return dbResult;
+           return  this.GetDbSet().Find(id);          
         }
 
         public virtual ICollection<T> GetAll()
         {
-            return this.GetDbSet().AsQueryable().Cast<T>().ToList();
+            return this.GetDbSet().ToList();
 
         }
-        public virtual PagedList GetPaged(int pageNo, int pageSize, Func<T, Object> orderBy)
+        public virtual PagedList GetPagedList(int pageNo, int pageSize, Func<T, Object> orderBy)
         {
             PagedList res = new PagedList();
             res.PageNo = pageNo;
             res.PageSize = pageSize;
 
-            var data = this.GetDbSet().AsQueryable().Cast<T>();
+            var data = this.GetDbSet().AsQueryable<T>();
             res.Total = data.Count();
             res.Data = data.OrderBy(orderBy).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
             return res;
         }
-        public virtual PagedList GetPagedWhile(int pageNo, int pageSize, Func<T, bool> predicate, Func<T, Object> orderBy)
+        public virtual PagedList GetPagedListWhile(int pageNo, int pageSize, Func<T, bool> predicate, Func<T, Object> orderBy)
         {
             PagedList res = new PagedList();
             res.PageNo = pageNo;
             res.PageSize = pageSize;
 
-            var data = this.GetDbSet().AsQueryable().Cast<T>().Where(predicate);
+            var data = this.GetDbSet().AsQueryable<T>().Where(predicate);
             res.Total = data.Count();
             res.Data = data.OrderBy(orderBy).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
             return res;

@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="DbContextScope\EntityFramework.Implementation\DbContextFactory.cs" />
     <Compile Include="Service\BaseService.cs" />
-    <Compile Include="Service\BaseService2.cs" />
     <Compile Include="DbContextScope\Repository\CrudRepository.cs" />
     <Compile Include="DbContextScope\EntityFramework.Implementation\AmbientContextSuppressor.cs" />
     <Compile Include="DbContextScope\EntityFramework.Implementation\AmbientDbContextLocator.cs" />

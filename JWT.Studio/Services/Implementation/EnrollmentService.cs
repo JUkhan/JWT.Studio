@@ -50,6 +50,7 @@ namespace Services.Implementation {
 		}
 		public PagedList GetPaged(int pageNo, int pageSize)
 		{
+          
 			PagedList res = new PagedList();
 			using (var dbContextScope = _dbContextScopeFactory.Create())
 			{
@@ -59,6 +60,7 @@ namespace Services.Implementation {
 				res.Total = query.Count();
 				res.Data = query.OrderBy(x=>x.EnrollmentID).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
 			}
+          
 			return res;
 		}
 		 public PagedList GetPagedWhile(int pageNo, int pageSize, Enrollment item)

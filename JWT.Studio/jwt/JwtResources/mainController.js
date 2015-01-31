@@ -38,6 +38,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function ($scope,
     };
     scope.layoutNameChanged = function (name) {
         scope.layout.Url = '/' + name;
+        scope.layout.TemplateUrl = name + '.html';
     };
     scope.update = function (u) {
         scope.layout = u;
