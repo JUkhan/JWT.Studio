@@ -13,6 +13,7 @@ namespace Jwtex
 
         public jwtApp()
         {
+
             this.Name = "app";
         }
         private Dictionary<string, Layout> _layouts = new Dictionary<string, Layout>();
