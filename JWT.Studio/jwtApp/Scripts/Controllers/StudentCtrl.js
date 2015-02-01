@@ -11,7 +11,8 @@ this.scope=scope;
 
 this.service=service;
 
-scope.gridOpts.columnDefs=[{name:"AC",width:50,enableSorting:false,cellTemplate:"<div style='text-align:center'><a ng-click=\"getExternalScopes().EditAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-pencil\"></i>  </a><a ng-click=\"getExternalScopes().RemoveAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-trash\"></i>  </a></div>"},{name:"LastName"},{name:"FirstName"},{name:"EnrollmentDate",cellFilter:"jwtDate | date:'yyyy-MM-dd'"}];
+scope.gridOpts.columnDefs=[{name:"AC",width:50,enableSorting:false,cellTemplate:"<div style='text-align:center'><a ng-click=\"getExternalScopes().EditAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-pencil\"></i>  </a><a ng-click=\"getExternalScopes().RemoveAction(row)\" href=\"javascript:;\"> <i class=\"fa fa-trash\"></i>  </a></div>"},
+                          {name:"FirstName"}, {name:"LastName"},{name:"EnrollmentDate",cellFilter:"jwtDate | date:'yyyy-MM-dd'"}];
 
 scope.gridOpts.onRegisterApi=function(gridApi){gridApi.paging.on.pagingChanged(scope,function(newPage,pageSize){this.pageNo=newPage;
 

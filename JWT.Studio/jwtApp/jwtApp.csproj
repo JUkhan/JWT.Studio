@@ -332,9 +332,9 @@
       <Project>{66e6071b-9e79-495b-9b4c-4af484730d6a}</Project>
       <Name>jwtDao</Name>
     </ProjectReference>
-    <ProjectReference Include="..\jwt\jwt.csproj">
-      <Project>{1a7d617a-6eb8-499f-97b4-8d9792086bc3}</Project>
-      <Name>jwt</Name>
+    <ProjectReference Include="..\Jwtex\Jwtex.csproj">
+      <Project>{e71bf010-c61b-42a3-bdb9-a7e0554271a3}</Project>
+      <Name>Jwtex</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{da953f1f-bc82-4ba1-9803-21d4f788c349}</Project>

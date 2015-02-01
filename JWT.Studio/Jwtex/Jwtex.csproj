@@ -36,6 +36,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,11 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseController.cs" />
+    <Compile Include="CodeGen\CodeGen.cs" />
+    <Compile Include="CodeGen\CSController.cs" />
+    <Compile Include="CodeGen\CSServiceImplementation.cs" />
+    <Compile Include="CodeGen\CSServiceInterface.cs" />
+    <Compile Include="CodeGen\JSController.cs" />
+    <Compile Include="CodeGen\JSService.cs" />
+    <Compile Include="CodeGen\TemplateCode.cs" />
     <Compile Include="JResult.cs" />
     <Compile Include="jwtApp.cs" />
     <Compile Include="FluentApi.cs" />
+    <Compile Include="JwtController.cs" />
     <Compile Include="JwtExController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StateManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JwtResources\angular-resource.js" />
@@ -62,6 +73,9 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\Utilities.js" />
+    <EmbeddedResource Include="JwtResources\mainController_jwt.js" />
+    <EmbeddedResource Include="JwtResources\index_jwt.html" />
     <EmbeddedResource Include="JwtResources\jwt-filter.js" />
     <EmbeddedResource Include="JwtResources\jquery.js" />
     <EmbeddedResource Include="JwtResources\toastr\toastr.css" />
@@ -71,6 +85,7 @@
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closetag.js" />
     <EmbeddedResource Include="JwtResources\angular.js" />
     <EmbeddedResource Include="JwtResources\angular-sanitize.js" />
+    <EmbeddedResource Include="JwtResources\app2.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />
