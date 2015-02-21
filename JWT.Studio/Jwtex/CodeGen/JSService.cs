@@ -14,17 +14,21 @@ namespace jwt.CodeGen
         {
             _propList = props;
             AddUsing(entity);
-            AddConstructor(entity);           
-            AddRelationalMethods();
+            AddConstructor(entity);
+            AddRelationalMethods(entity);
 
             _res.AppendLine();   
-            _res.Append(TAB1 + "}");
-            _res.AppendLine();          
-            _res.Append("}");
+   
+            _res.Append( "}");
+          
+            _res.AppendLine();
+            _res.AppendFormat("{0}Svc.{1}Factory.$inject=['$http'];",entity, entity[0].ToString().ToLower() + entity.Substring(1));
+            _res.AppendLine();
+            _res.AppendFormat("export default {0}Svc;", entity);
             return _res.ToString();
         }
 
-        private void AddRelationalMethods()
+        private void AddRelationalMethods(string entity)
         {
             var list = _propList.Where(n => n.Details != null && n.Details.Count > 1);
            
@@ -32,81 +36,57 @@ namespace jwt.CodeGen
             foreach (var item in list)
             {
                 _res.AppendLine();
-                _res.AppendFormat(TAB2 + "public Promise Get{0}List()",item.PropertyName);
+                _res.AppendFormat(TAB1 + "get{0}List()",item.PropertyName);
                 _res.AppendLine();
-                _res.Append(TAB2 + "{");
+                _res.Append(TAB1 + "{");
 
                 _res.AppendLine();
-                _res.Append(TAB3 + "Deferred deffer = this.qService.defer();");
 
+                _res.Append(TAB2 + "return HTTP.get(this).get(this.root() + this.controllerName+\"/Get" + item.PropertyName + "List\");");
+               
                 _res.AppendLine();
-                _res.Append(TAB3 + " this.http.get(\"{0}/Get"+item.PropertyName+"List\".format(this.Root() + this.controllerName))");
-                _res.AppendLine();
-                _res.Append(TAB3 + ".success((res, status) => { deffer.resolve(res); })");
-                _res.AppendLine();
-                _res.Append(TAB3 + ".error((res, status) => { deffer.reject(res); });");
-
-                _res.AppendLine();
-                _res.Append(TAB3+"return deffer.promise;");
-                _res.AppendLine();
-                _res.Append(TAB2 + "}");
+                _res.Append(TAB1 + "}");
             }
+
+            _res.AppendLine();
+            _res.AppendFormat(TAB1 + "static {0}Factory(http)", entity[0].ToString().ToLower() + entity.Substring(1));
+            _res.AppendLine();
+            _res.Append(TAB1 + "{");
+
+            _res.AppendLine();
+            _res.AppendFormat(TAB2 + "return new {0}Svc(http);", entity);
+            _res.AppendLine();
+            _res.Append(TAB1 + "}");
         }
         private void AddConstructor(string entity)
         {
+           
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "private HttpService http = null;", entity);
+            _res.AppendFormat(TAB1 + "constructor(http)");
+            _res.AppendLine();
+            _res.Append(TAB1 + "{");
 
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "private QService qService = null;", entity);
+            _res.AppendFormat(TAB2 + "super('{0}',http);",entity);
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "public {0}Service(HttpService http, QService qService):base(\"{0}\", http, qService)", entity);
-            _res.AppendLine();
-            _res.Append(TAB2 + "{");
-
-            _res.AppendLine();
-            _res.Append(TAB3 + "this.http=http;");
-            _res.AppendLine();
-            _res.Append(TAB3 + "this.qService=qService;");
+            _res.Append(TAB2 + "HTTP.set(this, http);");
 
            
             _res.AppendLine();
-            _res.Append(TAB2 + "}");
+            _res.Append(TAB1 + "}");
 
         }
         private void AddUsing(string entity)
         {
-            _res.AppendFormat(@"//opath={0}Scripts\Services\{1}Service.js,ab=true", Config.Root, entity);
-            string folder = ConfigurationManager.AppSettings["EntityProject"];
-            if (!string.IsNullOrEmpty(folder))
-            {
-                _res.AppendLine();
-                _res.AppendFormat("using {0}.Entities;", folder);
-            }
+            _res.Append("import BaseSvc from 'Scripts/Services/BaseSvc.js';");
             _res.AppendLine();
-            _res.Append("using CSharp.Wrapper.Angular;");
             _res.AppendLine();
-            _res.Append("using CSharp.Wrapper.JS;");
+            _res.Append("const HTTP=new WeakMap();");
             _res.AppendLine();
-            _res.Append("using Scripts.Services;");
+            _res.AppendFormat( "class {0}Svc extends BaseSvc", entity);
             _res.AppendLine();
-            _res.Append("using System;");
-            _res.AppendLine();
-            _res.Append("using System.Collections.Generic;");
-            _res.AppendLine();
-            _res.Append("using System.Linq;");
-            _res.AppendLine();
-            _res.Append("namespace Scripts.Services");
-            _res.AppendLine();
-            _res.Append("{");
+            _res.Append( "{");
             
-            _res.AppendLine();
-            _res.AppendFormat(TAB1 + "[Angular(ModuleName = \"app\", ActionType = \"factory\", ActionName = \"{0}Service\", DI = \"$http,$q\")]", entity);
-            _res.AppendLine();
-            _res.AppendFormat(TAB1 + "public class {0}Service : BaseService<{0}>", entity);
-            _res.AppendLine();
-            _res.AppendLine(TAB1 + "{");
-
         }
 
         public JwtConfig Config

@@ -51,13 +51,9 @@
     <Compile Include="Entities\Course.cs" />
     <Compile Include="Entities\Enrollment.cs" />
     <Compile Include="Entities\Student.cs" />
-    <Compile Include="Migrations\201412250408021_CourseIDAutoIncrement.cs" />
-    <Compile Include="Migrations\201412250408021_CourseIDAutoIncrement.Designer.cs">
-      <DependentUpon>201412250408021_CourseIDAutoIncrement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201412250436249_CourseIDAutoIncrement1.cs" />
-    <Compile Include="Migrations\201412250436249_CourseIDAutoIncrement1.Designer.cs">
-      <DependentUpon>201412250436249_CourseIDAutoIncrement1.cs</DependentUpon>
+    <Compile Include="Migrations\201502170100459_init.cs" />
+    <Compile Include="Migrations\201502170100459_init.Designer.cs">
+      <DependentUpon>201502170100459_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,11 +64,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201412250408021_CourseIDAutoIncrement.resx">
-      <DependentUpon>201412250408021_CourseIDAutoIncrement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201412250436249_CourseIDAutoIncrement1.resx">
-      <DependentUpon>201412250436249_CourseIDAutoIncrement1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502170100459_init.resx">
+      <DependentUpon>201502170100459_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

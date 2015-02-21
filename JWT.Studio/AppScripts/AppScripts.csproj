@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Csharp.Wrapper">
-      <HintPath>C:\Users\Omar\Desktop\JS_Cake\libs\Csharp.Wrapper.dll</HintPath>
+      <HintPath>..\..\lib\Csharp.Wrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

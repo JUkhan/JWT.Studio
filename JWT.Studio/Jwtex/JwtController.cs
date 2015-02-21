@@ -13,6 +13,8 @@ namespace Jwt.Controller
 {
     public class JwtController : BaseController
     {
+        private const string TAB1 = "\t";
+        private const string TAB2 = "\t\t";
         public void Index()
         {
             string nameSpace = GetType().Assembly.GetName().Name;
@@ -53,25 +55,60 @@ namespace Jwt.Controller
             sm.RootPath = Config.Root;
             sm.Deserialize();
             string res = sm.AddState(state);
-            if (res != "Already Exist")
-            {
-                string templates = Config.Root + "Templates";
-                if (!Directory.Exists(templates))
-                {
-                    Directory.CreateDirectory(templates);
-                }
-                string component = Config.Root + "Templates\\Layouts";
-                if (!Directory.Exists(component))
-                {
-                    Directory.CreateDirectory(component);
-                }
-                if (!string.IsNullOrEmpty(state.TemplateUrl) && !System.IO.File.Exists(component + "\\" + state.TemplateUrl) && state.IsAbstract)
-                {
-                    System.IO.File.WriteAllText(component + "\\" + state.TemplateUrl, DateTime.Now.ToLongDateString());
-                }
-            }
+           
             sm.Serialize();
             return Json(new { msg = res });
+        }
+        private void AddLayout(string item)
+        {
+            string templates = Config.Root + "Templates";
+            createDirectory(templates);
+            string component = Config.Root + "Templates\\Layouts";
+            createDirectory(component);
+           
+           string PathString = Config.Root + string.Format("Templates\\Layouts\\{0}", item);
+           if (!System.IO.File.Exists(PathString))
+            {
+                System.IO.File.WriteAllText(PathString, string.Format("<h3>Layout Name : {0}</h3><div ui-view></div>", item));
+            }
+        }
+        private void AddTemplate(string item)
+        {
+            string templates = Config.Root + "Templates";
+            createDirectory(templates);
+            string Widgets = Config.Root + "Templates\\Components";
+            createDirectory(Widgets);
+            string PathString = Config.Root + string.Format("Templates\\Components\\{0}", item);
+            if (!System.IO.File.Exists(PathString))
+            {
+                System.IO.File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
+            }
+        }
+        public void AddEmptyController(string name)
+        {
+            string templates = Config.Root + "Scripts";
+            createDirectory(templates);
+            string controllers = Config.Root + "Scripts\\Controllers";
+            createDirectory(controllers);
+
+            name = name.Replace("Ctrl", "");
+           
+
+            string PathString = Config.Root + string.Format("Scripts\\Controllers\\{0}Ctrl.js", name);
+            if (!System.IO.File.Exists(PathString))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("class {0}Ctrl", name);
+                sb.AppendLine();
+                sb.Append("{");
+                sb.Append(Environment.NewLine + TAB1 + "constructor(){");
+                sb.AppendFormat(Environment.NewLine + TAB2 + "this.title='{0}';", name);
+                sb.Append(Environment.NewLine + TAB1 + "}");
+                sb.AppendLine();
+                sb.Append("}");
+                sb.AppendFormat(Environment.NewLine + "export default {0}Ctrl;", name);
+                System.IO.File.WriteAllText(PathString, sb.ToString());
+            }
         }
         public JsonResult Remove(State state)
         {
@@ -118,14 +155,17 @@ namespace Jwt.Controller
                     if (item.IsAbstract)
                     {
                         strBuilder.AppendFormat("stateprovider.state('{0}',{1}abstract:true, url:'{2}',templateUrl: root + '{3}'", GetStateName(item, sm.StateList), "{", item.Url, "Templates/Layouts/" + item.TemplateUrl);
+                        AddLayout(item.TemplateUrl);
                     }
                     else
                     {
                         var stateName=GetStateName(item, sm.StateList);
                         jwt.AppendFormat((isFirst?"":",")+"'{0}':['{1}','']", item.StateName, stateName);
                         strBuilder.AppendFormat("stateprovider.state('{0}',{1}url:'{2}'", stateName, "{", item.Url);
+
                         if (!string.IsNullOrEmpty(item.TemplateUrl))
                         {
+                            AddTemplate(item.TemplateUrl);
                             strBuilder.AppendFormat(",templateUrl:root + 'Templates/Components/{0}'", item.TemplateUrl);
                         }
                         isFirst = false;
@@ -133,7 +173,9 @@ namespace Jwt.Controller
 
                     if (!string.IsNullOrEmpty(item.StateController))
                     {
-                        strBuilder.AppendFormat(",controller:'{0}'", item.StateController);
+                        strBuilder.AppendFormat(",controller:'{0} as vm'", item.StateController);
+                        mControllers.Add(item.StateController);
+                        AddEmptyController(item.StateController);
                     }
 
                     if (item.StateViews != null && item.StateViews.Count > 0)
@@ -144,24 +186,23 @@ namespace Jwt.Controller
                         foreach (StateView item2 in item.StateViews)
                         {
                             if (!isFirst) { comma = ","; }
-                            strBuilder.AppendFormat("{0}'{1}':{2}controller:'{3}', templateUrl:root + 'Templates/Components/{4}'{5}", comma, item2.ViewName, "{", item2.ControllerName, item2.TemplateUrl, "}", comma);
+                            strBuilder.AppendFormat("{0}'{1}':{2}controller:'{3} as vm', templateUrl:root + 'Templates/Components/{4}'{5}", comma, item2.ViewName, "{", item2.ControllerName, item2.TemplateUrl, "}", comma);
                             isFirst = false;
+                            AddEmptyController(item2.ControllerName);
+                            AddTemplate(item2.TemplateUrl);
                         }
                         strBuilder.Append("}");
                     }
                     strBuilder.Append("});");
                 }
                 jwt.Append("};");
-                string router = Config.Root + "Scripts\\Router";
-                if (!Directory.Exists(router))
-                {
-                    Directory.CreateDirectory(router);
-                }
-                string fLine = "angular.module('app').config(['$stateProvider', '$urlRouterProvider', function (stateprovider, routeProvider) {" + Environment.NewLine;
+                string router = Config.Root + "Scripts\\";
+                createDirectory(router);
+                string fLine = "export default function config(stateprovider, routeProvider){" + Environment.NewLine;
                 fLine += "var root = '';";
-                string lLine = Environment.NewLine + "}]);" + Environment.NewLine;
-                System.IO.File.WriteAllText(router + "\\AppRouter.js", string.Format("{0}{1}{2}{3}", fLine, strBuilder, lLine, Environment.NewLine+jwt.ToString()));
-
+                string lLine = Environment.NewLine + "}" + Environment.NewLine;
+                System.IO.File.WriteAllText(router + "\\config.js", string.Format("{0}{1}{2}{3}", fLine, strBuilder, lLine, Environment.NewLine + "config.$inject=['$stateProvider', '$urlRouterProvider'];"));
+                GenAllControllersAndServices();
             }
             catch (Exception ex)
             {
@@ -170,6 +211,86 @@ namespace Jwt.Controller
             }
             return Json(new { msg = "Successfully generated." }, JsonRequestBehavior.AllowGet);
         }
+        private void createDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+        private List<string> mControllers = new List<string>();
+
+        private bool IsExist(string path)
+        {
+            return System.IO.File.Exists(path);
+        }
+        private void GenAllControllersAndServices()
+        {
+            var list = mControllers.Distinct();
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                if (IsExist(Config.Root + String.Format("Scripts\\Controllers\\{0}.js", item)))
+                {
+                    sb.AppendLine();
+                    sb.AppendFormat("import {0} from 'Scripts/Controllers/{0}.js';", item);
+                }
+            }
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.AppendFormat("var moduleName='{0}.controllers';","app");
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("angular.module(moduleName,[])");
+            foreach (var item in list)
+            {
+                if (IsExist(Config.Root + String.Format("Scripts\\Controllers\\{0}.js", item)))
+                {
+                    sb.AppendLine();
+                    sb.AppendFormat(".controller('{0}', {0})", item);
+                }
+            }
+            sb.Append(";");
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("export default moduleName;");
+            System.IO.File.WriteAllText(Config.Root + "Scripts\\app.controllers.js", sb.ToString());
+
+            sb.Clear();
+
+            foreach (var item in list)
+            {
+                var name = item.Replace("Ctrl", "Svc");
+                if (IsExist(Config.Root + String.Format("Scripts\\Services\\{0}.js", name)))
+                {
+                    sb.AppendLine();
+                    sb.AppendFormat("import {0} from 'Scripts/Services/{0}.js';", name);
+                }
+            }
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.AppendFormat("var moduleName='{0}.Services';", "app");
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("angular.module(moduleName,[])");
+            foreach (var item in list)
+            {
+                var name = item.Replace("Ctrl", "Svc");
+                if (IsExist(Config.Root + String.Format("Scripts\\Services\\{0}.js",name)))
+                {                    
+                    sb.AppendLine();
+                    sb.AppendFormat(".factory('{0}', {0}.{1}Factory)", name, name[0].ToString().ToLower() + name.Replace("Svc","").Substring(1));
+                }
+            }
+            sb.Append(";");
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("export default moduleName;");
+            System.IO.File.WriteAllText(Config.Root + "Scripts\\app.Services.js", sb.ToString());
+
+            sb.Clear();
+        }
+           
 
         private string GetStateName(State state, List<State> list, string res = "")
         {
@@ -297,52 +418,31 @@ namespace Jwt.Controller
             try
             {
                 string templates = Config.Root + "Templates";
-                if (!Directory.Exists(templates))
-                {
-                    Directory.CreateDirectory(templates);
-                }
+                createDirectory(templates);
                 string component = Config.Root + "Templates\\Components";
-                if (!Directory.Exists(component))
-                {
-                    Directory.CreateDirectory(component);
-                }
+                createDirectory(component);
 
                 //Generate scripts directories
-                string script = Config.ScriptProject + "\\Scripts";
-                if (!Directory.Exists(script))
-                {
-                    Directory.CreateDirectory(script);
-                }
-                script = Config.ScriptProject + "\\Scripts\\Controllers";
-                if (!Directory.Exists(script))
-                {
-                    Directory.CreateDirectory(script);
-                }
-                script = Config.ScriptProject + "\\Scripts\\Services";
-                if (!Directory.Exists(script))
-                {
-                    Directory.CreateDirectory(script);
-                }
+                string script = Config.Root + "\\Scripts";
+                createDirectory(script);
+                script = Config.Root + "\\Scripts\\Controllers";
+                createDirectory(script);
+                script = Config.Root + "\\Scripts\\Services";
+                createDirectory(script);
                 //services
                 script = Config.ServiceProject + "\\Interfaces";
-                if (!Directory.Exists(script))
-                {
-                    Directory.CreateDirectory(script);
-                }
+                createDirectory(script);
                 script = Config.ServiceProject + "\\Implementation";
-                if (!Directory.Exists(script))
-                {
-                    Directory.CreateDirectory(script);
-                }
+                createDirectory(script);
 
                 ICode code = new TemplateCode();
                 System.IO.File.WriteAllText(component + "\\" + entity + ".html", code.CodeGenerate(entity, props));
                 code = new JSController();
                 code.Config = this.Config;
-                System.IO.File.WriteAllText(Config.ScriptProject + "\\Scripts\\Controllers\\" + entity + "Ctrl.cs", code.CodeGenerate(entity, props));
+                System.IO.File.WriteAllText(Config.Root + "\\Scripts\\Controllers\\" + entity + "Ctrl.js", code.CodeGenerate(entity, props));
                 code = new JSService();
                 code.Config = this.Config;
-                System.IO.File.WriteAllText(Config.ScriptProject + "\\Scripts\\Services\\" + entity + "Service.cs", code.CodeGenerate(entity, props));
+                System.IO.File.WriteAllText(Config.Root + "\\Scripts\\Services\\" + entity + "Svc.js", code.CodeGenerate(entity, props));
                 code = new CSController();
                 System.IO.File.WriteAllText(Config.Root + "Controllers\\" + entity + "Controller.cs", code.CodeGenerate(entity, props));
                 code = new CSServiceInterface();

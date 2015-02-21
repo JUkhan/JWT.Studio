@@ -213,3 +213,5 @@ function root() {
     var path = window.location.pathname.toLowerCase().replace('/jwt', '');
     return path;
 }
+
+app.controller('ModalInstanceCtrl', ModalInstanceCtrl);

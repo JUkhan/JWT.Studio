@@ -14,13 +14,13 @@ namespace jwt.CodeGen
             _propList = props;
             SetGrid();
             _res.AppendLine();
-            _res.Append("<div class=\"container\" ng-hide=\"!isGrid\">");
+            _res.Append("<div class=\"container\" ng-hide=\"!vm.isGrid\">");
             _res.AppendLine();
             _res.Append(TAB1 + "<div class=\"col-sm-8 col-sm-offset-2\">");
             _res.AppendLine();
             _res.AppendFormat(TAB2 + "<div class=\"page-header\"><b>{0}</b></div>", entity);
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "<form name=\"{0}Form\" ng-submit=\"submitForm()\" novalidate>", entity);
+            _res.AppendFormat(TAB2 + "<form name=\"{0}Form\" ng-submit=\"vm.submitForm()\" novalidate>", entity);
             foreach (JPropertyInfo item in props)
             {
                 if (item.Checked)
@@ -35,7 +35,7 @@ namespace jwt.CodeGen
 
                         _res.AppendLine();
 
-                        _res.AppendFormat(TAB4 + "<select  name=\"{0}\" class=\"form-control\"  ng-model=\"model.{1}\" {2} {3} > <option value=\"\">--select--</option></select>",  item.PropertyName, item.PropertyName, getValidation(item), getSelectQuery(item));
+                        _res.AppendFormat(TAB4 + "<select  name=\"{0}\" class=\"form-control\"  ng-model=\"vm.model.{1}\" {2} {3} > <option value=\"\">--select--</option></select>", item.PropertyName, item.PropertyName, getValidation(item), getSelectQuery(item));
 
 
                         _res.AppendLine();
@@ -53,11 +53,11 @@ namespace jwt.CodeGen
                         _res.AppendLine();
                         if (item.UiType == "textarea")
                         {
-                            _res.AppendFormat(TAB4 + "<textarea  name=\"{0}\" class=\"form-control\"  ng-model=\"model.{1}\" {2}  ></textarea>", item.PropertyName, item.PropertyName, getValidation(item));
+                            _res.AppendFormat(TAB4 + "<textarea  name=\"{0}\" class=\"form-control\"  ng-model=\"vm.model.{1}\" {2}  ></textarea>", item.PropertyName, item.PropertyName, getValidation(item));
                         }
                         else
                         {
-                            _res.AppendFormat(TAB4 + "<input type=\"{0}\" name=\"{1}\" class=\"form-control\"  ng-model=\"model.{2}\" {3}  />", item.UiType, item.PropertyName, item.PropertyName, getValidation(item));
+                            _res.AppendFormat(TAB4 + "<input type=\"{0}\" name=\"{1}\" class=\"form-control\"  ng-model=\"vm.model.{2}\" {3}  />", item.UiType, item.PropertyName, item.PropertyName, getValidation(item));
                         }
                         //validation message
                         if (item.IsReq)
@@ -84,7 +84,7 @@ namespace jwt.CodeGen
             _res.AppendLine();
             _res.AppendFormat(TAB3 + "<button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"{0}Form.$invalid\">Submit</button>", entity);
             _res.AppendLine();
-            _res.Append(TAB3 + "<button type=\"button\" class=\"btn btn-default\" ng-click=\"isGrid=false\">Cancel</button>");
+            _res.Append(TAB3 + "<button type=\"button\" class=\"btn btn-default\" ng-click=\"vm.isGrid=false\">Cancel</button>");
             _res.AppendLine();
             _res.Append(TAB2 + "</form>");
             _res.AppendLine();
@@ -127,11 +127,11 @@ namespace jwt.CodeGen
                     }
                     if (isAbnrmal)
                     {
-                        res = string.Format(" ng-options=\"s.{0} as s.{1} for s in {2}List\"", id, val, temp.PropertyName.ToLower());
+                        res = string.Format(" ng-options=\"s.{0} as s.{1} for s in vm.{2}List\"", id, val, temp.PropertyName.ToLower());
                     }
                     else
                     {
-                        res = string.Format(" ng-options=\"s.{0} as s.{1} for s in {2}List\"", id, val, field);
+                        res = string.Format(" ng-options=\"s.{0} as s.{1} for s in vm.{2}List\"", id, val, field);
                     }
                 }
             }
@@ -148,9 +148,9 @@ namespace jwt.CodeGen
         }
         private void SetGrid()
         {
-            _res.Append("<div class=\"container\" ng-hide=\"isGrid\">");
+            _res.Append("<div class=\"container\" ng-hide=\"vm.isGrid\">");
             _res.AppendLine();
-            _res.Append(TAB1 + "<input type=\"button\" class=\"btn btn-link\" value=\"Create New\" ng-click=\"createNewItem()\" />");
+            _res.Append(TAB1 + "<input type=\"button\" class=\"btn btn-link\" value=\"Create New\" ng-click=\"vm.createNewItem()\" />");
             _res.AppendLine();
             _res.AppendFormat(TAB1 + "<div id=\"grid-{0}\" ui-grid=\"gridOpts\" ui-grid-paging external-scopes=\"gridAction\" class=\"grid\"></div>", Guid.NewGuid().ToString());
             _res.AppendLine();

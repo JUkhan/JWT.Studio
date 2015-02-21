@@ -45,7 +45,7 @@ namespace Jwtex
         public void Execute()
         {
             new CodeGen(this).Execute();
-           
+
         }
     }
 
@@ -94,25 +94,29 @@ namespace Jwtex
         private Dictionary<string, string> navList = new Dictionary<string, string>();
         public CodeGen(jwtApp app)
         {
-            
+
             this.App = app;
             this.Root = AppDomain.CurrentDomain.BaseDirectory;
         }
+        private List<String> mControllers = new List<string>();
         public jwtApp App { get; set; }
         public void Execute()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("angular.module('" + App.Name + "').config(['$stateProvider', '$urlRouterProvider', function (stateprovider, routeProvider) {");
+            sb.AppendLine();
+            sb.Append("export default function config(stateprovider, routeProvider){");
+            //sb.Append("angular.module('" + App.Name + "').config(['$stateProvider', '$urlRouterProvider', function (stateprovider, routeProvider) {");
             SetLayout(sb);
             SetNavigation(sb);
             sb.AppendLine();
-            sb.Append("}]);");
+            sb.Append("}");
             sb.AppendLine();
-            sb.Append("jwt._arr={");
-            GetNamArr(sb);
-            sb.Append("};");
+            sb.Append("config.$inject=['$stateProvider', '$urlRouterProvider'];");
+            //sb.Append("jwt._arr={");
+            //GetNamArr(sb);
+            //sb.Append("};");
             sb.AppendLine();
-            System.IO.File.WriteAllText(this.Root + "Scripts\\router.js", sb.ToString());
+            System.IO.File.WriteAllText(this.Root + "Scripts\\config.js", sb.ToString());
 
 
         }
@@ -127,9 +131,7 @@ namespace Jwtex
             }
         }
         private void SetLayout(StringBuilder sb)
-        {
-
-            sb.AppendLine();
+        {           
 
             foreach (Layout item in App.GetLayout().Values)
             {
@@ -140,7 +142,7 @@ namespace Jwtex
                 sb.AppendFormat(@"url:'/{0}'", item.LayoutName);
                 CreateDirectory(Root + "Templates");
                 CreateDirectory(Root + "Templates\\Layouts");
-               
+
                 PathString = Root + string.Format("Templates\\Layouts\\{0}.html", item.LayoutName);
                 if (!File.Exists(PathString))
                 {
@@ -151,6 +153,7 @@ namespace Jwtex
 
                 if (File.Exists(PathString))
                 {
+                    mControllers.Add(item.LayoutName + "Ctrl");
                     sb.AppendFormat(",controller:'{0}Ctrl'", item.LayoutName);
                 }
                 sb.Append("});");
@@ -166,6 +169,8 @@ namespace Jwtex
         }
         private void SetNavigation(StringBuilder sb)
         {
+            CreateDirectory(Root + "Scripts");
+            CreateDirectory(Root + "Scripts\\Controllers");
             CreateDirectory(Root + "Templates");
             CreateDirectory(Root + "Templates\\Widgets");
             sb.AppendLine();
@@ -176,7 +181,7 @@ namespace Jwtex
                 sb.AppendFormat("stateprovider.state('{0}'", GetStateName(item));
                 sb.Append(",{");
                 sb.AppendFormat(@"url:'/{0}{1}'", item.NavigationName, string.IsNullOrEmpty(item.ParamName) ? "" : "/:" + item.ParamName);
-               
+
                 var view = item.GetView();
                 if (view != null && item.GetView().Count > 0)
                 {
@@ -193,30 +198,31 @@ namespace Jwtex
                             PathString = Root + string.Format("Templates\\Widgets\\{0}.html", item2.WidgetName);
                             if (!File.Exists(PathString))
                             {
-                                File.WriteAllText(PathString, string.Format("<h3>widget Name : {0}</h3>", item2.WidgetName));
+                                File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
                             }
                             //sb.AppendFormat("templateUrl:'Templates/Widgets/{0}/{0}.html'", item2.WidgetName);
                             sb.AppendFormat("templateUrl:'Templates/Widgets/{0}.html'", item2.WidgetName);
+                            mControllers.Add(item2.WidgetName + "Ctrl");
                         }
                         PathString = Root + "Scripts\\Controllers\\" + item2.WidgetName + "Ctrl.js";
                         if (!File.Exists(PathString))
                         {
                             File.WriteAllText(PathString, getEmptyController(item2.WidgetName));
                         }
-                        sb.AppendFormat(",controller:'{0}Ctrl'", item2.WidgetName);
+                        sb.AppendFormat(",controller:'{0}Ctrl as vm'", item2.WidgetName);
                         sb.Append("}");
                         isFirst = false;
                     }
                     sb.Append("}");
                 }
-                if(!string.IsNullOrEmpty(item.WidgetName))
-                {                    
+                if (!string.IsNullOrEmpty(item.WidgetName))
+                {
                     //CreateDirectory(Root + "Templates\\Widgets\\" + item.WidgetName);
                     //PathString = Root + string.Format("Templates\\Widgets\\{0}\\{0}.html", item.WidgetName);
                     PathString = Root + string.Format("Templates\\Widgets\\{0}.html", item.WidgetName);
                     if (!File.Exists(PathString))
                     {
-                        File.WriteAllText(PathString, string.Format("<h3>widget Name : {0}</h3>", item.WidgetName));
+                        File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
                     }
                     //sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}/{0}.html'", item.WidgetName);
                     sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}.html'", item.WidgetName);
@@ -225,13 +231,56 @@ namespace Jwtex
                     {
                         File.WriteAllText(PathString, getEmptyController(item.WidgetName));
                     }
-                    sb.AppendFormat(",controller:'{0}Ctrl'", item.WidgetName);
+                    sb.AppendFormat(",controller:'{0}Ctrl as vm'", item.WidgetName);
+                    mControllers.Add(item.WidgetName + "Ctrl");
                 }
-                
+
                 sb.Append("});");
             }
+            GenAllControllers();
+        }
+
+        private void GenAllControllers()
+        {
+            var list = mControllers.Distinct();
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                sb.AppendLine();
+                sb.AppendFormat("import {0} from 'Scripts/Controllers/{0}.js';", item);
+            }
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.AppendFormat("var moduleName='{0}.controllers';", this.App.Name);
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("angular.module(moduleName,[])");
+            foreach (var item in list)
+            {
+                sb.AppendLine();
+                sb.AppendFormat(".controller('{0}', {0})", item);
+            }
+            sb.Append(";");
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.Append("export default moduleName;");
+            File.WriteAllText(Root+"Scripts\\app.controllers.js", sb.ToString());
         }
         public string getEmptyController(string name)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("class {0}Ctrl", name);
+            sb.AppendLine();
+            sb.Append("{");
+            sb.Append(Environment.NewLine + TAB1 + "constructor(){");
+            sb.AppendFormat(Environment.NewLine + TAB2 + "this.title='{0}';", name);
+            sb.Append(Environment.NewLine + TAB1 + "}");
+            sb.AppendLine();
+            sb.Append("}");
+            sb.AppendFormat(Environment.NewLine + "export default {0}Ctrl;", name);
+            return sb.ToString();
+        }
+        public string getEmptyController_es5(string name)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("namespace('app.controllers.{0}Ctrl', jwt.controllers.baseCtrl.extend(", name);
@@ -239,11 +288,10 @@ namespace Jwtex
             sb.Append(Environment.NewLine + TAB1 + "init: function (scope, sce) {");
             sb.Append(Environment.NewLine + TAB2 + "this._super(scope, sce);");
             sb.Append(Environment.NewLine + TAB1 + "}");
-            sb.Append(Environment.NewLine +  "}));");
+            sb.Append(Environment.NewLine + "}));");
             sb.AppendFormat(Environment.NewLine + "angular.module('app').controller('{0}Ctrl', ['$scope', '$sce', app.controllers.{0}Ctrl]);", name);
             return sb.ToString();
         }
-
         private string GetStateName(Navigation navigation)
         {
             List<string> nameList = new List<string>();

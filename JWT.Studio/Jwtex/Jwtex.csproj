@@ -35,7 +35,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -73,6 +76,7 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\traceur.js" />
     <EmbeddedResource Include="JwtResources\Utilities.js" />
     <EmbeddedResource Include="JwtResources\mainController_jwt.js" />
     <EmbeddedResource Include="JwtResources\index_jwt.html" />

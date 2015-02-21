@@ -17,9 +17,11 @@ namespace jwt.CodeGen
             AddConstructor(entity);
             AddRemoveMethod(entity);
             _res.AppendLine();
-            _res.Append(TAB1 + "}");
-            _res.AppendLine();
             _res.Append("}");
+            _res.AppendLine();
+            _res.AppendFormat("{0}Ctrl.$inject=['{0}Svc', '$scope', '$sce'];", entity);
+            _res.AppendLine();
+            _res.AppendFormat("export default {0}Ctrl;",entity);
             return _res.ToString();
         }
         private bool hasDatetime = false;
@@ -27,27 +29,27 @@ namespace jwt.CodeGen
         private StringBuilder dateResolved = new StringBuilder();
         private void AddConstructor(string entity)
         {
+            var xentity = entity.Length > 1 ? entity[0].ToString().ToLower() + entity.Substring(1) : entity;
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "private {0}Scope scope = null;", entity);
+            _res.AppendFormat(TAB1 + "constructor({0}Svc, scope, sce)", xentity);
+            _res.AppendLine();
+            _res.Append(TAB1 + "{");
 
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "private {0}Service service = null;", entity);
+            _res.AppendFormat(TAB2 + "super({0}Svc, scope, sce);", xentity);
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "public {0}Ctrl({0}Scope scope, {0}Service service, Sce sce):base(scope, service, sce)", entity);
-            _res.AppendLine();
-            _res.Append(TAB2 + "{");
 
             _res.AppendLine();
-            _res.Append(TAB3 + "this.scope=scope;");
+            _res.AppendFormat(TAB2 + "SVC.set(this, {0}Svc);",xentity);
             _res.AppendLine();
-            _res.Append(TAB3 + "this.service=service;");
+
             _res.Append(this.scopeInitialized.ToString());
 
             _res.AppendLine();
-            _res.Append(TAB3 + "scope.gridOpts.columnDefs = new List<ColumnDef>{");
+            _res.Append(TAB2 + "scope.gridOpts.columnDefs =[");
 
             _res.AppendLine();
-            _res.Append(TAB4 + "new ColumnDef{ name=\"AC\",  width=50, enableSorting=false, cellTemplate=\"<div style='text-align:center'><a ng-click=\\\"getExternalScopes().EditAction(row)\\\" href=\\\"javascript:;\\\"> <i class=\\\"fa fa-pencil\\\"></i>  </a><a ng-click=\\\"getExternalScopes().RemoveAction(row)\\\" href=\\\"javascript:;\\\"> <i class=\\\"fa fa-trash\\\"></i>  </a></div>\"}");
+            _res.Append(TAB3 + "{ name:\"AC\",  width:50, enableSorting:false, cellTemplate:\"<div style='text-align:center'><a ng-click=\\\"getExternalScopes().editAction(row)\\\" href=\\\"javascript:;\\\"> <i class=\\\"fa fa-pencil\\\"></i>  </a><a ng-click=\\\"getExternalScopes().removeAction(row)\\\" href=\\\"javascript:;\\\"> <i class=\\\"fa fa-trash\\\"></i>  </a></div>\"}");
             foreach (var item in _propList)
             {
                 if (item.Checked)
@@ -56,7 +58,7 @@ namespace jwt.CodeGen
                     if (item.UiType == "date")
                     {
                         _res.AppendLine();
-                        _res.Append(TAB4 + ",new ColumnDef{ name=\"" + item.PropertyName + "\" ,cellFilter=\"jwtDate | date:'yyyy-MM-dd'\"}");
+                        _res.Append(TAB4 + ",{ name:\"" + item.PropertyName + "\" ,cellFilter:\"jwtDate | date:'yyyy-MM-dd'\"}");
                     }
                     else if (item.UiType == "select")
                     {
@@ -71,19 +73,19 @@ namespace jwt.CodeGen
                             var x=temp.Details.FirstOrDefault(m=>m.Checked&&!(m.PropertyName.ToLower().Contains("id")));
                             if(x!=null){
                                  _res.AppendLine();
-                                _res.Append(TAB4 + ",new ColumnDef{ name=\""+temp.PropertyName+"\", field=\""+temp.PropertyName+"_"+x.PropertyName +"\"}");
+                                _res.Append(TAB4 + ",{ name:\""+temp.PropertyName+"\", field:\""+temp.PropertyName+"_"+x.PropertyName +"\"}");
                             }
                         }
                     }
                     else
                     {                        
                         _res.AppendLine();
-                        _res.Append(TAB4 + ",new ColumnDef{ name=\""+item.PropertyName+"\"}");
+                        _res.Append(TAB4 + ",{ name:\""+item.PropertyName+"\"}");
                     }
                 }
             }
             _res.AppendLine();
-            _res.Append(TAB3 + "};");
+            _res.Append(TAB3 + "];");
             _res.AppendLine();
             _res.Append(TAB3+ "scope.gridOpts.onRegisterApi = gridApi => { ");
             _res.AppendLine();
@@ -93,144 +95,69 @@ namespace jwt.CodeGen
                 _res.AppendLine();
                 _res.Append(TAB5 + "this.pageSize = pageSize;");
                 _res.AppendLine();
-                _res.Append(TAB5 + "this.GetPaged();");
+                _res.Append(TAB5 + "this.getPagedList();");
                 _res.AppendLine();
                 _res.Append(TAB4 + "});");
                 _res.AppendLine();
                 _res.Append(TAB3 + "};");
 
-           
             _res.AppendLine();
-            _res.Append(TAB3 + "this.GetPaged();");
+            _res.Append(TAB2 + "this.getPagedList();");
             _res.AppendLine();
-            _res.Append(TAB3 + "this.LoadRelationalData();");
+            _res.Append(TAB2 + "this.loadRelationalData();");
             _res.AppendLine();
-            _res.Append(TAB2 + "}");
+            _res.Append(TAB1 + "}");
 
         }
         public void AddRemoveMethod(string entity)
         {
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "protected override void OnAfterDeleted({0} item)", entity);
+            _res.Append(TAB1 + "onAfterDeleted(item)");
             _res.AppendLine();
-            _res.Append(TAB2 + "{");
+            _res.Append(TAB1 + "{");
 
             _res.AppendLine();
-            _res.AppendFormat(TAB3 + "this.scope.list.remove(x => x.{0}ID == item.{0}ID);", entity);
+            _res.AppendFormat(TAB2 + "this.getScope().list.remove(x => x.{0}ID == item.{0}ID);", entity);
             _res.AppendLine();
-            _res.Append(TAB2 + "}");
+            _res.Append(TAB1 + "}");
 
-            if (hasDatetime)
-            {
-               /* _res.AppendLine();
-                _res.AppendFormat(TAB2 + "protected override List<{0}> OnPreLoad(List<{0}> dataList)", entity);
-                _res.AppendLine();
-                _res.Append(TAB2 + "{");
-
-                _res.AppendLine();
-                _res.Append(TAB3 + "dataList.ForEach(item => {");
-                _res.AppendLine();
-                _res.Append(dateResolved.ToString());
-                _res.AppendLine();
-                _res.Append(TAB3 + " });");
-                _res.AppendLine();
-                _res.Append(TAB3 + "return dataList;");
-                _res.AppendLine();
-                _res.Append(TAB2 + "}");*/
-                /////////////////
-
-                _res.AppendLine();
-                _res.AppendFormat(TAB2 + "protected override {0} OnPreLoadForm({0} item)", entity);
-                _res.AppendLine();
-                _res.Append(TAB2 + "{");
-
-                _res.AppendLine();
-                _res.AppendFormat(dateResolved.ToString());
-                _res.AppendLine();
-                _res.AppendFormat(TAB3 + "return item;");
-                _res.AppendLine();
-                _res.Append(TAB2 + "}");
-            }
+            
 
             //loadRelationalData
             var list = _propList.Where(n => n.Details != null && n.Details.Count > 1);
             _res.AppendLine();
-            _res.Append(TAB2 + "protected void LoadRelationalData()");
+            _res.Append(TAB1 + "loadRelationalData()");
             _res.AppendLine();
-            _res.Append(TAB2 + "{");
+            _res.Append(TAB1 + "{");
 
             foreach (var item in list)
             {
                 _res.AppendLine();
-                _res.AppendFormat(TAB3 + "this.service.Get{0}List().then(p =>", item.PropertyName);
+                _res.AppendFormat(TAB2 + "SVC.get(this).get{0}List().success(data =>", item.PropertyName);
                 _res.AppendLine();
-                _res.Append(TAB3+"{");
+                _res.Append(TAB2+"{");
                 _res.AppendLine();
-                _res.AppendFormat(TAB4 + "this.scope.{0}List=p.Data;", item.PropertyName.ToLower());
+                _res.AppendFormat(TAB3 + "this.{0}List=data;", item.PropertyName.ToLower());
                 _res.AppendLine();
-                _res.Append(TAB3 + "});");
+                _res.Append(TAB2 + "});");
             }
 
-            _res.AppendLine();
-            _res.Append(TAB2 + "}");
-        }
-        private void AddUsing(string entity)
-        {
-            _res.AppendLine();
-            _res.AppendFormat(@"//opath={0}Scripts\Controllers\{1}Ctrl.js,ab=true", Config.Root,entity);
-            string folder = ConfigurationManager.AppSettings["EntityProject"];
-            if (!string.IsNullOrEmpty(folder))
-            {
-                _res.AppendLine();
-                _res.AppendFormat("using {0}.Entities;", folder);
-            }           
-            _res.AppendLine();
-            _res.Append("using CSharp.Wrapper.Angular;");
-            _res.AppendLine();
-            _res.Append("using CSharp.Wrapper.JS;");
-            _res.AppendLine();
-            _res.Append("using Scripts.Services;");
-            _res.AppendLine();
-            _res.Append("using System;");
-            _res.AppendLine();
-            _res.Append("using System.Collections.Generic;");
-            _res.AppendLine();
-            _res.Append("using System.Linq;");
-            _res.AppendLine();
-            _res.Append("namespace Scripts.Controllers");
-            _res.AppendLine();
-            _res.Append("{");
-            _res.AppendLine();
-            _res.AppendFormat(TAB1 + "public interface {0}Scope : IBaseScope<{0}>", entity);
-            _res.AppendLine();
-            _res.Append(TAB1 + "{");
-
-            foreach (var item in _propList)
-            {
-                if (item.Details!=null && item.Details.Count > 0)
-                {
-                    _res.AppendLine();
-                    _res.Append(TAB2 + string.Format("List<{0}> {1}", item.Xtype.Substring(item.Xtype.LastIndexOf('.') + 1), item.PropertyName.ToLower()) + "List{get;set;}");
-
-                    this.scopeInitialized.AppendLine();
-                    this.scopeInitialized.AppendFormat(TAB3 + "this.scope.{0}List=new List<{1}>();", item.PropertyName.ToLower(), item.Xtype.Substring(item.Xtype.LastIndexOf('.')+1));
-                }
-
-                if (item.UiType == "date")
-                {
-                    hasDatetime = true;
-                    dateResolved.AppendLine();
-                    dateResolved.AppendFormat(TAB3 + "item.{0}=this.ParseDateTime(item.{0});", item.PropertyName);
-                }
-            }
             _res.AppendLine();
             _res.Append(TAB1 + "}");
+
+           
+        }
+        private void AddUsing(string entity)
+        {         
             _res.AppendLine();
-            _res.AppendFormat(TAB1 + "[Angular(ModuleName = \"app\", ActionType = \"controller\", ActionName = \"{0}Ctrl\", DI = \"$scope,{0}Service,$sce\")]", entity);
+            _res.Append("import BaseCtrl from 'Scripts/Controllers/BaseCtrl.js';");
             _res.AppendLine();
-            _res.AppendFormat(TAB1 + "public class {0}Ctrl : BaseController<{0}>", entity);
+            _res.AppendFormat("const SVC=new WeakMap();");
             _res.AppendLine();
-            _res.AppendLine(TAB1 + "{");
+           
+            _res.AppendFormat("class {0}Ctrl extends BaseCtrl", entity);
+            _res.AppendLine();
+            _res.AppendLine("{");
 
         }
 
