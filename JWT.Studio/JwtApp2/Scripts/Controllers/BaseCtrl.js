@@ -67,20 +67,20 @@ class BaseCtrl{
             this.hideSpinner();
 
             this.isGrid = false;
-
-            this.getScope().list.push(this.onBeforeAddInList(res.DataObject));
+            
+          	this.getPagedList();
 
         }.bind(this));
 
 
     }
-    onBeforeAddInList(item) {
-        return item;
-    }
+   
     update(data) {
         this.showSpinner();
 
         SVC.get(this).update(data).success(function (res) {
+          
+          	this.getPagedList();
                
             this.message = res.Message;
 

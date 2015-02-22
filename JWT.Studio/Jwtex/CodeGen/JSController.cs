@@ -133,11 +133,11 @@ namespace jwt.CodeGen
             foreach (var item in list)
             {
                 _res.AppendLine();
-                _res.AppendFormat(TAB2 + "SVC.get(this).get{0}List().success(data =>", item.PropertyName);
+                _res.AppendFormat(TAB2 + "SVC.get(this).get{0}List().success(res =>", item.PropertyName);
                 _res.AppendLine();
                 _res.Append(TAB2+"{");
                 _res.AppendLine();
-                _res.AppendFormat(TAB3 + "this.{0}List=data;", item.PropertyName.ToLower());
+                _res.AppendFormat(TAB3 + "this.{0}List=res.Data;", item.PropertyName.ToLower());
                 _res.AppendLine();
                 _res.Append(TAB2 + "});");
             }

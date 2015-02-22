@@ -33,6 +33,10 @@ class StudentCtrl extends BaseCtrl
 	loadRelationalData()
 	{
 	}
+  	onPreLoadForm(item){
+      item.EnrollmentDate=this.parseDateTime(item.EnrollmentDate);
+      return item;
+    }
 }
 StudentCtrl.$inject=['StudentSvc', '$scope', '$sce'];
 export default StudentCtrl;

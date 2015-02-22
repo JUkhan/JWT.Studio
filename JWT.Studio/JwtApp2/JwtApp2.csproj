@@ -204,7 +204,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\app.controllers.js" />
+    <Content Include="Scripts\app.filters.js" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\app.directives.js" />
     <Content Include="Scripts\app.Services.js" />
     <Content Include="Scripts\appStarter.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -244,6 +246,8 @@
     <Content Include="Scripts\Controllers\CourseCtrl.js" />
     <Content Include="Scripts\Controllers\nav1Ctrl.js" />
     <Content Include="Scripts\Controllers\nav2Ctrl.js" />
+    <Content Include="Scripts\Directives\JwtFilter.js" />
+    <Content Include="Scripts\Filters\JwtDate.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

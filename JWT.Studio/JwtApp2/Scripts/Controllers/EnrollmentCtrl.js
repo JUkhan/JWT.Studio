@@ -25,7 +25,6 @@ class EnrollmentCtrl extends BaseCtrl
 			};
 		this.getPagedList();
 		this.loadRelationalData();
-      	this.courseList=[];
 	}
 	onAfterDeleted(item)
 	{
@@ -33,13 +32,13 @@ class EnrollmentCtrl extends BaseCtrl
 	}
 	loadRelationalData()
 	{
-		SVC.get(this).getCourseList().success(data =>
+		SVC.get(this).getCourseList().success(res =>
 		{
-			this.courseList=data; 
+			this.courseList=res.Data;
 		});
-		SVC.get(this).getStudentList().success(data =>
+		SVC.get(this).getStudentList().success(res =>
 		{
-			this.studentList=data;
+			this.studentList=res.Data;
 		});
 	}
 }
