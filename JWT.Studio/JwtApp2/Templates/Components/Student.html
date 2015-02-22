@@ -8,7 +8,7 @@
 		<form name="StudentForm" ng-submit="vm.submitForm()" novalidate>
 			 <div class="form-group" ng-class="{ 'has-error' : StudentForm.LastName.$invalid && !StudentForm.LastName.$pristine }">
 				<label>LastName</label>
-				<input type="text" name="LastName" class="form-control"  ng-model="vm.model.LastName" required  />
+				<input type="text" name="LastName" jwt-filter class="form-control"  ng-model="vm.model.LastName" required  />
 				<p ng-show="StudentForm.LastName.$invalid && !StudentForm.LastName.$pristine" class="help-block">Last Name is required</p>
 			</div>
 			 <div class="form-group" ng-class="{ 'has-error' : StudentForm.FirstName.$invalid && !StudentForm.FirstName.$pristine }">

@@ -2,6 +2,7 @@
 const ROOTSCOPE=new WeakMap();
 class JwtFilter{
     constructor(rootScope){
+        console.log('gwt-filter initialized succ...');
         this.restrict='A';
         ROOTSCOPE.set(this,rootScope);
     }
@@ -19,10 +20,10 @@ class JwtFilter{
         });
     }
     static builder(rootScope){
-        JwtFilter.instance=new JwtNotifier(rootScope);
+        JwtFilter.instance=new JwtFilter(rootScope);
         return  JwtFilter.instance;
     }
 
 }
-JwtFilter.builder.$instance=['$rootScope'];
+JwtFilter.builder.$inject =['$rootScope'];
 export default JwtFilter;

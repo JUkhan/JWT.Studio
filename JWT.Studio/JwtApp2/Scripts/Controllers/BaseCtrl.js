@@ -6,7 +6,7 @@ class BaseCtrl{
     constructor(service, scope, sce){            
         SVC.set(this, service);
         SCE.set(this, sce);
-      	SCOPE.set(this, scope);
+        SCOPE.set(this, scope);
         this.isNewItem= false;
         this.message = null;
         scope.list = null;
@@ -36,7 +36,10 @@ class BaseCtrl{
             toastr.options.fadeIn = 250;
             toastr.options.positionClass = "toast-top-center";
         }
-       
+        scope.$on('FilterValueChanged', function(event, obj){this.filterValueChanged(obj);}.bind(this));
+    }
+    filterValueChanged(obj){
+      
     }
     createNewItem(){
         this.model = {};
@@ -53,7 +56,7 @@ class BaseCtrl{
         }
     }
     getScope(){
-      return SCOPE.get(this);
+        return SCOPE.get(this);
     }
     insert(data) {
         this.showSpinner();
@@ -68,7 +71,7 @@ class BaseCtrl{
 
             this.isGrid = false;
             
-          	this.getPagedList();
+            this.getPagedList();
 
         }.bind(this));
 
@@ -80,7 +83,7 @@ class BaseCtrl{
 
         SVC.get(this).update(data).success(function (res) {
           
-          	this.getPagedList();
+            this.getPagedList();
                
             this.message = res.Message;
 
@@ -137,7 +140,7 @@ class BaseCtrl{
             this.message = res.Message;
 
             if (res.DataList) {
-                 SCOPE.get(this).list = this.onPreLoadGrid(res.DataList);
+                SCOPE.get(this).list = this.onPreLoadGrid(res.DataList);
             }
             this.showMessage(res.IsSuccess, res.Message);
 
@@ -210,6 +213,35 @@ class BaseCtrl{
     }
     hideSpinner() {
         jQuery(".jwt-spinner").hide();
+    }
+    initFilter() {
+        var scope=this;
+        if (window.sessionStorage["jwtFilter"]) {
+            var ob = angular.fromJson(window.sessionStorage["jwtFilter"]);
+            if (angular.isObject(ob)) {
+                for (var prop in ob) {
+                    if (scope.hasOwnProperty(prop)) {
+                        scope[prop] = ob[prop];
+                    }
+                }
+            }
+        }
+    }
+    async(g){
+        let it=g(),ret;
+        (function iterate(val){
+            ret=it.next(val);
+            if(!ret.done){             
+                if(ret.value){
+                    if('success' in ret.value){
+                        ret.value.success(iterate);
+                    }
+                    else{
+                        iterate(ret.value);
+                    }
+                }
+            }
+        })();
     }
 }
 export default BaseCtrl;
