@@ -23,13 +23,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="active"><a ui-sref="nav1">nav1</a></li>
+                    <li><a ui-sref="nav2">nav2</a></li>
+                    <li><a ui-sref="layout1.nav3">nav3</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+    
     <div class="container body-content">
       <div ui-view>@RenderBody()</div> 
       

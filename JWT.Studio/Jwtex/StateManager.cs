@@ -1,4 +1,5 @@
 ﻿using Jwt.Controller;
+using Jwtex;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,57 +63,27 @@ namespace jwt.internals
 
         }
     }
-    public class StateManager
+
+    public class jwtAppManager
     {
+        private jwtApp app = null;
+        public jwtAppManager()
+        {
+
+        }
+        public jwtAppManager(string path)
+        {
+            RootPath = path;
+        }
         public string RootPath { get; set; }
-        public List<State> StateList { get; set; }
-
-        public string AddState(State state)
-        {
-            state.Id = Guid.NewGuid().ToString();
-            State temp = StateList.FirstOrDefault(x => x.StateName == state.StateName);
-            if (temp == null)
-            {
-                StateList.Add(state);
-
-                return state.Id;
-            }
-            return "Already Exist";
-        }
-        public string UpdateState(State state)
-        {
-            State temp = StateList.FirstOrDefault(x => x.Id == state.Id);
-            if (temp != null)
-            {
-                temp.StateName = state.StateName;
-                temp.IsAbstract = state.IsAbstract;
-                temp.Url = state.Url;
-                temp.StateController = state.StateController;
-                temp.TemplateUrl = state.TemplateUrl;
-                temp.StateViews = state.StateViews;
-                temp.Parent = state.Parent;
-                return "State updated successfully";
-            }
-            return "Not Found";
-        }
-        public string RemoveState(State state)
-        {
-            State temp = StateList.FirstOrDefault(x => x.Id == state.Id);
-            if (temp != null)
-            {
-                StateList.Remove(temp);
-                return "State removed successfully";
-            }
-            return "Not Found";
-        }
-        public void Serialize()
+        private void Serialize()
         {
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<State>));
-                using (TextWriter writer = new StreamWriter(this.RootPath + @"State.config"))
+                XmlSerializer serializer = new XmlSerializer(typeof(jwtApp));
+                using (TextWriter writer = new StreamWriter(this.RootPath + @"jwtApp.config"))
                 {
-                    serializer.Serialize(writer, StateList);
+                    serializer.Serialize(writer, this.app);
                 }
             }
             catch
@@ -120,44 +91,214 @@ namespace jwt.internals
 
             }
         }
-        public void Deserialize()
+        private void Deserialize()
         {
             try
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<State>));
-                TextReader reader = new StreamReader(this.RootPath + @"State.config");
+                XmlSerializer deserializer = new XmlSerializer(typeof(jwtApp));
+                TextReader reader = new StreamReader(this.RootPath + @"jwtApp.config");
                 object obj = deserializer.Deserialize(reader);
-                StateList = (List<State>)obj;
+                app = (jwtApp)obj;
                 reader.Close();
             }
             catch
             {
-                this.StateList = new List<State>();
+                this.app = new jwtApp();
+                this.app.UILayouts = new List<Layout>();
+                this.app.UINavigations = new List<Navigation>();
             }
 
         }
 
-    }
-
-    public class State
-    {
-        public State()
+        #region Layouts
+        public string AddLayout(Layout layout)
         {
-            StateViews = new List<StateView>();
+            try
+            {
+                Deserialize();
+                var temp = app.UILayouts.Find(u => u.LayoutName == layout.LayoutName);
+                if (temp != null)
+                {
+                    return string.Format("'{0}' already exist.");
+                }
+                layout._id = Guid.NewGuid().ToString();
+                app.UILayouts.Add(layout);
+                Serialize();
+
+                return layout._id;
+            }
+            catch (Exception ex)
+            {
+
+                return ex.ToString();
+            }
         }
-        public string Id { get; set; }
-        public string StateName { get; set; }
-        public string Url { get; set; }
-        public string StateController { get; set; }
-        public string TemplateUrl { get; set; }
-        public bool IsAbstract { get; set; }
-        public string Parent { get; set; }
-        public List<StateView> StateViews { get; set; }
+        public string UpdateLayout(Layout layout)
+        {
+            try
+            {
+                Deserialize();
+                var temp = app.UILayouts.Find(u => u._id == layout._id);
+                if (temp == null)
+                {
+                    return string.Format("'{0}' not exist.");
+                }
+                temp.LayoutName = layout.LayoutName;
+                temp.Extend = layout.Extend;
+                Serialize();
+
+                return "Successfully Updted.";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.ToString();
+            }
+        }
+        public string RemoveLayout(Layout layout)
+        {
+            try
+            {
+                Deserialize();
+                var temp = app.UILayouts.Find(u => u._id == layout._id);
+                if (temp == null)
+                {
+                    return string.Format("'{0}' not exist.");
+                }
+                app.UILayouts.Remove(temp);
+                Serialize();
+
+                return "Successfully Removed.";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.ToString();
+            }
+        }
+        public List<Layout> GetLayoutList()
+        {
+            try
+            {
+                Deserialize();
+                return app.UILayouts ?? new List<Layout>();
+            }
+            catch (Exception ex)
+            {
+
+                return new List<Layout>();
+            }
+        } 
+        #endregion
+
+        #region Navigations
+        public string AddNavigation(Navigation navigation)
+        {
+            try
+            {
+                Deserialize();
+                var temp = app.UINavigations.Find(u => u.NavigationName == navigation.NavigationName);
+                if (temp != null)
+                {
+                    return string.Format("'{0}' already exist.");
+                }
+                navigation._id = Guid.NewGuid().ToString();
+                app.UINavigations.Add(navigation);
+                Serialize();
+
+                return navigation._id;
+            }
+            catch (Exception ex)
+            {
+
+                return ex.ToString();
+            }
+        }
+        public string UpdateNavigation(Navigation navigation)
+        {
+            try
+            {
+                Deserialize();
+                var temp = app.UINavigations.Find(u => u._id == navigation._id);
+                if (temp == null)
+                {
+                    return string.Format("'{0}' not exist.");
+                }
+                temp.NavigationName = navigation.NavigationName;
+                temp.WidgetName = navigation.WidgetName;
+                temp.ParamName = navigation.ParamName;
+                temp.UIViews = navigation.UIViews;
+                Serialize();
+
+                return "Successfully Updted.";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.ToString();
+            }
+        }
+        public string RemoveNavigation(Navigation navigation)
+        {
+            try
+            {
+                Deserialize();
+                var temp = app.UINavigations.Find(u => u._id == navigation._id);
+                if (temp == null)
+                {
+                    return string.Format("'{0}' not exist.");
+                }
+                app.UINavigations.Remove(temp);
+                Serialize();
+
+                return "Successfully Removed.";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.ToString();
+            }
+        }
+        public List<Navigation> GetNavigationList()
+        {
+            try
+            {
+                Deserialize();
+                return app.UINavigations ?? new List<Navigation>();
+            }
+            catch (Exception ex)
+            {
+
+                return new List<Navigation>();
+            }
+        }
+        #endregion
+
+        public void GenerateConfig()
+        {
+            try
+            {
+                Deserialize();
+                Jwtex.CodeGen codeGen = new Jwtex.CodeGen();
+                codeGen.App = this.app;
+                codeGen.Root = RootPath;
+                foreach (var item in app.UILayouts)
+                {
+                    app.Layout = item;
+                }
+                foreach (var item in app.UINavigations)
+                {
+                    app.Navigation = item;
+                }
+                codeGen.Execute();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+        }
     }
-    public class StateView
-    {
-        public string TemplateUrl { get; set; }
-        public string ControllerName { get; set; }
-        public string ViewName { get; set; }
-    }
+   
 }

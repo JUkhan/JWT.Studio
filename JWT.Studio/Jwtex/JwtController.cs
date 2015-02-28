@@ -12,9 +12,7 @@ using System.Text.RegularExpressions;
 namespace Jwt.Controller
 {
     public class JwtController : BaseController
-    {
-        private const string TAB1 = "\t";
-        private const string TAB2 = "\t\t";
+    {       
         public void Index()
         {
             string nameSpace = GetType().Assembly.GetName().Name;
@@ -49,168 +47,59 @@ namespace Jwt.Controller
 
         }
 
-        public JsonResult AddState(State state)
+        #region Layouts
+        public JsonResult AddLayout(Jwtex.Layout layout)
         {
-            StateManager sm = new StateManager();
-            sm.RootPath = Config.Root;
-            sm.Deserialize();
-            string res = sm.AddState(state);
-           
-            sm.Serialize();
-            return Json(new { msg = res });
+            return Json(new { msg = new jwtAppManager(Config.Root).AddLayout(layout) });
         }
-        private void AddLayout(string item)
+        public JsonResult UpdateLayout(Jwtex.Layout layout)
         {
-            string templates = Config.Root + "Templates";
-            createDirectory(templates);
-            string component = Config.Root + "Templates\\Layouts";
-            createDirectory(component);
-           
-           string PathString = Config.Root + string.Format("Templates\\Layouts\\{0}", item);
-           if (!System.IO.File.Exists(PathString))
-            {
-                System.IO.File.WriteAllText(PathString, string.Format("<h3>Layout Name : {0}</h3><div ui-view></div>", item));
-            }
+            return Json(new { msg = new jwtAppManager(Config.Root).UpdateLayout(layout) });
         }
-        private void AddTemplate(string item)
+        public JsonResult RemoveLayout(Jwtex.Layout layout)
         {
-            string templates = Config.Root + "Templates";
-            createDirectory(templates);
-            string Widgets = Config.Root + "Templates\\Components";
-            createDirectory(Widgets);
-            string PathString = Config.Root + string.Format("Templates\\Components\\{0}", item);
-            if (!System.IO.File.Exists(PathString))
-            {
-                System.IO.File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
-            }
+            return Json(new { msg = new jwtAppManager(Config.Root).RemoveLayout(layout) });
         }
-        public void AddEmptyController(string name)
+        public JsonResult GetLayoutList()
         {
-            string templates = Config.Root + "Scripts";
-            createDirectory(templates);
-            string controllers = Config.Root + "Scripts\\Controllers";
-            createDirectory(controllers);
+            return Json(new jwtAppManager(Config.Root).GetLayoutList() , JsonRequestBehavior.AllowGet);
+        } 
+        #endregion
 
-            name = name.Replace("Ctrl", "");
-           
-
-            string PathString = Config.Root + string.Format("Scripts\\Controllers\\{0}Ctrl.js", name);
-            if (!System.IO.File.Exists(PathString))
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("class {0}Ctrl", name);
-                sb.AppendLine();
-                sb.Append("{");
-                sb.Append(Environment.NewLine + TAB1 + "constructor(){");
-                sb.AppendFormat(Environment.NewLine + TAB2 + "this.title='{0}';", name);
-                sb.Append(Environment.NewLine + TAB1 + "}");
-                sb.AppendLine();
-                sb.Append("}");
-                sb.AppendFormat(Environment.NewLine + "export default {0}Ctrl;", name);
-                System.IO.File.WriteAllText(PathString, sb.ToString());
-            }
-        }
-        public JsonResult Remove(State state)
+        #region Navigtions
+        public JsonResult AddNavigation(Jwtex.Navigation navigation)
         {
-            StateManager sm = new StateManager();
-            sm.RootPath = Config.Root;
-            sm.Deserialize();
-            string res = sm.RemoveState(state);
-            sm.Serialize();
-            return Json(new { msg = res });
+            return Json(new { msg = new jwtAppManager(Config.Root).AddNavigation(navigation) });
         }
-        public JsonResult Update(State state)
+        public JsonResult UpdateNavigation(Jwtex.Navigation navigation)
         {
-            StateManager sm = new StateManager();
-            sm.RootPath = Config.Root;
-            sm.Deserialize();
-            string res = sm.UpdateState(state);
-            sm.Serialize();
-            return Json(new { msg = res });
+            return Json(new { msg = new jwtAppManager(Config.Root).UpdateNavigation(navigation) });
         }
-        public JsonResult GetAllState()
+        public JsonResult RemoveNavigation(Jwtex.Navigation navigation)
         {
-            StateManager sm = new StateManager();
-            sm.RootPath = Config.Root;
-            sm.Deserialize();
-            if (sm.StateList == null)
-            {
-                return Json(new { layout = new List<State>(), state = new List<State>() }, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new { layout = sm.StateList.Where(x => x.IsAbstract) ?? new List<State>(), state = sm.StateList.Where(x => !x.IsAbstract) ?? new List<State>() }, JsonRequestBehavior.AllowGet);
+            return Json(new { msg = new jwtAppManager(Config.Root).RemoveNavigation(navigation) });
         }
+        public JsonResult GetNavigationList()
+        {
+            return Json(new jwtAppManager(Config.Root).GetNavigationList(), JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        
         public JsonResult GenerateConfig()
         {
             try
             {
-                StateManager sm = new StateManager();
-                sm.RootPath = Config.Root;
-                sm.Deserialize();
-                StringBuilder strBuilder = new StringBuilder();
-                StringBuilder jwt = new StringBuilder();
-                jwt.Append("jwt._arr={"); bool isFirst = true;
-                foreach (var item in sm.StateList)
-                {
-                    strBuilder.AppendLine();
-                    if (item.IsAbstract)
-                    {
-                        strBuilder.AppendFormat("stateprovider.state('{0}',{1}abstract:true, url:'{2}',templateUrl: root + '{3}'", GetStateName(item, sm.StateList), "{", item.Url, "Templates/Layouts/" + item.TemplateUrl);
-                        AddLayout(item.TemplateUrl);
-                    }
-                    else
-                    {
-                        var stateName=GetStateName(item, sm.StateList);
-                        jwt.AppendFormat((isFirst?"":",")+"'{0}':['{1}','']", item.StateName, stateName);
-                        strBuilder.AppendFormat("stateprovider.state('{0}',{1}url:'{2}'", stateName, "{", item.Url);
+                new jwtAppManager(Config.Root).GenerateConfig();
 
-                        if (!string.IsNullOrEmpty(item.TemplateUrl))
-                        {
-                            AddTemplate(item.TemplateUrl);
-                            strBuilder.AppendFormat(",templateUrl:root + 'Templates/Components/{0}'", item.TemplateUrl);
-                        }
-                        isFirst = false;
-                    }                   
-
-                    if (!string.IsNullOrEmpty(item.StateController))
-                    {
-                        strBuilder.AppendFormat(",controller:'{0} as vm'", item.StateController);
-                        mControllers.Add(item.StateController);
-                        AddEmptyController(item.StateController);
-                    }
-
-                    if (item.StateViews != null && item.StateViews.Count > 0)
-                    {
-                        isFirst = true;
-                        string comma = "";
-                        strBuilder.Append(",views:{");
-                        foreach (StateView item2 in item.StateViews)
-                        {
-                            if (!isFirst) { comma = ","; }
-                            strBuilder.AppendFormat("{0}'{1}':{2}controller:'{3} as vm', templateUrl:root + 'Templates/Components/{4}'{5}", comma, item2.ViewName, "{", item2.ControllerName, item2.TemplateUrl, "}", comma);
-                            isFirst = false;
-                            AddEmptyController(item2.ControllerName);
-                            AddTemplate(item2.TemplateUrl);
-                        }
-                        strBuilder.Append("}");
-                    }
-                    strBuilder.Append("});");
-                }
-                jwt.Append("};");
-                string router = Config.Root + "Scripts\\";
-                createDirectory(router);
-                string fLine = "export default function config(stateprovider, routeProvider){" + Environment.NewLine;
-                fLine += "var root = '';";
-                string lLine = Environment.NewLine + "}" + Environment.NewLine;
-                System.IO.File.WriteAllText(router + "\\config.js", string.Format("{0}{1}{2}{3}", fLine, strBuilder, lLine, Environment.NewLine + "config.$inject=['$stateProvider', '$urlRouterProvider'];"));
-                GenAllControllersAndServices();
             }
-            catch (Exception ex)
+             catch (Exception ex)
             {
 
                 return Json(new { msg = ex.Message }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { msg = "Successfully generated." }, JsonRequestBehavior.AllowGet);
         }
+       
         private void createDirectory(string path)
         {
             if (!Directory.Exists(path))
@@ -218,98 +107,13 @@ namespace Jwt.Controller
                 Directory.CreateDirectory(path);
             }
         }
-        private List<string> mControllers = new List<string>();
+       
 
         private bool IsExist(string path)
         {
             return System.IO.File.Exists(path);
         }
-        private void GenAllControllersAndServices()
-        {
-            var list = mControllers.Distinct();
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in list)
-            {
-                if (IsExist(Config.Root + String.Format("Scripts\\Controllers\\{0}.js", item)))
-                {
-                    sb.AppendLine();
-                    sb.AppendFormat("import {0} from 'Scripts/Controllers/{0}.js';", item);
-                }
-            }
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.AppendFormat("var moduleName='{0}.controllers';","app");
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.Append("angular.module(moduleName,[])");
-            foreach (var item in list)
-            {
-                if (IsExist(Config.Root + String.Format("Scripts\\Controllers\\{0}.js", item)))
-                {
-                    sb.AppendLine();
-                    sb.AppendFormat(".controller('{0}', {0})", item);
-                }
-            }
-            sb.Append(";");
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.Append("export default moduleName;");
-            System.IO.File.WriteAllText(Config.Root + "Scripts\\app.controllers.js", sb.ToString());
-
-            sb.Clear();
-
-            foreach (var item in list)
-            {
-                var name = item.Replace("Ctrl", "Svc");
-                if (IsExist(Config.Root + String.Format("Scripts\\Services\\{0}.js", name)))
-                {
-                    sb.AppendLine();
-                    sb.AppendFormat("import {0} from 'Scripts/Services/{0}.js';", name);
-                }
-            }
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.AppendFormat("var moduleName='{0}.Services';", "app");
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.Append("angular.module(moduleName,[])");
-            foreach (var item in list)
-            {
-                var name = item.Replace("Ctrl", "Svc");
-                if (IsExist(Config.Root + String.Format("Scripts\\Services\\{0}.js",name)))
-                {                    
-                    sb.AppendLine();
-                    sb.AppendFormat(".factory('{0}', {0}.{1}Factory)", name, name[0].ToString().ToLower() + name.Replace("Svc","").Substring(1));
-                }
-            }
-            sb.Append(";");
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.Append("export default moduleName;");
-            System.IO.File.WriteAllText(Config.Root + "Scripts\\app.Services.js", sb.ToString());
-
-            sb.Clear();
-        }
-           
-
-        private string GetStateName(State state, List<State> list, string res = "")
-        {
-            if (string.IsNullOrEmpty(res))
-            {
-                res = state.StateName;
-            }
-            else
-            {
-                res = state.StateName + "." + res;
-            }
-
-            if (!string.IsNullOrEmpty(state.Parent) && state.Parent != "--Select--")
-            {
-                res = GetStateName(list.Find(x => x.StateName == state.Parent), list, res);
-            }
-            return res;
-        }
-
+      
         #region Code Gen
 
         public JsonResult GetTemplateList()
@@ -411,15 +215,13 @@ namespace Jwt.Controller
 
         }
 
-        
-
         public JsonResult CodeGenerate(string entity, List<JPropertyInfo> props)
         {
             try
             {
                 string templates = Config.Root + "Templates";
                 createDirectory(templates);
-                string component = Config.Root + "Templates\\Components";
+                string component = Config.Root + "Templates\\Widgets";
                 createDirectory(component);
 
                 //Generate scripts directories
@@ -498,85 +300,58 @@ namespace Jwt.Controller
         private List<string> GetTemplateList(string path)
         {
             List<string> list = null;
-            if (Directory.Exists(path + "Templates//Components"))
+            if (Directory.Exists(path + "Templates//Widgets"))
             {
                 list = new List<string>();
-                foreach (var item in Directory.GetFiles(path + "Templates//Components"))
+                foreach (var item in Directory.GetFiles(path + "Templates//Widgets"))
                 {
                     FileInfo fileInfo = new FileInfo(item);
-                    list.Add(fileInfo.Name);
+                    list.Add(fileInfo.Name.Replace(".html", ""));
                 }
             }
             return list;
         }
         #endregion
 
-        public JsonResult GetViewList(string stateName, string stateName2)
+        public JsonResult GetViewList(string layoutName, string navName)
         {
             JSONData res = new JSONData();
-            res.success = true;
-            StateManager sm = new StateManager();
-            sm.RootPath = Config.Root;
-            sm.Deserialize();
-            State temp = sm.StateList.FirstOrDefault(x => x.StateName ==stateName);
-            if (temp == null)
+            try
             {
-                res.success = false;
-            }
-            else
-            {
-                try
+                string input = System.IO.File.ReadAllText(Config.Root + "Templates\\Layouts\\" + layoutName+".html");
+                var matches = Regex.Matches(input, "ui-view=\"([a-zA-Z0-9]+)\"", RegexOptions.IgnoreCase);
+                List<Jwtex.View> views = new List<Jwtex.View>();
+                foreach (Match item in matches)
                 {
-                    string input = System.IO.File.ReadAllText(Config.Root + "Templates\\Layouts\\" + temp.TemplateUrl);
-                    var matches = Regex.Matches(input, "ui-view=\"([a-zA-Z0-9]+)\"", RegexOptions.IgnoreCase);
-                    List<string> views = new List<string>();
-                    foreach (Match item in matches)
-                    {                      
-                        views.Add(item.Groups[1].Value);
-                    }
-                    State temp2 = sm.StateList.FirstOrDefault(x => x.StateName == stateName2);
-                    if (temp2 == null)
+                    views.Add(new Jwtex.View { ViewName = item.Groups[1].Value, WidgetName="" });
+                }
+                var nav = new jwtAppManager(Config.Root).GetNavigationList().FirstOrDefault(n => n.NavigationName == navName);
+                if (nav != null)
+                {
+                    if (nav.UIViews != null && nav.UIViews.Count > 0)
                     {
-                        temp2 = new State();
-                        foreach (string item2 in views)
-                        {                            
-                           temp2.StateViews.Add(new StateView { ViewName = item2, ControllerName = "", TemplateUrl = "" });
-                           
-                        }
-                        res.data = temp2.StateViews;
-                    }
-                    else if (temp2.StateViews.Count == 0)
-                    {
-                        foreach (var item in views)
+                        foreach (var item in nav.UIViews)
                         {
-                            temp2.StateViews.Add(new StateView { ViewName = item, ControllerName = "", TemplateUrl = "" });
-                        }
-                        res.data = temp2.StateViews;
-                    }
-                    else
-                    {
-                        
-                        foreach (string item2 in views)
-                        {
-                            var ld = temp2.StateViews.FirstOrDefault(v => v.ViewName == item2);
-                            if (ld == null)
+                            var temp = views.FirstOrDefault(v => v.ViewName == item.ViewName);
+                            if (temp != null)
                             {
-                                temp2.StateViews.Add(new StateView { ViewName = item2, ControllerName = "", TemplateUrl = "" });
+                                temp.WidgetName = item.WidgetName;
                             }
                         }
-                        res.data = temp2.StateViews;
                     }
                 }
-                catch (Exception ex)
-                {
-                    res.success = false;
-                }
+                res.data = views;
+                res.success = true;
             }
-           
-           
-            
+            catch (Exception ex)
+            {
+
+                res.message = ex.ToString();
+            }
+
             return Json(res, JsonRequestBehavior.AllowGet);
         }
+       
     }
     public class JSONData
     {

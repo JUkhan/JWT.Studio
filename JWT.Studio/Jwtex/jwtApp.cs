@@ -13,11 +13,9 @@ namespace Jwtex
 
         public jwtApp()
         {
-
             this.Name = "app";
         }
-        private Dictionary<string, Layout> _layouts = new Dictionary<string, Layout>();
-
+        private Dictionary<string, Layout> _layouts = new Dictionary<string, Layout>();        
         public Dictionary<string, Layout> GetLayout() { return _layouts; }
         public Dictionary<string, Navigation> GetNavigation() { return _navigations; }
         public Layout Layout
@@ -30,7 +28,8 @@ namespace Jwtex
                 }
             }
         }
-
+        public List<Layout> UILayouts { get; set; }
+        public List<Navigation> UINavigations { get; set; }
         private Dictionary<string, Navigation> _navigations = new Dictionary<string, Navigation>();
         public Navigation Navigation
         {
@@ -54,15 +53,17 @@ namespace Jwtex
         public string LayoutName { get; set; }
         public string Extend { get; set; }
 
+        public string _id { get; set; }
     }
     public class Navigation
     {
+        public string _id { get; set; }
         public string NavigationName { get; set; }
         public string HasLayout { get; set; }
         public string ParamName { get; set; }
         public string WidgetName { get; set; }
         private Dictionary<string, View> _views = new Dictionary<string, View>();
-
+        public List<View> UIViews { get; set; }
         public Dictionary<string, View> GetView() { return _views; }
         public View View
         {
@@ -98,23 +99,23 @@ namespace Jwtex
             this.App = app;
             this.Root = AppDomain.CurrentDomain.BaseDirectory;
         }
+        public CodeGen()
+        {
+
+        }
         private List<String> mControllers = new List<string>();
         public jwtApp App { get; set; }
         public void Execute()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine();
-            sb.Append("export default function config(stateprovider, routeProvider){");
-            //sb.Append("angular.module('" + App.Name + "').config(['$stateProvider', '$urlRouterProvider', function (stateprovider, routeProvider) {");
+            sb.Append("export default function config(stateprovider, routeProvider){");           
             SetLayout(sb);
             SetNavigation(sb);
             sb.AppendLine();
             sb.Append("}");
             sb.AppendLine();
-            sb.Append("config.$inject=['$stateProvider', '$urlRouterProvider'];");
-            //sb.Append("jwt._arr={");
-            //GetNamArr(sb);
-            //sb.Append("};");
+            sb.Append("config.$inject=['$stateProvider', '$urlRouterProvider'];");            
             sb.AppendLine();
             System.IO.File.WriteAllText(this.Root + "Scripts\\config.js", sb.ToString());
 
@@ -199,8 +200,7 @@ namespace Jwtex
                             if (!File.Exists(PathString))
                             {
                                 File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
-                            }
-                            //sb.AppendFormat("templateUrl:'Templates/Widgets/{0}/{0}.html'", item2.WidgetName);
+                            }                            
                             sb.AppendFormat("templateUrl:'Templates/Widgets/{0}.html'", item2.WidgetName);
                             mControllers.Add(item2.WidgetName + "Ctrl");
                         }
@@ -216,15 +216,12 @@ namespace Jwtex
                     sb.Append("}");
                 }
                 if (!string.IsNullOrEmpty(item.WidgetName))
-                {
-                    //CreateDirectory(Root + "Templates\\Widgets\\" + item.WidgetName);
-                    //PathString = Root + string.Format("Templates\\Widgets\\{0}\\{0}.html", item.WidgetName);
+                {                    
                     PathString = Root + string.Format("Templates\\Widgets\\{0}.html", item.WidgetName);
                     if (!File.Exists(PathString))
                     {
                         File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
-                    }
-                    //sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}/{0}.html'", item.WidgetName);
+                    }                    
                     sb.AppendFormat(",templateUrl:'Templates/Widgets/{0}.html'", item.WidgetName);
                     PathString = Root + "Scripts\\Controllers\\" + item.WidgetName + "Ctrl.js";
                     if (!File.Exists(PathString))
