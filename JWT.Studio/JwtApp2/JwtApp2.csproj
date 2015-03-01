@@ -186,10 +186,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SchoolContext.mdf" />
-    <Content Include="App_Data\SchoolContext_log.ldf">
-      <DependentUpon>SchoolContext.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -203,11 +199,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\app.controllers.js" />
     <Content Include="Scripts\app.filters.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app.directives.js" />
-    <Content Include="Scripts\app.Services.js" />
     <Content Include="Scripts\appStarter.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -243,9 +237,6 @@
     <Content Include="Content\font-awesome\scss\font-awesome.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Controllers\BaseCtrl.js" />
-    <Content Include="Scripts\Controllers\CourseCtrl.js" />
-    <Content Include="Scripts\Controllers\nav1Ctrl.js" />
-    <Content Include="Scripts\Controllers\nav2Ctrl.js" />
     <Content Include="Scripts\Directives\JwtFilter.js" />
     <Content Include="Scripts\Filters\JwtDate.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -259,7 +250,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Services\BaseSvc.js" />
-    <Content Include="Scripts\Services\CourseSvc.js" />
     <Content Include="Scripts\UI-Grid\csv.js" />
     <Content Include="Scripts\UI-Grid\pdfmake.js" />
     <Content Include="Scripts\UI-Grid\ui-grid-unstable.css" />
@@ -268,10 +258,6 @@
     <Content Include="Scripts\UI-Grid\ui-grid-unstable.min.js" />
     <Content Include="Scripts\UI-Grid\vfs_fonts.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Templates\Components\Course.html" />
-    <Content Include="Templates\Components\nav1.html" />
-    <Content Include="Templates\Components\nav2.html" />
-    <Content Include="Templates\Layouts\layout1.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -301,7 +287,9 @@
     <Content Include="Scripts\UI-Grid\ui-grid.ttf" />
     <Content Include="Scripts\UI-Grid\ui-grid.woff" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

@@ -24,7 +24,7 @@ namespace jwt.CodeGen
             _res.AppendLine();
             _res.AppendFormat("{0}Svc.{1}Factory.$inject=['$http'];",entity, entity[0].ToString().ToLower() + entity.Substring(1));
             _res.AppendLine();
-            _res.AppendFormat("export default {0}Svc;", entity);
+            _res.AppendFormat("export default {0}Svc.{1}Factory;", entity, entity[0].ToString().ToLower() + entity.Substring(1));
             return _res.ToString();
         }
 

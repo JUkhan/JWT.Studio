@@ -14,4 +14,4 @@ class StudentSvc extends BaseSvc
 	}
 }
 StudentSvc.studentFactory.$inject=['$http'];
-export default StudentSvc;
+export default StudentSvc.studentFactory;

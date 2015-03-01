@@ -24,6 +24,8 @@ class CourseCtrl extends BaseCtrl
 			};
 		this.getPagedList();
 		this.loadRelationalData();
+       	this.msg='as';
+      	this.initFilter();
 	}
 	onAfterDeleted(item)
 	{

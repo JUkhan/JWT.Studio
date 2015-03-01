@@ -22,4 +22,4 @@ class EnrollmentSvc extends BaseSvc
 	}
 }
 EnrollmentSvc.enrollmentFactory.$inject=['$http'];
-export default EnrollmentSvc;
+export default EnrollmentSvc.enrollmentFactory;

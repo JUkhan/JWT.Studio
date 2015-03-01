@@ -14,6 +14,7 @@ namespace EntityModule.Entities
             : base("SchoolContext")
         {
             this.Configuration.LazyLoadingEnabled = false;
+           
         }
 
         public DbSet<Student> Students { get; set; }

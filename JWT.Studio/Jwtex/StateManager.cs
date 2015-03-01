@@ -228,6 +228,7 @@ namespace jwt.internals
                 temp.WidgetName = navigation.WidgetName;
                 temp.ParamName = navigation.ParamName;
                 temp.UIViews = navigation.UIViews;
+                temp.HasLayout = navigation.HasLayout;
                 Serialize();
 
                 return "Successfully Updted.";
@@ -287,7 +288,11 @@ namespace jwt.internals
                     app.Layout = item;
                 }
                 foreach (var item in app.UINavigations)
-                {
+                {                    
+                    foreach (var view in item.UIViews)
+                    {
+                        item.View = view;
+                    }
                     app.Navigation = item;
                 }
                 codeGen.Execute();

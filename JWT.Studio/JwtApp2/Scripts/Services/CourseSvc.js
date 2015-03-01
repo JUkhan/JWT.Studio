@@ -14,4 +14,4 @@ class CourseSvc extends BaseSvc
 	}
 }
 CourseSvc.courseFactory.$inject=['$http'];
-export default CourseSvc;
+export default CourseSvc.courseFactory;

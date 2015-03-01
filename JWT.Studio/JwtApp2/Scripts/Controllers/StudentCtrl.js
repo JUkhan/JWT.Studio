@@ -33,6 +33,9 @@ class StudentCtrl extends BaseCtrl
 	loadRelationalData()
 	{
 	}
+  	filterValueChanged(obj){
+      console.log(obj);
+    }
 }
 StudentCtrl.$inject=['StudentSvc', '$scope', '$sce'];
 export default StudentCtrl;

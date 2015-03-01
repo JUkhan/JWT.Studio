@@ -15,6 +15,7 @@ class JwtFilter{
     link(scope, jquery, attrs, ctrl){
         var filterNaame = attrs.dbFilter || attrs.ngModel;
         scope.$watch(filterNaame, function (newVal, oldVal) {
+            filterNaame=filterNaame.replace('vm.','');
             ROOTSCOPE.get(JwtFilter.instance).$broadcast("FilterValueChanged", { name: filterNaame, newValue: newVal, oldValue: oldVal });
             JwtFilter.instance.setVal(filterNaame, newVal);
         });
