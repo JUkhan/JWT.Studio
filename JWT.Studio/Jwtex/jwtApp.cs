@@ -186,7 +186,7 @@ namespace Jwtex
                 sb.Append(TAB1);
                 sb.AppendFormat("stateprovider.state('{0}'", GetStateName(item));
                 sb.Append(",{");
-                sb.AppendFormat(@"url:'/{0}{1}'", item.NavigationName, string.IsNullOrEmpty(item.ParamName) ? "" : "/:" + item.ParamName);
+                sb.AppendFormat(@"url:'/{0}{1}'", item.NavigationName, string.IsNullOrEmpty(item.ParamName) ? "" : GetParamName(item.ParamName));
 
                 var view = item.GetView();
                 if (view != null && item.GetView().Count > 0)
@@ -240,6 +240,13 @@ namespace Jwtex
                 sb.Append("});");
             }
            
+        }
+
+        private string GetParamName(string p)
+        {           
+            if (p.StartsWith("/:")) return p;
+            if (p.StartsWith(":")) return '/' + p;
+            return "/:" + p;
         }
 
         private void GenAllControllers()

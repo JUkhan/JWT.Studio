@@ -58,7 +58,6 @@
     <Compile Include="JResult.cs" />
     <Compile Include="jwtApp.cs" />
     <Compile Include="FluentApi.cs" />
-    <None Include="JwtController -backup.cs" />
     <Compile Include="JwtController.cs" />
     <Compile Include="JwtExController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
