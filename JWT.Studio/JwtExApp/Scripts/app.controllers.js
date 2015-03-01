@@ -1,11 +1,11 @@
 
-import nav3LayoutCtrl from 'Scripts/Controllers/nav3LayoutCtrl.js';
-import widget007Ctrl from 'Scripts/Controllers/widget007Ctrl.js';
+import layout1Ctrl from 'Scripts/Controllers/layout1Ctrl.js';
+import widget1Ctrl from 'Scripts/Controllers/widget1Ctrl.js';
 
 var moduleName='app.controllers';
 
 angular.module(moduleName,[])
-.controller('nav3LayoutCtrl', nav3LayoutCtrl)
-.controller('widget007Ctrl', widget007Ctrl);
+.controller('layout1Ctrl', layout1Ctrl)
+.controller('widget1Ctrl', widget1Ctrl);
 
 export default moduleName;

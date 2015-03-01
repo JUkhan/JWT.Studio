@@ -186,8 +186,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Controllers\BaseCtrl.js" />
-    <Content Include="Scripts\Controllers\DbWeatherCtrl.js" />
-    <Content Include="Scripts\Controllers\testWidgetCtrl.js" />
     <Content Include="Scripts\Directives\JwtFilter.js" />
     <Content Include="Scripts\Filters\JwtDate.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

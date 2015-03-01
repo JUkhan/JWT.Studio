@@ -143,10 +143,17 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                //rename files
+                var preControllerName = RootPath + "Scripts\\Controllers\\" + temp.LayoutName + "Ctrl.js";
+                var newControllerName = RootPath + "Scripts\\Controllers\\" + layout.LayoutName + "Ctrl.js";
+                RenameFile(preControllerName, newControllerName);
+                var preTemplateName = RootPath + "Templates\\Layouts\\" + temp.LayoutName + ".html";
+                var newTemplateName = RootPath + "Templates\\Layouts\\" + layout.LayoutName + ".html";
+                RenameFile(preTemplateName, newTemplateName);
+
                 temp.LayoutName = layout.LayoutName;
                 temp.Extend = layout.Extend;
-                Serialize();
-
+                Serialize();               
                 return "Successfully Updted.";
             }
             catch (Exception ex)
@@ -165,6 +172,10 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                //rename files               
+                RemoveFile(RootPath + "Scripts\\Controllers\\" + temp.LayoutName + "Ctrl.js");
+                RemoveFile(RootPath + "Templates\\Layouts\\" + temp.LayoutName + ".html");
+
                 app.UILayouts.Remove(temp);
                 Serialize();
 
@@ -224,6 +235,14 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                //rename files
+                var preControllerName = RootPath + "Scripts\\Controllers\\" + temp.WidgetName + "Ctrl.js";
+                var newControllerName = RootPath + "Scripts\\Controllers\\" + navigation.WidgetName + "Ctrl.js";
+                RenameFile(preControllerName, newControllerName);
+                var preTemplateName = RootPath + "Templates\\Widgets\\" + temp.WidgetName + ".html";
+                var newTemplateName = RootPath + "Templates\\Widgets\\" + navigation.WidgetName + ".html";
+                RenameFile(preTemplateName, newTemplateName);
+
                 temp.NavigationName = navigation.NavigationName;
                 temp.WidgetName = navigation.WidgetName;
                 temp.ParamName = navigation.ParamName;
@@ -249,6 +268,10 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                //rename files               
+                RemoveFile(RootPath + "Scripts\\Controllers\\" + temp.WidgetName + "Ctrl.js");
+                RemoveFile(RootPath + "Templates\\Widgets\\" + temp.WidgetName + ".html");
+
                 app.UINavigations.Remove(temp);
                 Serialize();
 
@@ -304,6 +327,27 @@ namespace jwt.internals
             }
 
         }
+
+        #region File Operations
+        private bool IsExist(string path)
+        {
+            return System.IO.File.Exists(path);
+        }
+        private void RenameFile(string previousName, string newName)
+        {
+            if (IsExist(previousName))
+            {
+                System.IO.File.Move(previousName, newName);
+            }
+        }
+        private void RemoveFile(string fileName)
+        {
+            if (IsExist(fileName))
+            {
+                System.IO.File.Delete(fileName);
+            }
+        } 
+        #endregion
     }
    
 }

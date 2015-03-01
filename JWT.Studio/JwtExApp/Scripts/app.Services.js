@@ -1,6 +1,6 @@
 
 
-var moduleName='app.Services';
+var moduleName='app.services';
 
 angular.module(moduleName,[]);
 
