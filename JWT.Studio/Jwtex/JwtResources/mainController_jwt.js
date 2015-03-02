@@ -21,7 +21,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
     scope.removeLayout = function (vm) {
         if (!confirm('Sure to remove?')) { return;}
         http.post('Jwt/RemoveLayout', vm).success(function (res) {
-            getLayouts();
+            getLayouts(); scope.lvm = {};
         });
     }
     function getLayouts() {
@@ -48,7 +48,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
     scope.removeNav = function (vm) {
         if (!confirm('Sure to remove?')) { return; }
         http.post('Jwt/RemoveNavigation', vm).success(function (res) {
-            getNavs();
+            getNavs(); scope.nvm = {};
         });
     }
     function getNavs() {
