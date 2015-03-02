@@ -275,6 +275,7 @@ namespace jwt.internals
                 return ex.ToString();
             }
         }
+
         private void UpdateNavigation(string oldName, string newName)
         {
             if (oldName == newName) return;
