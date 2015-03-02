@@ -143,6 +143,7 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                UpdateLayout(temp.LayoutName, layout.LayoutName);
                 //rename files
                 var preControllerName = RootPath + "Scripts\\Controllers\\" + temp.LayoutName + "Ctrl.js";
                 var newControllerName = RootPath + "Scripts\\Controllers\\" + layout.LayoutName + "Ctrl.js";
@@ -153,7 +154,7 @@ namespace jwt.internals
 
                 temp.LayoutName = layout.LayoutName;
                 temp.Extend = layout.Extend;
-                Serialize();               
+                Serialize();
                 return "Successfully Updted.";
             }
             catch (Exception ex)
@@ -161,6 +162,21 @@ namespace jwt.internals
 
                 return ex.ToString();
             }
+        }
+        public void UpdateLayout(string oldName, string newName)
+        {
+            if (oldName == newName) return;
+            foreach (var item in app.UILayouts)
+            {
+                if (item.Extend == oldName)
+                    item.Extend = oldName;
+            }
+            if (app.UINavigations != null)
+                foreach (var item in app.UINavigations)
+                {
+                    if (item.HasLayout == oldName)
+                        item.HasLayout = newName;
+                }
         }
         public string RemoveLayout(Layout layout)
         {
@@ -199,7 +215,7 @@ namespace jwt.internals
 
                 return new List<Layout>();
             }
-        } 
+        }
         #endregion
 
         #region Navigations
@@ -235,6 +251,7 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                UpdateNavigation(temp.WidgetName, navigation.WidgetName);
                 //rename files
                 var preControllerName = RootPath + "Scripts\\Controllers\\" + temp.WidgetName + "Ctrl.js";
                 var newControllerName = RootPath + "Scripts\\Controllers\\" + navigation.WidgetName + "Ctrl.js";
@@ -256,6 +273,23 @@ namespace jwt.internals
             {
 
                 return ex.ToString();
+            }
+        }
+        private void UpdateNavigation(string oldName, string newName)
+        {
+            if (oldName == newName) return;
+            foreach (var item in app.UINavigations)
+            {
+                if (item.WidgetName == oldName)
+                    item.WidgetName = newName;
+                if (item.UIViews != null)
+                {
+                    foreach (var view in item.UIViews)
+                    {
+                        if (view.WidgetName == oldName)
+                            view.WidgetName = newName;
+                    }
+                }
             }
         }
         public string RemoveNavigation(Navigation navigation)
@@ -311,7 +345,7 @@ namespace jwt.internals
                     app.Layout = item;
                 }
                 foreach (var item in app.UINavigations)
-                {                    
+                {
                     foreach (var view in item.UIViews)
                     {
                         item.View = view;
@@ -322,7 +356,7 @@ namespace jwt.internals
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
 
@@ -335,6 +369,7 @@ namespace jwt.internals
         }
         private void RenameFile(string previousName, string newName)
         {
+            if (previousName == newName) return;
             if (IsExist(previousName))
             {
                 System.IO.File.Move(previousName, newName);
@@ -346,8 +381,8 @@ namespace jwt.internals
             {
                 System.IO.File.Delete(fileName);
             }
-        } 
+        }
         #endregion
     }
-   
+
 }
