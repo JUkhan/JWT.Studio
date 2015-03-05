@@ -82,7 +82,7 @@
                                     <select class="form-control" ng-model="nvm.HasLayout" ng-options="item.LayoutName as item.LayoutName for item in layoutList">
                                         <option value=""></option>
                                     </select>
-                                    <input type="button" class="btn btn-warning btn-sm" ng-click="showViewsDialog(nvm)" ng-if="!!nvm.HasLayout" value="Add Views" />
+                                    <input type="button" class="btn btn-warning btn-sm" ng-click="showViewsDialog(nvm)" ng-if="!!nvm.HasLayout" value="Add Widgets" />
                                 </div>
 
                             <input type="button" class="btn btn-default" value="Save Navigation" ng-click="addNav(nvm)" /> 
@@ -233,7 +233,7 @@
 
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
-            <h3 class="modal-title">Add Views</h3>
+            <h3 class="modal-title">Map widgets with view names</h3>
         </div>
         <div class="modal-body">
             <table class="table table-condensed table-hover table-striped">
