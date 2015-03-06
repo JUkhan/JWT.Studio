@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jwt</title>
+    <link href="Jwt/Resources/?file=bootstrap.css" rel="stylesheet" />
+    <link href="Jwt/Resources/?file=Site.css" rel="stylesheet" />
+    <script src="Jwt/Resources/?file=jquery.js"></script>
+</head>
+<body ng-app="app">
+
+    <div class="container body-content" ng-controller="mainController">
+
+        <h5></h5>
+        <hr />
+
+        <iframe id="iframe" src="http://localhost:29324/Child"></iframe>
+        <input type="button" value="Send Message From Parent" onclick="setMessage()" />
+        <b>Message:</b>
+        <p id="msg">
+
+        </p>
+        <script>
+            var load = true;
+            $(function () {
+                if (window.addEventListener) {
+                    window.addEventListener("message", listener, false);
+                } else {
+                    attachEvent('onMessage', listener);
+                }
+                //http://localhost:29324/Child
+            });
+            function setMessage() {
+                load = true;
+                document.getElementById('iframe').contentWindow.postMessage("data from Parent", 'http://localhost:29324');
+            }
+            function listener(event) {
+                if (!load) return;
+                console.log(event.data);
+                $('#msg').html(event.data);
+                $.get("JwtComponent/Download", function (res) { alert(res.msg); load = true; });
+                load = false;
+            }
+        </script>
+
+
+
+
+        <hr />
+        <footer>
+            <p>&copy; jwt</p>
+        </footer>
+    </div>
+    
+    <script src="Jwt/Resources/?file=angular.js"></script>
+    <script src="Jwt/Resources/?file=angular-resource.js"></script>
+   
+
+</body>
+</html>

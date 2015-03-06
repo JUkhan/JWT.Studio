@@ -33,6 +33,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -58,6 +60,7 @@
     <Compile Include="JResult.cs" />
     <Compile Include="jwtApp.cs" />
     <Compile Include="FluentApi.cs" />
+    <Compile Include="JwtComponentController.cs" />
     <Compile Include="JwtController.cs" />
     <Compile Include="JwtExController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +79,7 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\component.html" />
     <EmbeddedResource Include="JwtResources\traceur.js" />
     <EmbeddedResource Include="JwtResources\Utilities.js" />
     <EmbeddedResource Include="JwtResources\mainController_jwt.js" />

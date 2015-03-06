@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<input type="button" value="Send Message From Child" onclick="setMessage()" />
+<b>Message:</b>
+<p id="msg">
+
+</p>
+<script>
+    $(function () {
+        if (window.addEventListener) {
+            window.addEventListener("message", listener, false);
+        }else{
+            attachEvent('onMessage', listener);
+        }
+    });
+    function setMessage() {
+        window.parent.postMessage("data from child", '*');
+    }
+    function listener(event){
+        $('#msg').html(event.data);
+    }
+</script>
