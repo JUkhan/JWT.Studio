@@ -348,7 +348,7 @@ namespace Jwtex
             {
                 if (!File.Exists(Root + string.Format( "\\Scripts\\Components\\{0}\\{0}Svc.js", item ))) { continue; }
                 sb.AppendLine();
-                sb.AppendFormat("import {0} from 'Scripts/Components/{0}/{0}Svc.js';", item );
+                sb.AppendFormat("import {0} from 'Scripts/Components/{0}/{0}.js';", item + "Svc");
             }
             sb.AppendLine();
             sb.AppendLine();
@@ -360,7 +360,7 @@ namespace Jwtex
             {
                 if (!File.Exists(Root + string.Format("\\Scripts\\Components\\{0}\\{0}Svc.js", item))) { continue; }
                 sb.AppendLine();
-                sb.AppendFormat(".factory('{0}Svc', {0})", item);
+                sb.AppendFormat(".factory('{0}', {0})", item+"Svc");
             }
             sb.Append(";");
             sb.AppendLine();

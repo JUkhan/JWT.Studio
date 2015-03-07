@@ -13,14 +13,21 @@
 </head>
 <body ng-app="jwt2">
     <div class="container body-content" ng-controller="mainController">
-       
+        <div>
+            <div class="btn-group">
+                <label ng-click="changeDataMode('Layouts')" class="btn btn-success" ng-model="dataMode" btn-radio="'Layouts'">Layouts</label>
+                <label ng-click="changeDataMode('Widgets')" class="btn btn-success" ng-model="dataMode" btn-radio="'Widgets'">Widgets</label>
+                <label ng-click="changeDataMode('Components')" class="btn btn-success" ng-model="dataMode" btn-radio="'Components'">Components</label>
+            </div>
+            <b>&nbsp;&nbsp;</b>
+            <select ng-show="items.length>0" ng-change="changeItemValue()" ng-model="itemValue" >
+                <option ng-repeat="u in items" value="{{$index}}">{{u}}</option>
+            </select>
+            
+        </div>
         <tabset>
             <tab heading="Javascript">
-                <div>
-                    <div class="btn-group" >
-                        <label class="btn btn-success" ng-click="jsSearch('Controllers')" ng-model="jsModel" btn-radio="'Controllers'">Controllers</label>
-                        <label class="btn btn-success" ng-click="jsSearch('Services')" ng-model="jsModel" btn-radio="'Services'">Services</label>
-                    </div>
+                <div>                  
 
                     <input type="text" ng-model="jsFileName" typeahead="name for name in jsList" class="form-control" placeholder="{{jsModel}}" />
                     <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />  
@@ -32,12 +39,7 @@
             </tab>
             <tab heading="Html">
                 <div>
-                    <div class="btn-group">
-                        <label ng-click="htmlSearch('Layouts')" class="btn btn-success" ng-model="htmlModel" btn-radio="'Layouts'">Layouts</label>
-                        <label ng-click="htmlSearch('Widgets')" class="btn btn-success" ng-model="htmlModel" btn-radio="'Widgets'">Widgets</label>
-                        <label ng-click="htmlSearch('Components')" class="btn btn-success" ng-model="htmlModel" btn-radio="'Components'">Components</label>
-                    </div>
-
+                   
                     <input type="text" ng-model="htmlFileName" typeahead="name for name in htmlList" class="form-control" placeholder="{{htmlModel}}" />
                     <input class="btn btn-success" type="button" ng-click="htmlLoad(htmlFileName)" value="Load" />
                     <input class="btn btn-success" type="button" value="Save" ng-click="saveHtmlFile()" />  

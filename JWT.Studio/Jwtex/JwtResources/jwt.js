@@ -27,9 +27,9 @@
         return res;
     })
     .method('select', function (conditionalCallback, selectionCallback) {
-        var res = [];
+        var res = [], index=0;
         for (var i = 0, len = this.length; i < len; i++) {
-            if (conditionalCallback(this[i])) { res.push(selectionCallback(this[i])); }
+            if (conditionalCallback(this[i], i)) { res.push(selectionCallback(this[i], index)); index++; }
         }
         return res;
     })

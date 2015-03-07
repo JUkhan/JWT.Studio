@@ -173,10 +173,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Components\mac\mac.css" />
-    <Content Include="Components\mac\mac.html" />
-    <Content Include="Components\mac\mac.js" />
-    <Content Include="Components\jwtFilter\jwtFilter.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

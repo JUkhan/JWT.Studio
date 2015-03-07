@@ -1,4 +1,4 @@
-﻿
+
 const ROOTSCOPE=new WeakMap();
 class jwtFilter{
     constructor(rootScope){

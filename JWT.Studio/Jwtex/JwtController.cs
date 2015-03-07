@@ -219,32 +219,35 @@ namespace Jwt.Controller
         {
             try
             {
-                string templates = Config.Root + "Templates";
-                createDirectory(templates);
-                string component = Config.Root + "Templates\\Widgets";
-                createDirectory(component);
+                //string templates = Config.Root + "Scripts";
+                createDirectory(Config.Root + "Scripts");
 
+                //string component = Config.Root + "Scripts\\Components";
+                createDirectory(Config.Root + "Scripts\\Components");
+
+                createDirectory(Config.Root + "Scripts\\Components\\"+entity);
                 //Generate scripts directories
-                string script = Config.Root + "\\Scripts";
-                createDirectory(script);
-                script = Config.Root + "\\Scripts\\Controllers";
-                createDirectory(script);
-                script = Config.Root + "\\Scripts\\Services";
-                createDirectory(script);
+                //string script = Config.Root + "\\Scripts";
+                //createDirectory(script);
+                //script = Config.Root + "\\Scripts\\Controllers";
+                //createDirectory(script);
+                //script = Config.Root + "\\Scripts\\Services";
+                //createDirectory(script);
                 //services
-                script = Config.ServiceProject + "\\Interfaces";
-                createDirectory(script);
-                script = Config.ServiceProject + "\\Implementation";
-                createDirectory(script);
+                //string script = Config.ServiceProject + "\\Interfaces";
+                createDirectory(Config.ServiceProject + "\\Interfaces");
+               // script = Config.ServiceProject + "\\Implementation";
+                createDirectory(Config.ServiceProject + "\\Implementation");
 
                 ICode code = new TemplateCode();
-                System.IO.File.WriteAllText(component + "\\" + entity + ".html", code.CodeGenerate(entity, props));
+                string path = Config.Root + "Scripts\\Components\\" + entity;
+                System.IO.File.WriteAllText(path + "\\" + entity + ".html", code.CodeGenerate(entity, props));
                 code = new JSController();
                 code.Config = this.Config;
-                System.IO.File.WriteAllText(Config.Root + "\\Scripts\\Controllers\\" + entity + "Ctrl.js", code.CodeGenerate(entity, props));
+                System.IO.File.WriteAllText(path + "\\"+entity + "Ctrl.js", code.CodeGenerate(entity, props));
                 code = new JSService();
                 code.Config = this.Config;
-                System.IO.File.WriteAllText(Config.Root + "\\Scripts\\Services\\" + entity + "Svc.js", code.CodeGenerate(entity, props));
+                System.IO.File.WriteAllText(path + "\\" + entity + "Svc.js", code.CodeGenerate(entity, props));
                 code = new CSController();
                 System.IO.File.WriteAllText(Config.Root + "Controllers\\" + entity + "Controller.cs", code.CodeGenerate(entity, props));
                 code = new CSServiceInterface();

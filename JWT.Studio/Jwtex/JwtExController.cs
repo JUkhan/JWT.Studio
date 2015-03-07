@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Jwtex
 {
-    public class JwtExController : Controller
+    public class JwtExController : Jwt.Controller.BaseController
     {
         public void Index()
         {
@@ -54,10 +54,10 @@ namespace Jwtex
                     case "Controllers":
                     case "Services":
                         path += "Scripts\\" + directory;
-                        setFiles(path,res, directory);
+                        setFiles(path, res, directory);
                         break;
                     case "Layouts":
-                        path += "Templates\\Layouts" ;
+                        path += "Templates\\Layouts";
                         setFiles(path, res, directory);
                         break;
                     case "Components":
@@ -65,7 +65,7 @@ namespace Jwtex
                         setFiles(path, res, directory);
                         break;
                     case "Widgets":
-                        path += "Templates\\Widgets" ;
+                        path += "Templates\\Widgets";
                         setFiles(path, res, directory);
                         break;
                 }
@@ -90,13 +90,13 @@ namespace Jwtex
                 res.isSuccess = true;
             }
         }
-        public JsonResult GetFileContent(string fileName, string key)
+        public JsonResult GetFileContent(string mode, string directoryName, string fileName)
         {
-            string path = Server.MapPath("~");
+            string path = Config.Root;
             JResult res = new JResult();
             try
             {
-                switch (key)
+                switch (mode)
                 {
                     case "Controllers":
                         path += "Scripts\\Controllers\\" + fileName;
@@ -107,15 +107,15 @@ namespace Jwtex
                         res.data = System.IO.File.ReadAllText(path);
                         break;
                     case "Layouts":
-                        path += "Templates\\Layouts\\" + fileName;
+                        path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
                         res.data = System.IO.File.ReadAllText(path);
                         break;
                     case "Components":
-                        path += "Templates\\Components\\" + fileName;
+                        path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
                         res.data = System.IO.File.ReadAllText(path);
                         break;
                     case "Widgets":
-                        path += "Templates\\Widgets\\" + fileName;
+                        path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
                         res.data = System.IO.File.ReadAllText(path);
                         break;
                 }
@@ -129,13 +129,13 @@ namespace Jwtex
 
             return Json(res, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult SaveFile(string key, string fileName, string content)
+        public JsonResult SaveFile(string mode, string directoryName, string fileName, string content)
         {
-            string path = Server.MapPath("~");
+            string path = Config.Root;
             JResult res = new JResult();
             try
             {
-                switch (key)
+                switch (mode)
                 {
                     case "Controllers":
                         path += "Scripts\\Controllers\\" + fileName;
@@ -146,15 +146,15 @@ namespace Jwtex
                         System.IO.File.WriteAllText(path, content);
                         break;
                     case "Layouts":
-                        path += "Templates\\Layouts\\" + fileName;
+                        path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
                         System.IO.File.WriteAllText(path, content);
                         break;
                     case "Components":
-                        path += "Templates\\Components\\" + fileName;
+                        path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
                         System.IO.File.WriteAllText(path, content);
                         break;
                     case "Widgets":
-                        path += "Templates\\Widgets\\" + fileName;
+                        path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
                         System.IO.File.WriteAllText(path, content);
                         break;
                 }
@@ -169,7 +169,49 @@ namespace Jwtex
             return Json(res, JsonRequestBehavior.AllowGet);
         }
 
+        #region New Style
+        public JsonResult GetItems(string name)
+        {
+            List<string> list = new List<string>();
+            switch (name)
+            {
+                case "Layouts":
+                    list.Add("Select a layout");
+                    list.AddRange(GetSubdirectories(Config.Root + "Scripts//Layouts"));
+                    break;
+                case "Widgets":
+                    list.Add("Select a widgets");
+                    list.AddRange(GetSubdirectories(Config.Root + "Scripts//Components"));
+                    break;
+                case "Components":
+                    list.Add("Select a component");
+                    list.AddRange(GetSubdirectories(Config.Root + "Scripts//Directives"));
 
+                    break;
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetItemDetail(string name, string mode)
+        {
+            List<string> list = null;
+            switch (mode)
+            {
+                case "Layouts":
+                    list = GetFiles(Config.Root + "Scripts//Layouts//" + name);
+                    break;
+                case "Widgets":
+                    list = GetFiles(Config.Root + "Scripts//Components//" + name);
+                    break;
+                case "Components":
+
+                    list = GetFiles(Config.Root + "Scripts//Directives//" + name);
+
+                    break;
+            }
+            return Json(new {  js=list.Where(x=>x.EndsWith(".js")), html=list.Where(x=>x.EndsWith(".css")||x.EndsWith(".html"))}, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
         private List<string> GetFiles(string directoryName)
         {
             List<string> files = new List<string>();
@@ -178,6 +220,16 @@ namespace Jwtex
                 files.Add(Path.GetFileName(item));
             }
             return files;
+        }
+        private List<string> GetSubdirectories(string path)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+            List<string> list = new List<string>();
+            foreach (var item in dir.GetDirectories())
+            {
+                list.Add(item.Name);
+            }
+            return list;
         }
     }
 }

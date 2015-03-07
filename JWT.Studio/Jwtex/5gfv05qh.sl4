@@ -104,7 +104,6 @@ namespace Jwtex
 
         }
         private List<String> mControllers = new List<string>();
-        private List<String> layoutControllers = new List<string>();
         public jwtApp App { get; set; }
         public string DefaultNavigation { get; set; }
         public void Execute()
@@ -134,7 +133,6 @@ namespace Jwtex
             sb.AppendLine();
             System.IO.File.WriteAllText(this.Root + "Scripts\\config.js", sb.ToString());
 
-           
             GenAllControllers();
             GenAllServices();
             GenAppDirectives();
@@ -212,7 +210,7 @@ namespace Jwtex
                     File.WriteAllText(PathString, getEmptyController(item.LayoutName));
                 }
                 sb.AppendFormat(",controller:'{0}Ctrl as vm'", item.LayoutName);
-                layoutControllers.Add(item.LayoutName);
+                mControllers.Add(item.LayoutName);
                 
                 sb.Append("});");
             }
@@ -303,18 +301,10 @@ namespace Jwtex
         {
             var list = mControllers.Distinct();
             StringBuilder sb = new StringBuilder();
-            var directoryName = "Components";
             foreach (var item in list)
             {                
                 sb.AppendLine();
-                sb.AppendFormat("import {0} from 'Scripts/{1}/{0}/{0}Ctrl.js';", item ,directoryName);
-            }
-            list = layoutControllers.Distinct();
-            directoryName = "Layouts";
-            foreach (var item in list)
-            {
-                sb.AppendLine();
-                sb.AppendFormat("import {0} from 'Scripts/{1}/{0}/{0}Ctrl.js';", item, directoryName);
+                sb.AppendFormat("import {0} from 'Scripts/Components/{0}/{0}Ctrl.js';", item );
             }
             sb.AppendLine();
             sb.AppendLine();
@@ -322,17 +312,10 @@ namespace Jwtex
             sb.AppendLine();
             sb.AppendLine();
             sb.Append("angular.module(moduleName,[])");
-            list = mControllers.Distinct();
             foreach (var item in list)
             {
                 sb.AppendLine();
-                sb.AppendFormat(".controller('{0}Ctrl', {0})", item);
-            }
-            list = layoutControllers.Distinct();
-            foreach (var item in list)
-            {
-                sb.AppendLine();
-                sb.AppendFormat(".controller('{0}Ctrl', {0})", item );
+                sb.AppendFormat(".controller('{0}', {0})", item+"Ctrl");
             }
             sb.Append(";");
             sb.AppendLine();
@@ -348,7 +331,7 @@ namespace Jwtex
             {
                 if (!File.Exists(Root + string.Format( "\\Scripts\\Components\\{0}\\{0}Svc.js", item ))) { continue; }
                 sb.AppendLine();
-                sb.AppendFormat("import {0} from 'Scripts/Components/{0}/{0}Svc.js';", item );
+                sb.AppendFormat("import {0} from 'Scripts/Components/{0}/{0}.js';", item + "Svc");
             }
             sb.AppendLine();
             sb.AppendLine();
@@ -360,7 +343,7 @@ namespace Jwtex
             {
                 if (!File.Exists(Root + string.Format("\\Scripts\\Components\\{0}\\{0}Svc.js", item))) { continue; }
                 sb.AppendLine();
-                sb.AppendFormat(".factory('{0}Svc', {0})", item);
+                sb.AppendFormat(".factory('{0}', {0})", item+"Svc");
             }
             sb.Append(";");
             sb.AppendLine();
