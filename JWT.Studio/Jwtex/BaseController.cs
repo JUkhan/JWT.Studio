@@ -16,6 +16,11 @@ namespace Jwt.Controller
             base.Initialize(requestContext);
             SetConfig();
         }
+
+        public string GetDefaultNavigation()
+        {
+            return ConfigurationManager.AppSettings["DefaultNavigation"] ?? "";
+        }
         private void SetConfig()
         {
             JwtConfig config = Session["Config"] as JwtConfig;

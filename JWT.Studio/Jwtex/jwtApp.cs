@@ -105,6 +105,7 @@ namespace Jwtex
         }
         private List<String> mControllers = new List<string>();
         public jwtApp App { get; set; }
+        public string DefaultNavigation { get; set; }
         public void Execute()
         {
             CreateDirectory(Root + "Scripts");
@@ -116,7 +117,13 @@ namespace Jwtex
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine();
-            sb.Append("export default function config(stateprovider, routeProvider){");           
+            sb.Append("export default function config(stateprovider, routeProvider){");
+            if (!string.IsNullOrEmpty(DefaultNavigation))
+            {
+                sb.AppendLine();
+                sb.AppendFormat(TAB1+ "routeProvider.otherwise('{0}');", DefaultNavigation);
+                sb.AppendLine();
+            }
             SetLayout(sb);
             SetNavigation(sb);
             sb.AppendLine();
@@ -128,6 +135,44 @@ namespace Jwtex
 
             GenAllControllers();
             GenAllServices();
+            GenAppDirectives();
+        }
+        private void GenAppDirectives()
+        {
+            DirectoryInfo dir = new DirectoryInfo(Root+ "Scripts//Directives");
+            StringBuilder import = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
+            StringBuilder componentsCSS = new StringBuilder();
+            foreach (var item in dir.GetDirectories())
+            {
+                import.AppendFormat("import {0} from 'Scripts/Directives/{0}/{0}.js';", item.Name);
+                import.AppendLine();
+
+                builder.AppendFormat(".directive('{0}', {0}.builder)", item.Name);
+                builder.AppendLine();
+                if (System.IO.File.Exists(string.Format(Root + "Scripts/Directives/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Directives/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
+
+            StringBuilder res = new StringBuilder();
+            res.Append(import);
+            res.AppendLine();
+            res.AppendLine();
+            res.Append("var moduleName='app.Directives';");
+            res.AppendLine();
+            res.AppendLine();
+            res.Append("angular.module(moduleName, [])");
+            res.AppendLine();
+            res.Append(builder);
+            res.Append(";");
+            res.AppendLine();
+            res.AppendLine();
+            res.Append("export default moduleName;");
+            System.IO.File.WriteAllText(Root + "Scripts//app.directives.js", res.ToString());
+            System.IO.File.WriteAllText(Root + "Content//components.css", componentsCSS.ToString());
         }
         private void GetNamArr(StringBuilder sb)
         {

@@ -173,8 +173,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Components\init\init.html" />
-    <Content Include="Components\init\init.js" />
+    <Content Include="Components\mac\mac.css" />
+    <Content Include="Components\mac\mac.html" />
+    <Content Include="Components\mac\mac.js" />
+    <Content Include="Components\jwtFilter\jwtFilter.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -183,8 +185,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\app.directives.js" />
+    <Content Include="Scripts\app.filters.js" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\appStarter.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Controllers\BaseCtrl.js" />
+    <Content Include="Scripts\Directives\comInstaller\comInstaller.html" />
+    <Content Include="Scripts\Directives\comInstaller\comInstaller.js" />
+    <Content Include="Scripts\Filters\JwtDate.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -196,7 +206,15 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\Services\BaseSvc.js" />
+    <Content Include="Scripts\UI-Grid\csv.js" />
+    <Content Include="Scripts\UI-Grid\pdfmake.js" />
+    <Content Include="Scripts\UI-Grid\ui-grid-unstable.css" />
+    <Content Include="Scripts\UI-Grid\ui-grid-unstable.js" />
+    <Content Include="Scripts\UI-Grid\ui-grid-unstable.min.css" />
+    <Content Include="Scripts\UI-Grid\ui-grid-unstable.min.js" />
+    <Content Include="Scripts\UI-Grid\vfs_fonts.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -211,7 +229,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
@@ -223,6 +240,10 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Child\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\UI-Grid\ui-grid.eot" />
+    <Content Include="Scripts\UI-Grid\ui-grid.ttf" />
+    <Content Include="Scripts\UI-Grid\ui-grid.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -233,6 +254,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jwtex\Jwtex.csproj">
+      <Project>{e71bf010-c61b-42a3-bdb9-a7e0554271a3}</Project>
+      <Name>Jwtex</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

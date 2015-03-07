@@ -3,59 +3,53 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jwt</title>
-    <link href="Jwt/Resources/?file=bootstrap.css" rel="stylesheet" />
-    <link href="Jwt/Resources/?file=Site.css" rel="stylesheet" />
+    <title>jwt Components</title>
     <script src="Jwt/Resources/?file=jquery.js"></script>
-</head>
-<body ng-app="app">
-
-    <div class="container body-content" ng-controller="mainController">
-
-        <h5></h5>
-        <hr />
-
-        <iframe id="iframe" src="http://localhost:29324/Child"></iframe>
-        <input type="button" value="Send Message From Parent" onclick="setMessage()" />
-        <b>Message:</b>
-        <p id="msg">
-
-        </p>
-        <script>
-            var load = true;
-            $(function () {
-                if (window.addEventListener) {
-                    window.addEventListener("message", listener, false);
-                } else {
-                    attachEvent('onMessage', listener);
-                }
-                //http://localhost:29324/Child
-            });
-            function setMessage() {
-                load = true;
-                document.getElementById('iframe').contentWindow.postMessage("data from Parent", 'http://localhost:29324');
-            }
-            function listener(event) {
-                if (!load) return;
-                console.log(event.data);
-                $('#msg').html(event.data);
-                $.get("JwtComponent/Download", function (res) { alert(res.msg); load = true; });
-                load = false;
-            }
-        </script>
-
-
-
-
-        <hr />
-        <footer>
-            <p>&copy; jwt</p>
-        </footer>
-    </div>
-    
-    <script src="Jwt/Resources/?file=angular.js"></script>
-    <script src="Jwt/Resources/?file=angular-resource.js"></script>
    
+</head>
+<body>
+
+
+    <iframe frameborder="0" id="iframe" src="COMPONENT_SITE_URL"></iframe>
+    
+    <script>
+        var load = true;
+        $(function () {
+            if (window.addEventListener) {
+                window.addEventListener("message", listener, false);
+            } else {
+                attachEvent('onMessage', listener);
+            }
+            var win=$(window);
+            $('#iframe').css({ width: win.width(), height: win.height() });
+        });
+        function setMessage() {
+            load = true;
+            document.getElementById('iframe').contentWindow.postMessage("data from Parent", 'http://localhost:29324');
+        }
+        function listener(event) {
+            if (!load) return;
+            load = false;
+            if (event.data && event.data.hasOwnProperty("id") && event.data.id === 'jwt') {
+                $.get("JwtComponent/IsInstalled?name=" + event.data.comName, function (res) {
+                    if (res.msg) {
+                        if (confirm('This component is already installed in your site. Do you want to reinstall it?')) {
+                            $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { alert(res.msg); load = true; });
+                        } else {
+                            load = true;
+                        }
+                    }
+                    else {
+                        $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { alert(res.msg); load = true; });
+                    }
+                });
+
+            } else {
+                load = true;
+            }
+
+        }
+    </script>
 
 </body>
 </html>

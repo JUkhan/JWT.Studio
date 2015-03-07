@@ -10,6 +10,4 @@ angular.module(moduleName,[])
 .factory('StudentSvc', StudentSvc)
 .factory('EnrollmentSvc', EnrollmentSvc);
 
-
-
 export default moduleName;

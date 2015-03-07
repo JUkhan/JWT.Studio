@@ -6,20 +6,54 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+    <script src="JwtEx/Resources/?file=jquery.js"></script>
 </head>
 <body>
-    
-    <div class="container body-content">
-        @RenderBody()
+   <div class="container body-content">
+        <div ui-view>@RenderBody()</div>
+      <br />
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; jwt components</p>
         </footer>
     </div>
+    <div class="overlay">
+        <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></i></div>
+    </div>
 
-   
+    <script src="JwtEx/Resources/?file=traceur.js"></script>   
+    <script src="JwtEx/Resources/?file=angular.js"></script>
+    <script src="JwtEx/Resources/?file=angular-resource.js"></script>
+    <script src="JwtEx/Resources/?file=angularui.js"></script>
+    <script src="JwtEx/Resources/?file=angular-ui-router.js"></script>
+    <script src="JwtEx/Resources/?file=angular-sanitize.js"></script>
+
+    <script type="module" src="~/Scripts/appStarter.js">
+    </script>
+    @Scripts.Render("~/bundles/uigrid")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="JwtEx/Resources/?file=jwt.js"></script>
+
     @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+            if (window.addEventListener) {
+                window.addEventListener("message", listener, false);
+            } else {
+                attachEvent('onMessage', listener);
+            }
+        });
+        function sendMessage(name) {
+            if (name) {
+                var data = { id: 'jwt', comName: name };
+                console.log(data);
+                window.parent.postMessage(data, '*');
+            }
+        }
+        function listener(event) {
+
+           //console.log(event.data);
+        }
+    </script>
 </body>
 </html>

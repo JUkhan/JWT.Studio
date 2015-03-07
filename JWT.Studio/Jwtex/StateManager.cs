@@ -66,14 +66,16 @@ namespace jwt.internals
 
     public class jwtAppManager
     {
+        private string defaultNavigation = "";
         private jwtApp app = null;
         public jwtAppManager()
         {
 
         }
-        public jwtAppManager(string path)
+        public jwtAppManager(string path, string defaultNavigation="")
         {
             RootPath = path;
+            this.defaultNavigation = defaultNavigation;
         }
         public string RootPath { get; set; }
         private void Serialize()
@@ -341,6 +343,7 @@ namespace jwt.internals
                 Jwtex.CodeGen codeGen = new Jwtex.CodeGen();
                 codeGen.App = this.app;
                 codeGen.Root = RootPath;
+                codeGen.DefaultNavigation = defaultNavigation;
                 foreach (var item in app.UILayouts)
                 {
                     app.Layout = item;

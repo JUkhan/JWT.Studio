@@ -102,43 +102,6 @@
         }
         return true;
     }   
-    this.SQLight = jsClass.extend({
-        init: function () {
-            var ops = SQLight.dbOptions;
-            this.db = openDatabase(ops.fileName, ops.version, ops.displayName, ops.maxSize);
-        },
-        query: function (sql, paramsArray) {
-            var res = {}, dbRef = this.db, scb = null, ecb = null;
-            res.init = function () {
-                dbRef.transaction(function (t) {
-                    t.executeSql(sql, paramsArray || [], function (t, res) { if (scb) { scb(res, t); } }, function (t, res) { if (ecb) { ecb(res, t); } });
-                });
-                return res;
-            };
-            res.success = function (callback) {
-                scb = callback;
-                return res;
-            };
-            res.error = function (callback) {
-                ecb = callback;
-                return res;
-            };
-            return res.init();
-        },
-        getTransaction: function (callback) {
-            this.db.transaction(function (t) { callback(t); });
-        }
-    });
-    SQLight.setDbOptions = function (fileName, version, displayName, maxSize) {
-        SQLight.dbOptions = { fileName: fileName, version: version, displayName: displayName, maxSize: maxSize };
-    };
-    SQLight.getList = function (res) {
-        var arr = [];
-        for (var i = 0, len = res.rows.length; i < len; i++) {
-            arr.push(res.rows.item(i));
-        }
-        return arr;
-    };
    
     Function.prototype.bind = Function.prototype.bind || function (b) { if (typeof this !== "function") { throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable"); } var a = Array.prototype.slice, f = a.call(arguments, 1), e = this, c = function () { }, d = function () { return e.apply(this instanceof c ? this : b || window, f.concat(a.call(arguments))); }; c.prototype = this.prototype; d.prototype = new c(); return d; };
 

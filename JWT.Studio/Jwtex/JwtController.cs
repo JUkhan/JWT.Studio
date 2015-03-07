@@ -89,7 +89,7 @@ namespace Jwt.Controller
         {
             try
             {
-                new jwtAppManager(Config.Root).GenerateConfig();
+                new jwtAppManager(Config.Root, GetDefaultNavigation()).GenerateConfig();
 
             }
              catch (Exception ex)
