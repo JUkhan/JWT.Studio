@@ -1,11 +1,9 @@
 
-import manu2005 from 'Scripts/Components/manu2005/manu2005Ctrl.js';
-import dox007 from 'Scripts/Layouts/dox007/dox007Ctrl.js';
+import Course202 from 'Scripts/Components/Course202/Course202Ctrl.js';
 
 var moduleName='app.controllers';
 
 angular.module(moduleName,[])
-.controller('manu2005Ctrl', manu2005)
-.controller('dox007Ctrl', dox007);
+.controller('Course202Ctrl', Course202);
 
 export default moduleName;

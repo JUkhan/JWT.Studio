@@ -1,9 +1,9 @@
 
-import manu2005 from 'Scripts/Components/manu2005/manu2005Svc.js';
+import Course202 from 'Scripts/Components/Course202/Course202Svc.js';
 
 var moduleName='app.services';
 
 angular.module(moduleName,[])
-.factory('manu2005Svc', manu2005);
+.factory('Course202Svc', Course202);
 
 export default moduleName;

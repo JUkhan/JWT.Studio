@@ -414,6 +414,13 @@ namespace jwt.internals
                     temp += newName + item.Extension;
                 }
                 RenameFile(item.FullName, temp);
+                //replace into the file content
+               /* if (item.Name.Contains("Svc")||item.Name.Contains("Ctrl"))
+                {
+                    var content= File.ReadAllText(temp);
+                    File.WriteAllText(temp, content.Replace(oldName, newName));
+                }*/              
+              
             }
             
         }
