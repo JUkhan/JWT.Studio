@@ -47,4 +47,5 @@ input[type="checkbox"].input-validation-error {
 }
 .form-control{
     display:inline-block;
+    width:auto;
 }

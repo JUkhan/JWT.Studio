@@ -1,5 +1,5 @@
 
-import BaseCtrl from 'Scripts/Controllers/BaseCtrl.js';
+import BaseCtrl from 'Scripts/base/BaseCtrl.js';
 const SVC=new WeakMap();
 class StudentCtrl extends BaseCtrl
 {

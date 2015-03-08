@@ -2,6 +2,7 @@
 import Course from 'Scripts/Components/Course/CourseCtrl.js';
 import Student from 'Scripts/Components/Student/StudentCtrl.js';
 import Enrollment from 'Scripts/Components/Enrollment/EnrollmentCtrl.js';
+import newItem from 'Scripts/Components/newItem/newItemCtrl.js';
 import rootLayout from 'Scripts/Layouts/rootLayout/rootLayoutCtrl.js';
 import imsLayout from 'Scripts/Layouts/imsLayout/imsLayoutCtrl.js';
 
@@ -11,6 +12,7 @@ angular.module(moduleName,[])
 .controller('CourseCtrl', Course)
 .controller('StudentCtrl', Student)
 .controller('EnrollmentCtrl', Enrollment)
+.controller('newItemCtrl', newItem)
 .controller('rootLayoutCtrl', rootLayout)
 .controller('imsLayoutCtrl', imsLayout);
 

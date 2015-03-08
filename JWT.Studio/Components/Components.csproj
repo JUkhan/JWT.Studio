@@ -185,9 +185,10 @@
     <Content Include="Scripts\app.filters.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\appStarter.js" />
+    <Content Include="Scripts\base\BaseCtrl.js" />
+    <Content Include="Scripts\base\BaseSvc.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Controllers\BaseCtrl.js" />
     <Content Include="Scripts\Directives\comInstaller\comInstaller.html" />
     <Content Include="Scripts\Directives\comInstaller\comInstaller.js" />
     <Content Include="Scripts\Filters\JwtDate.js" />
@@ -202,7 +203,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Services\BaseSvc.js" />
     <Content Include="Scripts\UI-Grid\csv.js" />
     <Content Include="Scripts\UI-Grid\pdfmake.js" />
     <Content Include="Scripts\UI-Grid\ui-grid-unstable.css" />

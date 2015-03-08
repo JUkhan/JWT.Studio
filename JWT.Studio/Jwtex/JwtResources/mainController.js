@@ -1,12 +1,12 @@
 ﻿
 angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal', '$q', function (scope, http, modal, qService) {
-    
+
     toastr.options.extendedTimeOut = 1000;
     toastr.options.timeOut = 1000;
     toastr.options.fadeOut = 250;
     toastr.options.fadeIn = 250;
-    toastr.options.positionClass = "toast-top-right";   
-   
+    toastr.options.positionClass = "toast-top-right";
+
     scope.jsModel = '';
     scope.htmlModel = '';
     scope.jsList = [];
@@ -25,24 +25,52 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.changeDataMode = function (val) {
         if (val !== scope.dataMode) {
             http.get('JwtEx/GetItems/?name=' + val)
-            .success(function (res) {               
+            .success(function (res) {
                 scope.items = res;
-                scope.itemValue ='0';
+                scope.itemValue = '0';
                 setEditorDefault();
-               
+
             })
         }
         scope.dataMode = val;
     }
     scope.changeItemValue = function () {
-        if (scope.itemValue === '0') { return;}
-        http.get('JwtEx/GetItemDetail/?name={0}&mode={1}'.format( scope.items[scope.itemValue], scope.dataMode))
-        .success(function (res) {           
+        if (scope.itemValue === '0') { return; }
+        http.get('JwtEx/GetItemDetail/?name={0}&mode={1}'.format(scope.items[scope.itemValue], scope.dataMode))
+        .success(function (res) {
             scope.jsList = res.js;
             scope.htmlList = res.html;
             setEditorDefault();
         });
     };
+    scope.newWidget = function (name) {
+        if (!name) return;
+        createItem(name, 'Widgets');
+       
+    };
+    scope.newComponent = function (name) {
+        if (!name) return
+        createItem(name, 'Components');
+    };
+    function createItem(name, mode) {
+        http.get('JwtEx/IsExist/?name={0}&mode={1}'.format(name, mode))
+        .success(function (res) {
+            if (!res.exist) {
+                http.get('JwtEx/CreateItem/?name={0}&mode={1}'.format(name, mode))
+                .success(function (res) {
+                    if (res.success) {
+                        success('Successfully generated.');
+                    }
+                    else {
+                        info(res.msg);
+                    }
+                });
+            }
+            else {
+                info('Already exist.');
+            }
+        });
+    }
     function setEditorDefault() {
         scope.htmlEditor.setValue('');
         scope.jsEditor.setValue('');
@@ -52,12 +80,12 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     //end of new style
 
     //tab_javascript
-     
+
     scope.jsLoad = function (fileName) {
         scope.jsFileName = fileName;
         if (!fileName) { info('File name is required.'); return; }
         http.get('JwtEx/GetFileContent/?mode={0}&directoryName={1}&fileName={2}'.format(scope.dataMode, scope.items[scope.itemValue], fileName))
-           .success(function (data) {              
+           .success(function (data) {
                scope.jsEditor.setValue(data.data);
            });
 
@@ -68,12 +96,12 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         .success(function (data) { if (data.isSuccess) { success('Saved successfully.'); } });
     }
     //tab_html
-       
+
     scope.htmlLoad = function (fileName) {
         scope.htmlFileName = fileName;
         if (!fileName) { info('File name is required.'); return; }
         http.get('JwtEx/GetFileContent/?mode={0}&directoryName={1}&fileName={2}'.format(scope.dataMode, scope.items[scope.itemValue], fileName))
-           .success(function (data) {               
+           .success(function (data) {
                scope.htmlEditor.setValue(data.data);
            });
 
@@ -97,14 +125,14 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
 
 function setJsEditor(scope) {
     setTimeout(function () {
-     scope.jsEditor= CodeMirror.fromTextArea(document.getElementById("jsEditor"), {
+        scope.jsEditor = CodeMirror.fromTextArea(document.getElementById("jsEditor"), {
             lineNumbers: true,
             theme: 'rubyblue',
             lineWrapping: true,
-            mode:{name: 'javascript',globalVars: true},
+            mode: { name: 'javascript', globalVars: true },
             matchBrackets: true,
             autoCloseBrackets: true,
-            extraKeys: { "Ctrl-Space": "autocomplete" },           
+            extraKeys: { "Ctrl-Space": "autocomplete" },
             enableSearchTools: true,
             styleActiveLine: true
         });

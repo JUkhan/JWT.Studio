@@ -7,5 +7,6 @@ export default function config(stateprovider, routeProvider){
 	stateprovider.state('rootLayout.Student',{url:'/Student',templateUrl:'Scripts/Components/Student/Student.html',controller:'StudentCtrl as vm'});
 	stateprovider.state('rootLayout.Enrollment',{url:'/Enrollment',templateUrl:'Scripts/Components/Enrollment/Enrollment.html',controller:'EnrollmentCtrl as vm'});
 	stateprovider.state('rootLayout.imsLayout.ims',{url:'/ims',views:{'col1':{templateUrl:'Scripts/Components/Course/Course.html',controller:'CourseCtrl as vm'},'col2':{templateUrl:'Scripts/Components/Student/Student.html',controller:'StudentCtrl as vm'},'col3':{templateUrl:'Scripts/Components/Enrollment/Enrollment.html',controller:'EnrollmentCtrl as vm'}}});
+	stateprovider.state('newitem',{url:'/newitem',templateUrl:'Scripts/Components/newItem/newItem.html',controller:'newItemCtrl as vm'});
 }
 config.$inject=['$stateProvider', '$urlRouterProvider'];

@@ -1,4 +1,4 @@
-﻿
+
 class comInstaller{
     constructor(){       
         this.restrict='E';
@@ -15,7 +15,7 @@ class comInstaller{
         };
        
 
-        console.log('comInstaller....');
+      
     }
    
    

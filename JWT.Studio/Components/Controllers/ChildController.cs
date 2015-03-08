@@ -19,7 +19,7 @@ namespace Components.Controllers
 
         public void GetComponent(string componentName)
         {
-            string SOURCE = Server.MapPath("~") + "Components/" + componentName;
+            string SOURCE = Server.MapPath("~") + "Scripts/Directives/" + componentName;
             string DESTINATION = Server.MapPath("~") + componentName + ".zip";
             if (System.IO.File.Exists(DESTINATION))
             {

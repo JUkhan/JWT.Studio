@@ -78,7 +78,7 @@ namespace jwt.CodeGen
         }
         private void AddUsing(string entity)
         {
-            _res.Append("import BaseSvc from 'Scripts/Services/BaseSvc.js';");
+            _res.Append("import BaseSvc from 'Scripts/base/BaseSvc.js';");
             _res.AppendLine();
             _res.AppendLine();
             _res.Append("const HTTP=new WeakMap();");

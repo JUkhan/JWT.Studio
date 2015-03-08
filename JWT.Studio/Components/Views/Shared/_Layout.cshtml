@@ -9,9 +9,9 @@
     <script src="JwtEx/Resources/?file=jquery.js"></script>
 </head>
 <body>
-   <div class="container body-content">
+    <div class="container body-content">
         <div ui-view>@RenderBody()</div>
-      <br />
+        <br />
         <hr />
         <footer>
             <p>&copy; jwt components</p>
@@ -21,7 +21,7 @@
         <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></i></div>
     </div>
 
-    <script src="JwtEx/Resources/?file=traceur.js"></script>   
+    <script src="JwtEx/Resources/?file=traceur.js"></script>
     <script src="JwtEx/Resources/?file=angular.js"></script>
     <script src="JwtEx/Resources/?file=angular-resource.js"></script>
     <script src="JwtEx/Resources/?file=angularui.js"></script>
@@ -36,23 +36,22 @@
 
     @RenderSection("scripts", required: false)
     <script>
-        $(function () {
-            if (window.addEventListener) {
-                window.addEventListener("message", listener, false);
-            } else {
-                attachEvent('onMessage', listener);
-            }
-        });
+
+        if (window.addEventListener) {
+            window.addEventListener("message", listener, false);
+        } else {
+            attachEvent('onMessage', listener);
+        }
+
         function sendMessage(name) {
             if (name) {
                 var data = { id: 'jwt', comName: name };
-                console.log(data);
                 window.parent.postMessage(data, '*');
             }
         }
         function listener(event) {
 
-           //console.log(event.data);
+            //console.log(event.data);
         }
     </script>
 </body>

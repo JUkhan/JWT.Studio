@@ -1,13 +1,15 @@
 
-import rootCtrl from 'Scripts/Controllers/rootCtrl.js';
-import MacWidgetCtrl from 'Scripts/Controllers/MacWidgetCtrl.js';
-import jwtFilterWidgetCtrl from 'Scripts/Controllers/jwtFilterWidgetCtrl.js';
+import MacWidget from 'Scripts/Components/MacWidget/MacWidgetCtrl.js';
+import jwtFilterWidget from 'Scripts/Components/jwtFilterWidget/jwtFilterWidgetCtrl.js';
+import dogWidget from 'Scripts/Components/dogWidget/dogWidgetCtrl.js';
+import root from 'Scripts/Layouts/root/rootCtrl.js';
 
 var moduleName='app.controllers';
 
 angular.module(moduleName,[])
-.controller('rootCtrl', rootCtrl)
-.controller('MacWidgetCtrl', MacWidgetCtrl)
-.controller('jwtFilterWidgetCtrl', jwtFilterWidgetCtrl);
+.controller('MacWidgetCtrl', MacWidget)
+.controller('jwtFilterWidgetCtrl', jwtFilterWidget)
+.controller('dogWidgetCtrl', dogWidget)
+.controller('rootCtrl', root);
 
 export default moduleName;

@@ -98,14 +98,7 @@ namespace Jwtex
             {
                 switch (mode)
                 {
-                    case "Controllers":
-                        path += "Scripts\\Controllers\\" + fileName;
-                        res.data = System.IO.File.ReadAllText(path);
-                        break;
-                    case "Services":
-                        path += "Scripts\\Services\\" + fileName;
-                        res.data = System.IO.File.ReadAllText(path);
-                        break;
+                   
                     case "Layouts":
                         path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
                         res.data = System.IO.File.ReadAllText(path);
@@ -136,15 +129,8 @@ namespace Jwtex
             try
             {
                 switch (mode)
-                {
-                    case "Controllers":
-                        path += "Scripts\\Controllers\\" + fileName;
-                        System.IO.File.WriteAllText(path, content);
-                        break;
-                    case "Services":
-                        path += "Scripts\\Services\\" + fileName;
-                        System.IO.File.WriteAllText(path, content);
-                        break;
+                {                    
+                    
                     case "Layouts":
                         path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
                         System.IO.File.WriteAllText(path, content);
@@ -211,6 +197,36 @@ namespace Jwtex
             return Json(new {  js=list.Where(x=>x.EndsWith(".js")), html=list.Where(x=>x.EndsWith(".css")||x.EndsWith(".html"))}, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult IsExist(string mode, string name)
+        {
+            string path = Config.Root;
+            switch (mode)
+            {
+                case "Widgets":
+                    path += "Scripts\\Components\\" + name;
+                    break;
+                case "Components":
+                    path += "Scripts\\Derictives\\" + name;
+                    break;
+            }
+            return Json(new { exist = Directory.Exists(path) }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult CreateItem(string mode, string name)
+        {
+            try
+            {
+                CodeGen cg = new CodeGen();
+                cg.Root = Config.Root;
+                cg.CreateItem(mode, name);
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, msg = ex.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
         #endregion
         private List<string> GetFiles(string directoryName)
         {

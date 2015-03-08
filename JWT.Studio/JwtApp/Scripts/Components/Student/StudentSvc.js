@@ -1,4 +1,4 @@
-import BaseSvc from 'Scripts/Services/BaseSvc.js';
+import BaseSvc from 'Scripts/base/BaseSvc.js';
 
 const HTTP=new WeakMap();
 class StudentSvc extends BaseSvc

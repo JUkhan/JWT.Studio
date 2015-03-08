@@ -20,10 +20,12 @@
                 <label ng-click="changeDataMode('Components')" class="btn btn-success" ng-model="dataMode" btn-radio="'Components'">Components</label>
             </div>
             <b>&nbsp;&nbsp;</b>
-            <select ng-show="items.length>0" ng-change="changeItemValue()" ng-model="itemValue" >
+            <select class="form-control" ng-show="items.length>0" ng-change="changeItemValue()" ng-model="itemValue">
                 <option ng-repeat="u in items" value="{{$index}}">{{u}}</option>
             </select>
-            
+            <input class="form-control" type="text" ng-model="itemName" />
+            <input type="button" class="btn btn-success" value="New Widget" ng-click="newWidget(itemName)" />
+            <input type="button" class="btn btn-success" value="New Component" ng-click="newComponent(itemName)" />
         </div>
         <tabset>
             <tab heading="Javascript">

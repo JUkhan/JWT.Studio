@@ -219,24 +219,12 @@ namespace Jwt.Controller
         {
             try
             {
-                //string templates = Config.Root + "Scripts";
-                createDirectory(Config.Root + "Scripts");
-
-                //string component = Config.Root + "Scripts\\Components";
+                
+                createDirectory(Config.Root + "Scripts");               
                 createDirectory(Config.Root + "Scripts\\Components");
-
-                createDirectory(Config.Root + "Scripts\\Components\\"+entity);
-                //Generate scripts directories
-                //string script = Config.Root + "\\Scripts";
-                //createDirectory(script);
-                //script = Config.Root + "\\Scripts\\Controllers";
-                //createDirectory(script);
-                //script = Config.Root + "\\Scripts\\Services";
-                //createDirectory(script);
-                //services
-                //string script = Config.ServiceProject + "\\Interfaces";
-                createDirectory(Config.ServiceProject + "\\Interfaces");
-               // script = Config.ServiceProject + "\\Implementation";
+                createDirectory(Config.Root + "Scripts\\Components\\"+entity); 
+               
+                createDirectory(Config.ServiceProject + "\\Interfaces");              
                 createDirectory(Config.ServiceProject + "\\Implementation");
 
                 ICode code = new TemplateCode();
@@ -302,14 +290,15 @@ namespace Jwt.Controller
         }
         private List<string> GetTemplateList(string path)
         {
-            List<string> list = null;
-            if (Directory.Exists(path + "Templates//Widgets"))
+            path += "Scripts\\Components";
+           
+            List<string> list = new List<string>();
+            if (Directory.Exists(path))
             {
-                list = new List<string>();
-                foreach (var item in Directory.GetFiles(path + "Templates//Widgets"))
+                DirectoryInfo dir = new DirectoryInfo(path);
+                foreach (var item in dir.GetDirectories())
                 {
-                    FileInfo fileInfo = new FileInfo(item);
-                    list.Add(fileInfo.Name.Replace(".html", ""));
+                    list.Add(item.Name);
                 }
             }
             return list;
@@ -321,7 +310,7 @@ namespace Jwt.Controller
             JSONData res = new JSONData();
             try
             {
-                string input = System.IO.File.ReadAllText(Config.Root + "Templates\\Layouts\\" + layoutName+".html");
+                string input = System.IO.File.ReadAllText(Config.Root + "Scripts\\Layouts\\"+layoutName+"\\" + layoutName+".html");
                 var matches = Regex.Matches(input, "ui-view=\"([a-zA-Z0-9]+)\"", RegexOptions.IgnoreCase);
                 List<Jwtex.View> views = new List<Jwtex.View>();
                 foreach (Match item in matches)
