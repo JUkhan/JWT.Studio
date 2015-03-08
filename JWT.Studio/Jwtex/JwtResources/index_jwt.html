@@ -12,7 +12,7 @@
 
     <div class="container body-content" ng-controller="mainController">
 
-        <h5>{{msg}}</h5>
+        <h5 ng-bind="msg"></h5>
         <hr />
 
         <tabset>
@@ -20,7 +20,7 @@
                 <div class="mac">
 
 
-                    <input type="button" value="Generate Config" class="btn btn-default" ng-click="generateConfig()" />
+                    <input ng-show="false" type="button" value="Generate Config" class="btn btn-default" ng-click="generateConfig()" />
                     <input type="button" class="btn btn-warning" value="Reload Widgets" ng-click="getTemplateList()" />
 
                     <div class="row">

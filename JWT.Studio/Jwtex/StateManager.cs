@@ -145,15 +145,9 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                Rename(RootPath + "Scripts\\Layouts\\" + temp.LayoutName, layout.LayoutName, temp.LayoutName);
                 UpdateLayout(temp.LayoutName, layout.LayoutName);
-                //rename files
-                var preControllerName = RootPath + "Scripts\\Controllers\\" + temp.LayoutName + "Ctrl.js";
-                var newControllerName = RootPath + "Scripts\\Controllers\\" + layout.LayoutName + "Ctrl.js";
-                RenameFile(preControllerName, newControllerName);
-                var preTemplateName = RootPath + "Templates\\Layouts\\" + temp.LayoutName + ".html";
-                var newTemplateName = RootPath + "Templates\\Layouts\\" + layout.LayoutName + ".html";
-                RenameFile(preTemplateName, newTemplateName);
-
+              
                 temp.LayoutName = layout.LayoutName;
                 temp.Extend = layout.Extend;
                 Serialize();
@@ -191,8 +185,7 @@ namespace jwt.internals
                     return string.Format("'{0}' not exist.");
                 }
                 //rename files               
-                RemoveFile(RootPath + "Scripts\\Controllers\\" + temp.LayoutName + "Ctrl.js");
-                RemoveFile(RootPath + "Templates\\Layouts\\" + temp.LayoutName + ".html");
+                Remove(RootPath + "Scripts\\Layouts\\" + temp.LayoutName);
 
                 app.UILayouts.Remove(temp);
                 Serialize();
@@ -253,15 +246,9 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
+                Rename(RootPath + "Scripts\\Components\\" + temp.WidgetName, navigation.WidgetName, temp.WidgetName);
                 UpdateNavigation(temp.WidgetName, navigation.WidgetName);
-                //rename files
-                var preControllerName = RootPath + "Scripts\\Controllers\\" + temp.WidgetName + "Ctrl.js";
-                var newControllerName = RootPath + "Scripts\\Controllers\\" + navigation.WidgetName + "Ctrl.js";
-                RenameFile(preControllerName, newControllerName);
-                var preTemplateName = RootPath + "Templates\\Widgets\\" + temp.WidgetName + ".html";
-                var newTemplateName = RootPath + "Templates\\Widgets\\" + navigation.WidgetName + ".html";
-                RenameFile(preTemplateName, newTemplateName);
-
+                 
                 temp.NavigationName = navigation.NavigationName;
                 temp.WidgetName = navigation.WidgetName;
                 temp.ParamName = navigation.ParamName;
@@ -305,9 +292,8 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
-                //rename files               
-                RemoveFile(RootPath + "Scripts\\Controllers\\" + temp.WidgetName + "Ctrl.js");
-                RemoveFile(RootPath + "Templates\\Widgets\\" + temp.WidgetName + ".html");
+                //remove files               
+                Remove(RootPath + "Scripts\\Components\\" + temp.WidgetName);
 
                 app.UINavigations.Remove(temp);
                 Serialize();
@@ -376,7 +362,8 @@ namespace jwt.internals
             if (previousName == newName) return;
             if (IsExist(previousName))
             {
-                System.IO.File.Move(previousName, newName);
+                System.IO.File.Copy(previousName, newName);
+                System.IO.File.Delete(previousName);
             }
         }
         private void RemoveFile(string fileName)
@@ -386,6 +373,51 @@ namespace jwt.internals
                 System.IO.File.Delete(fileName);
             }
         }
+        private void Remove(string path)
+        {
+            if (!Directory.Exists(path)) return;
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(path);
+                foreach (var item in dir.GetFiles())
+                {
+                    item.Delete();
+                }
+                dir.Delete();
+            }
+            catch (Exception)
+            {
+                
+                
+            }
+        }
+        private void Rename(string path, string newName, string oldName)
+        {
+            if (!Directory.Exists(path)) return;
+            string path2=path.Replace(oldName, newName);
+            Directory.Move(path, path2);
+            DirectoryInfo dir = new DirectoryInfo(path2);
+           
+            foreach (FileInfo item in dir.GetFiles())
+            {
+                var temp=item.FullName.Substring(0, item.FullName.LastIndexOf(item.Name));
+                if (item.Name.Contains("Svc"))
+                {
+                    temp += newName+"Svc" + item.Extension;
+                }
+                else if (item.Name.Contains("Ctrl"))
+                {
+                    temp += newName + "Ctrl" + item.Extension;
+                }
+                else
+                {
+                    temp += newName + item.Extension;
+                }
+                RenameFile(item.FullName, temp);
+            }
+            
+        }
+        
         #endregion
     }
 

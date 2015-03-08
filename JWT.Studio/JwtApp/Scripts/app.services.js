@@ -1,15 +1,9 @@
 
-import Course from 'Scripts/Components/Course/CourseSvc.js';
-import Student from 'Scripts/Components/Student/StudentSvc.js';
-import Enrollment from 'Scripts/Components/Enrollment/EnrollmentSvc.js';
-import newItem from 'Scripts/Components/newItem/newItemSvc.js';
+import manu2005 from 'Scripts/Components/manu2005/manu2005Svc.js';
 
 var moduleName='app.services';
 
 angular.module(moduleName,[])
-.factory('CourseSvc', Course)
-.factory('StudentSvc', Student)
-.factory('EnrollmentSvc', Enrollment)
-.factory('newItemSvc', newItem);
+.factory('manu2005Svc', manu2005);
 
 export default moduleName;

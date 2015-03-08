@@ -13,6 +13,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
         http.post(url, vm).success(function (res) {
             getLayouts();
             scope.lvm = {};
+            scope.generateConfig();
         });
     }
     scope.updateLayout = function (vm) {
@@ -22,6 +23,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
         if (!confirm('Sure to remove?')) { return;}
         http.post('Jwt/RemoveLayout', vm).success(function (res) {
             getLayouts(); scope.lvm = {};
+            scope.generateConfig();
         });
     }
     function getLayouts() {
@@ -40,6 +42,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
         http.post(url, vm).success(function (res) {
             getNavs();
             scope.nvm = {};
+            scope.generateConfig();
         });
     }
     scope.updateNav = function (vm) {
@@ -49,6 +52,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
         if (!confirm('Sure to remove?')) { return; }
         http.post('Jwt/RemoveNavigation', vm).success(function (res) {
             getNavs(); scope.nvm = {};
+            scope.generateConfig();
         });
     }
     function getNavs() {
@@ -81,7 +85,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
     }
     scope.$on('jwt-view-update', function (e, data) { scope.nvm.UIViews = data; });
     scope.generateConfig = function () {
-        http.get('Jwt/GenerateConfig').success(function (res) { scope.msg = res.msg; alert(res.msg); });
+        http.get('Jwt/GenerateConfig').success(function (res) { scope.msg = res.msg;  });
     };
     //second tab
     var list = [];

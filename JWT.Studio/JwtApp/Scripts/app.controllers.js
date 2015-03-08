@@ -1,19 +1,11 @@
 
-import Course from 'Scripts/Components/Course/CourseCtrl.js';
-import Student from 'Scripts/Components/Student/StudentCtrl.js';
-import Enrollment from 'Scripts/Components/Enrollment/EnrollmentCtrl.js';
-import newItem from 'Scripts/Components/newItem/newItemCtrl.js';
-import rootLayout from 'Scripts/Layouts/rootLayout/rootLayoutCtrl.js';
-import imsLayout from 'Scripts/Layouts/imsLayout/imsLayoutCtrl.js';
+import manu2005 from 'Scripts/Components/manu2005/manu2005Ctrl.js';
+import dox007 from 'Scripts/Layouts/dox007/dox007Ctrl.js';
 
 var moduleName='app.controllers';
 
 angular.module(moduleName,[])
-.controller('CourseCtrl', Course)
-.controller('StudentCtrl', Student)
-.controller('EnrollmentCtrl', Enrollment)
-.controller('newItemCtrl', newItem)
-.controller('rootLayoutCtrl', rootLayout)
-.controller('imsLayoutCtrl', imsLayout);
+.controller('manu2005Ctrl', manu2005)
+.controller('dox007Ctrl', dox007);
 
 export default moduleName;
