@@ -48,7 +48,7 @@ namespace Jwtex
         {
             try
             {
-                using (MemoryStream mem = GetURLContents(GetComponentUrl() + "Child/GetComponent?componentName=" + name))
+                using (MemoryStream mem = GetURLContents(GetComponentUrl() + "JwtComponent/GetComponent?componentName=" + name))
                 {
                     using (ZipArchive arc = new ZipArchive(mem))
                     {
@@ -68,7 +68,18 @@ namespace Jwtex
                 return Json(new { msg = ex.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+        public void GetComponent(string componentName)
+        {
+            string SOURCE =Config.Root + "Scripts/Directives/" + componentName;
+            string DESTINATION = Config.Root + componentName + ".zip";
+            if (System.IO.File.Exists(DESTINATION))
+            {
+                System.IO.File.Delete(DESTINATION);
+            }
+            ZipFile.CreateFromDirectory(SOURCE, DESTINATION);
+            Response.TransmitFile(DESTINATION);
 
+        }
         private void UpdateAppDirectives()
         {
             DirectoryInfo dir = new DirectoryInfo(Config.Root + "Scripts//Directives");
