@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using log4net;
+using System.Reflection;
 
 namespace jwt.internals
 {
@@ -66,13 +68,14 @@ namespace jwt.internals
 
     public class jwtAppManager
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private string defaultNavigation = "";
         private jwtApp app = null;
         public jwtAppManager()
         {
 
         }
-        public jwtAppManager(string path, string defaultNavigation="")
+        public jwtAppManager(string path, string defaultNavigation = "")
         {
             RootPath = path;
             this.defaultNavigation = defaultNavigation;
@@ -137,6 +140,7 @@ namespace jwt.internals
         }
         public string UpdateLayout(Layout layout)
         {
+            log.Info(layout.LayoutName);
             try
             {
                 Deserialize();
@@ -147,7 +151,7 @@ namespace jwt.internals
                 }
                 Rename(RootPath + "Scripts\\Layouts\\" + temp.LayoutName, layout.LayoutName, temp.LayoutName);
                 UpdateLayout(temp.LayoutName, layout.LayoutName);
-              
+
                 temp.LayoutName = layout.LayoutName;
                 temp.Extend = layout.Extend;
                 Serialize();
@@ -155,7 +159,7 @@ namespace jwt.internals
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return ex.ToString();
             }
         }
@@ -238,6 +242,7 @@ namespace jwt.internals
         }
         public string UpdateNavigation(Navigation navigation)
         {
+            log.Info(navigation.NavigationName);
             try
             {
                 Deserialize();
@@ -248,7 +253,7 @@ namespace jwt.internals
                 }
                 Rename(RootPath + "Scripts\\Components\\" + temp.WidgetName, navigation.WidgetName, temp.WidgetName);
                 UpdateNavigation(temp.WidgetName, navigation.WidgetName);
-                 
+
                 temp.NavigationName = navigation.NavigationName;
                 temp.WidgetName = navigation.WidgetName;
                 temp.ParamName = navigation.ParamName;
@@ -260,7 +265,7 @@ namespace jwt.internals
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return ex.ToString();
             }
         }
@@ -387,23 +392,24 @@ namespace jwt.internals
             }
             catch (Exception)
             {
-                
-                
+
+
             }
         }
         private void Rename(string path, string newName, string oldName)
         {
             if (!Directory.Exists(path)) return;
-            string path2=path.Replace(oldName, newName);
-            Directory.Move(path, path2);
+            string path2 = path.Replace(oldName, newName);
+            if (path != path2)
+                Directory.Move(path, path2);
             DirectoryInfo dir = new DirectoryInfo(path2);
-           
+
             foreach (FileInfo item in dir.GetFiles())
             {
-                var temp=item.FullName.Substring(0, item.FullName.LastIndexOf(item.Name));
+                var temp = item.FullName.Substring(0, item.FullName.LastIndexOf(item.Name));
                 if (item.Name.Contains("Svc"))
                 {
-                    temp += newName+"Svc" + item.Extension;
+                    temp += newName + "Svc" + item.Extension;
                 }
                 else if (item.Name.Contains("Ctrl"))
                 {
@@ -415,16 +421,16 @@ namespace jwt.internals
                 }
                 RenameFile(item.FullName, temp);
                 //replace into the file content
-               /* if (item.Name.Contains("Svc")||item.Name.Contains("Ctrl"))
-                {
-                    var content= File.ReadAllText(temp);
-                    File.WriteAllText(temp, content.Replace(oldName, newName));
-                }*/              
-              
+                /* if (item.Name.Contains("Svc")||item.Name.Contains("Ctrl"))
+                 {
+                     var content= File.ReadAllText(temp);
+                     File.WriteAllText(temp, content.Replace(oldName, newName));
+                 }*/
+
             }
-            
+
         }
-        
+
         #endregion
     }
 

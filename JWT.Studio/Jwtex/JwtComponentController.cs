@@ -9,10 +9,13 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using log4net;
+using System.Reflection;
 namespace Jwtex
 {
     public class JwtComponentController : BaseController
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public void Index()
         {
             //string nameSpace = GetType().Assembly.GetName().Name;
@@ -31,17 +34,28 @@ namespace Jwtex
 
         public JsonResult IsInstalled(string name)
         {
-            DirectoryInfo dir = new DirectoryInfo(Config.Root + "Scripts//Directives");
-            bool res = false;
-            foreach (var item in dir.GetDirectories())
+            try
             {
-                if (item.Name == name) { res = true; }
+
+                string path = Config.Root + "Scripts\\Directives";
+                DirectoryInfo dir = new DirectoryInfo(path);
+                bool res = false;
+                foreach (var item in dir.GetDirectories())
+                {
+                    if (item.Name == name) { res = true; }
+                }
+                return Json(new { msg = res }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { msg = res }, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return Json(new { msg = false, error = ex.ToString() }, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        private string GetComponentUrl(){
-            var url=ConfigurationManager.AppSettings["ComponentsUrl"]??"";
+        private string GetComponentUrl()
+        {
+            var url = ConfigurationManager.AppSettings["ComponentsUrl"] ?? "";
             return url.EndsWith("/") ? url : url + "/";
         }
         public JsonResult Download(string name)
@@ -52,7 +66,7 @@ namespace Jwtex
                 {
                     using (ZipArchive arc = new ZipArchive(mem))
                     {
-                        var path = Config.Root + "Scripts//Directives//" + name;
+                        var path = Config.Root + "Scripts\\Directives\\" + name;
                         if (Directory.Exists(path))
                         {
                             RemoveDirectoryFiles(path);
@@ -65,24 +79,32 @@ namespace Jwtex
             }
             catch (Exception ex)
             {
+                log.Error(ex);
                 return Json(new { msg = ex.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
         public void GetComponent(string componentName)
         {
-            string SOURCE =Config.Root + "Scripts/Directives/" + componentName;
-            string DESTINATION = Config.Root + componentName + ".zip";
-            if (System.IO.File.Exists(DESTINATION))
+            try
             {
-                System.IO.File.Delete(DESTINATION);
+                string SOURCE = Config.Root + "Scripts\\Directives\\" + componentName;
+                string DESTINATION = Config.Root + componentName + ".zip";
+                if (System.IO.File.Exists(DESTINATION))
+                {
+                    System.IO.File.Delete(DESTINATION);
+                }
+                ZipFile.CreateFromDirectory(SOURCE, DESTINATION);
+                Response.TransmitFile(DESTINATION);
             }
-            ZipFile.CreateFromDirectory(SOURCE, DESTINATION);
-            Response.TransmitFile(DESTINATION);
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
 
         }
         private void UpdateAppDirectives()
         {
-            DirectoryInfo dir = new DirectoryInfo(Config.Root + "Scripts//Directives");
+            DirectoryInfo dir = new DirectoryInfo(Config.Root + "Scripts\\Directives");
             StringBuilder import = new StringBuilder();
             StringBuilder builder = new StringBuilder();
             StringBuilder componentsCSS = new StringBuilder();
@@ -93,7 +115,7 @@ namespace Jwtex
 
                 builder.AppendFormat(".directive('{0}', {0}.builder)", item.Name);
                 builder.AppendLine();
-                if (System.IO.File.Exists(string.Format(Config.Root+ "Scripts/Directives/{0}/{0}.css", item.Name)))
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Directives/{0}/{0}.css", item.Name)))
                 {
                     componentsCSS.AppendFormat("@import '../Scripts/Directives/{0}/{0}.css';", item.Name);
                     componentsCSS.AppendLine();
@@ -114,13 +136,21 @@ namespace Jwtex
             res.AppendLine();
             res.AppendLine();
             res.Append("export default moduleName;");
-            System.IO.File.WriteAllText(Config.Root + "Scripts//app.directives.js", res.ToString());
-            System.IO.File.WriteAllText(Config.Root + "Content//components.css", componentsCSS.ToString());
+            System.IO.File.WriteAllText(Config.Root + "Scripts\\app.directives.js", res.ToString());
+            System.IO.File.WriteAllText(Config.Root + "Content\\components.css", componentsCSS.ToString());
         }
         private void RemoveDirectoryFiles(string path)
         {
-            DirectoryInfo dir = new DirectoryInfo(path);
-            foreach (FileInfo file in dir.GetFiles()) file.Delete();
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(path);
+                foreach (FileInfo file in dir.GetFiles()) file.Delete();
+            }
+            catch (Exception ex)
+            {
+
+                log.Error(ex);
+            }
         }
         private MemoryStream GetURLContents(string url)
         {
@@ -163,13 +193,22 @@ namespace Jwtex
         }
         public JsonResult GetDemoInfo(string name, string mode)
         {
-            string path = Config.Root + "Scripts\\ComDemoApi\\" + name + "\\"+mode+".html";
-            string res = "<b>Not Available</b>";
-            if (System.IO.File.Exists(path))
+            try
             {
-                res = System.IO.File.ReadAllText(path);
+                string path = Config.Root + "Scripts\\ComDemoApi\\" + name + "\\" + mode + ".html";
+                string res = "<b>Not Available</b>";
+                if (System.IO.File.Exists(path))
+                {
+                    res = System.IO.File.ReadAllText(path);
+                }
+                return Json(new { data = res }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { data = res }, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return Json(new { data = ex.ToString() }, JsonRequestBehavior.AllowGet);
+
+            }
         }
 
     }

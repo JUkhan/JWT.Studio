@@ -28,6 +28,10 @@ namespace Jwt.Controller
             {
                 config = new JwtConfig();
                 config.Root = Server.MapPath("~");
+                if (!config.Root.EndsWith("\\"))
+                {
+                    config.Root += "\\";
+                }
                 //EntityProject
                 if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["EntityProject"]))
                 {

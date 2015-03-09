@@ -1,9 +1,17 @@
 
-import Course202 from 'Scripts/Components/Course202/Course202Ctrl.js';
+import widget1 from 'Scripts/Components/widget1/widget1Ctrl.js';
+import widget2 from 'Scripts/Components/widget2/widget2Ctrl.js';
+import ims from 'Scripts/Components/ims/imsCtrl.js';
+import root from 'Scripts/Layouts/root/rootCtrl.js';
+import complex from 'Scripts/Layouts/complex/complexCtrl.js';
 
 var moduleName='app.controllers';
 
 angular.module(moduleName,[])
-.controller('Course202Ctrl', Course202);
+.controller('widget1Ctrl', widget1)
+.controller('widget2Ctrl', widget2)
+.controller('imsCtrl', ims)
+.controller('rootCtrl', root)
+.controller('complexCtrl', complex);
 
 export default moduleName;

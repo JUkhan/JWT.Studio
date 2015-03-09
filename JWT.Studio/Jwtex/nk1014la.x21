@@ -75,7 +75,6 @@ namespace Jwt.Controller
         }
         public JsonResult UpdateNavigation(Jwtex.Navigation navigation)
         {
-            log.Info(navigation.NavigationName);
             return Json(new { msg = new jwtAppManager(Config.Root).UpdateNavigation(navigation) });
         }
         public JsonResult RemoveNavigation(Jwtex.Navigation navigation)

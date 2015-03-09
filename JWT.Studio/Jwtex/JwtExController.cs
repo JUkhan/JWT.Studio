@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using log4net;
+using System.Reflection;
 
 namespace Jwtex
 {
     public class JwtExController : Jwt.Controller.BaseController
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public void Index()
         {
             string nameSpace = GetType().Assembly.GetName().Name;
@@ -48,7 +51,7 @@ namespace Jwtex
             JResult res = new JResult();
             try
             {
-                string path = Server.MapPath("~");
+                string path =Config.Root;
                 switch (directory)
                 {
                     case "Controllers":
@@ -117,6 +120,7 @@ namespace Jwtex
             }
             catch (Exception ex)
             {
+                log.Error(ex);
                 res.msg = ex.Message;
             }
 
@@ -149,6 +153,7 @@ namespace Jwtex
             }
             catch (Exception ex)
             {
+                log.Error(ex);
                 res.msg = ex.Message;
             }
 
@@ -163,15 +168,15 @@ namespace Jwtex
             {
                 case "Layouts":
                     list.Add("Select a layout");
-                    list.AddRange(GetSubdirectories(Config.Root + "Scripts//Layouts"));
+                    list.AddRange(GetSubdirectories(Config.Root + "Scripts\\Layouts"));
                     break;
                 case "Widgets":
                     list.Add("Select a widgets");
-                    list.AddRange(GetSubdirectories(Config.Root + "Scripts//Components"));
+                    list.AddRange(GetSubdirectories(Config.Root + "Scripts\\Components"));
                     break;
                 case "Components":
                     list.Add("Select a component");
-                    list.AddRange(GetSubdirectories(Config.Root + "Scripts//Directives"));
+                    list.AddRange(GetSubdirectories(Config.Root + "Scripts\\Directives"));
 
                     break;
             }
@@ -183,14 +188,14 @@ namespace Jwtex
             switch (mode)
             {
                 case "Layouts":
-                    list = GetFiles(Config.Root + "Scripts//Layouts//" + name);
+                    list = GetFiles(Config.Root + "Scripts\\Layouts\\" + name);
                     break;
                 case "Widgets":
-                    list = GetFiles(Config.Root + "Scripts//Components//" + name);
+                    list = GetFiles(Config.Root + "Scripts\\Components\\" + name);
                     break;
                 case "Components":
 
-                    list = GetFiles(Config.Root + "Scripts//Directives//" + name);
+                    list = GetFiles(Config.Root + "Scripts\\Directives\\" + name);
 
                     break;
             }
@@ -222,7 +227,7 @@ namespace Jwtex
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return Json(new { success = false, msg = ex.ToString() }, JsonRequestBehavior.AllowGet);
             }
 

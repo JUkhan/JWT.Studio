@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.IO;
+//using log4net;
+using System.Reflection;
 namespace Jwtex
 {
     public class jwtApp
@@ -85,6 +87,7 @@ namespace Jwtex
 
     public class CodeGen
     {
+        //private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private const string TAB1 = "\t";
         private const string TAB2 = "\t\t";
         private const string TAB3 = "\t\t\t";
@@ -95,7 +98,6 @@ namespace Jwtex
         private Dictionary<string, string> navList = new Dictionary<string, string>();
         public CodeGen(jwtApp app)
         {
-
             this.App = app;
             this.Root = AppDomain.CurrentDomain.BaseDirectory;
         }
@@ -138,7 +140,7 @@ namespace Jwtex
         }
         private void GenAppDirectives()
         {
-            DirectoryInfo dir = new DirectoryInfo(Root + "Scripts//Directives");
+            DirectoryInfo dir = new DirectoryInfo(Root + "Scripts\\Directives");
             StringBuilder import = new StringBuilder();
             StringBuilder builder = new StringBuilder();
             StringBuilder componentsCSS = new StringBuilder();
@@ -170,8 +172,8 @@ namespace Jwtex
             res.AppendLine();
             res.AppendLine();
             res.Append("export default moduleName;");
-            System.IO.File.WriteAllText(Root + "Scripts//app.directives.js", res.ToString());
-            System.IO.File.WriteAllText(Root + "Content//components.css", componentsCSS.ToString());
+            System.IO.File.WriteAllText(Root + "Scripts\\app.directives.js", res.ToString());
+            System.IO.File.WriteAllText(Root + "Content\\components.css", componentsCSS.ToString());
         }
         private void GetNamArr(StringBuilder sb)
         {
