@@ -19,7 +19,7 @@ namespace jwt.CodeGen
             _res.AppendLine();
             _res.Append("}");
             _res.AppendLine();
-            _res.AppendFormat("{0}Ctrl.$inject=['{0}Svc', '$scope', '$sce'];", entity);
+            _res.AppendFormat("{0}Ctrl.$inject=['{0}Svc', '$scope'];", entity);
             _res.AppendLine();
             _res.AppendFormat("export default {0}Ctrl;",entity);
             return _res.ToString();
@@ -31,12 +31,12 @@ namespace jwt.CodeGen
         {
             var xentity = entity.Length > 1 ? entity[0].ToString().ToLower() + entity.Substring(1) : entity;
             _res.AppendLine();
-            _res.AppendFormat(TAB1 + "constructor({0}Svc, scope, sce)", xentity);
+            _res.AppendFormat(TAB1 + "constructor({0}Svc, scope)", xentity);
             _res.AppendLine();
             _res.Append(TAB1 + "{");
 
             _res.AppendLine();
-            _res.AppendFormat(TAB2 + "super({0}Svc, scope, sce);", xentity);
+            _res.AppendFormat(TAB2 + "super({0}Svc, scope);", xentity);
             _res.AppendLine();
 
             _res.AppendLine();

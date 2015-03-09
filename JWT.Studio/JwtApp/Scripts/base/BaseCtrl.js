@@ -1,11 +1,9 @@
 
-const SCE=new WeakMap();
 const SVC=new WeakMap();
 const SCOPE=new WeakMap();
 class BaseCtrl{      
-    constructor(service, scope, sce){            
-        SVC.set(this, service);
-        SCE.set(this, sce);
+    constructor(service, scope){            
+        SVC.set(this, service);      
         SCOPE.set(this, scope);
         this.isNewItem= false;
         this.message = null;
@@ -184,10 +182,7 @@ class BaseCtrl{
         }.bind(this));
 
 
-    }
-    trustAsHtml(html) {
-        return SCE.get(this).trustAsHtml(html);
-    }
+    }   
     success(message) {
         toastr["success"](message);
     }

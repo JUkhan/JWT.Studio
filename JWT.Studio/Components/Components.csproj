@@ -188,6 +188,10 @@
     <Content Include="Scripts\base\BaseSvc.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ComDemoApi\dog\api.html" />
+    <Content Include="Scripts\ComDemoApi\dog\code.html" />
+    <Content Include="Scripts\ComDemoApi\mac\api.html" />
+    <Content Include="Scripts\ComDemoApi\mac\code.html" />
     <Content Include="Scripts\Directives\comInstaller\comInstaller.html" />
     <Content Include="Scripts\Directives\comInstaller\comInstaller.js" />
     <Content Include="Scripts\Filters\JwtDate.js" />

@@ -7,6 +7,20 @@
 <hr />
 <p>{{description}}</p>
 
-<b>Demo</b><a href="#" class="btn btn-link" >Demo Code</a><a href="#" class="btn btn-link">Api</a>
+<b>Demo</b><input type="button" class="btn btn-link" value="Demo Code" ng-click="getDemoInfo(name,'code')" />
+<input type="button" class="btn btn-link" value="Api" ng-click="getDemoInfo(name,'api')" />
 <hr />
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Component {{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-bind-html="info" ></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+
+    </div>
+</script>
 

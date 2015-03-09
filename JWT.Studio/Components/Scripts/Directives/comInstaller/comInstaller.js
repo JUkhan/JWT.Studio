@@ -8,10 +8,33 @@ class comInstaller{
             name:"@",
             description:'@'
         };
-       this.controller=function($scope){
-            $scope.installComponent=function(name){
-                sendMessage($scope.name);
-            }
+        this.controller=function($scope, $http, $modal){
+           $scope.installComponent=function(name){
+               sendMessage($scope.name);
+           };
+           $scope.getDemoInfo=function(name, mode){
+               $http.get('JwtComponent/GetDemoInfo?name={0}&mode={1}'.format(name, mode))
+               .success(function(res){                   
+                   var info=res.data, title=mode==='api'?'Api':'Demo Code';
+                   var modalInstance = $modal.open({
+                       templateUrl: 'myModalContent.html',
+                       controller: function($scope, $modalInstance, data){
+                           $scope.info=data.info;
+                           $scope.title=data.title;
+                           $scope.ok=function(){
+                               $modalInstance.dismiss('cancel');
+                           };
+                          
+                       },
+                       size: 'lg',
+                       resolve: {
+                           data: function () {
+                               return { info:info , title:title};
+                           }
+                       }
+                   });
+               });
+           }
         };
        
 

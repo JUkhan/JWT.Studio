@@ -161,5 +161,16 @@ namespace Jwtex
             byte[] byteArray = Encoding.UTF8.GetBytes(src);
             return new MemoryStream(byteArray);
         }
+        public JsonResult GetDemoInfo(string name, string mode)
+        {
+            string path = Config.Root + "Scripts\\ComDemoApi\\" + name + "\\"+mode+".html";
+            string res = "<b>Not Available</b>";
+            if (System.IO.File.Exists(path))
+            {
+                res = System.IO.File.ReadAllText(path);
+            }
+            return Json(new { data = res }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
