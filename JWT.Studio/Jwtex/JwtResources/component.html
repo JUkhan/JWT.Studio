@@ -28,12 +28,12 @@
             document.getElementById('iframe').contentWindow.postMessage("data from Parent", "COMPONENT_SITE_URL");
         }
         function listener(event) {
-            console.log(event.data, load);
+           
             if (!load) return;                      
             if (event.data.id === 'jwt') {
                 load = false;
                 $.get("JwtComponent/IsInstalled?name=" + event.data.comName, function (res) {
-                    console.log(res);
+                    
                     if (res.msg) {
                         if (confirm('This component is already installed in your site. Do you want to reinstall it?')) {
                             $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { alert(res.msg); load = true; });
