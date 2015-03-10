@@ -88,7 +88,8 @@ namespace Jwtex
             try
             {
                 string SOURCE = Config.Root + "Scripts\\Directives\\" + componentName;
-                string DESTINATION = Config.Root + componentName + ".zip";
+                CreateDirectory(Config.Root + "zippedComs");
+                string DESTINATION = Config.Root + "zippedComs\\" + componentName + ".zip";
                 if (System.IO.File.Exists(DESTINATION))
                 {
                     System.IO.File.Delete(DESTINATION);
@@ -101,6 +102,13 @@ namespace Jwtex
                 log.Error(ex);
             }
 
+        }
+        public void CreateDirectory(string name)
+        {
+            if (!Directory.Exists(name))
+            {
+                Directory.CreateDirectory(name);
+            }
         }
         private void UpdateAppDirectives()
         {

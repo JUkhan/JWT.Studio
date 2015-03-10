@@ -107,3 +107,19 @@
 
 })(window);
 
+if (window.addEventListener) {
+    window.addEventListener("message", listener, false);
+} else {
+    attachEvent('onMessage', listener);
+}
+
+function sendMessage(name) {
+    if (name) {
+        var data = { id: 'jwt', comName: name };
+        window.parent.postMessage(data, '*');
+    }
+}
+function listener(event) {
+    
+}
+

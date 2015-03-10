@@ -200,9 +200,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\app.controllers.js" />
     <Content Include="Scripts\app.filters.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app.directives.js" />
+    <Content Include="Scripts\app.services.js" />
     <Content Include="Scripts\appStarter.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -236,9 +238,24 @@
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
     <Content Include="Content\font-awesome\scss\font-awesome.scss" />
+    <Content Include="jwtApp.config" />
+    <None Include="Properties\PublishProfiles\jwtApplication.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\base\BaseCtrl.js" />
+    <Content Include="Scripts\Components\ims\ims.html" />
+    <Content Include="Scripts\Components\ims\imsCtrl.js" />
+    <Content Include="Scripts\Components\ims\imsSvc.js" />
+    <Content Include="Scripts\Components\widget1\widget1.html" />
+    <Content Include="Scripts\Components\widget1\widget1Ctrl.js" />
+    <Content Include="Scripts\Components\widget1\widget1Svc.js" />
+    <Content Include="Scripts\Components\widget2\widget2.html" />
+    <Content Include="Scripts\Components\widget2\widget2Ctrl.js" />
+    <Content Include="Scripts\Components\widget2\widget2Svc.js" />
+    <Content Include="Scripts\config.js" />
     <Content Include="Scripts\Directives\JwtFilter.js" />
+    <Content Include="Scripts\Directives\mac\mac.css" />
+    <Content Include="Scripts\Directives\mac\mac.html" />
+    <Content Include="Scripts\Directives\mac\mac.js" />
     <Content Include="Scripts\Filters\JwtDate.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -247,6 +264,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Layouts\complex\complex.html" />
+    <Content Include="Scripts\Layouts\complex\complexCtrl.js" />
+    <Content Include="Scripts\Layouts\root\root.html" />
+    <Content Include="Scripts\Layouts\root\rootCtrl.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -287,6 +308,7 @@
     <Content Include="Scripts\UI-Grid\ui-grid.eot" />
     <Content Include="Scripts\UI-Grid\ui-grid.ttf" />
     <Content Include="Scripts\UI-Grid\ui-grid.woff" />
+    <Content Include="Widget.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

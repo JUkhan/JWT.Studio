@@ -39,6 +39,7 @@ namespace Components
                        "~/Scripts/UI-Grid/vfs_fonts.js",
                         "~/Scripts/UI-Grid/ui-grid-unstable.js"
                      ));
+            BundleTable.EnableOptimizations = false;
         }
     }
 }
