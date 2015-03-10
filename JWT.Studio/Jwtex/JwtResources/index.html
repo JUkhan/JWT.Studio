@@ -12,8 +12,29 @@
     <link href="JwtEx/Resources/?file=codemirror.addon.hint.show-hint.css" rel="stylesheet" />
 </head>
 <body ng-app="jwt2">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="Jwt" class="navbar-brand">App Builder</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="Jwt">Widget Relation</a></li>
+                    <li class="active"><a href="JwtEx">Component Builder</a></li>
+                    <li><a href="JwtComponent">Component Showcase</a></li>
+                </ul>
+               
+            </div>
+        </div>
+    </div>
     <div class="container body-content" ng-controller="mainController">
-        <div>
+       
+        <div style="margin-top:.4em">
             <div class="btn-group">
                 <label ng-click="changeDataMode('Layouts')" class="btn btn-success" ng-model="dataMode" btn-radio="'Layouts'">Layouts</label>
                 <label ng-click="changeDataMode('Widgets')" class="btn btn-success" ng-model="dataMode" btn-radio="'Widgets'">Widgets</label>

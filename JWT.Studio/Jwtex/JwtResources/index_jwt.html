@@ -9,7 +9,26 @@
 
 </head>
 <body ng-app="app">
-
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>               
+                <a href="Jwt" class="navbar-brand">App Builder</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="Jwt">Widget Relation</a></li>
+                    <li><a href="JwtEx">Component Builder</a></li>
+                    <li><a href="JwtComponent">Component Showcase</a></li>
+                </ul>
+               
+            </div>
+        </div>
+    </div>
     <div class="container body-content" ng-controller="mainController">
 
         <h5 ng-bind="msg"></h5>

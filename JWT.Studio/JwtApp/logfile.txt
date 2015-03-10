@@ -55,3 +55,4 @@
 2015-03-09 21:43:48,230 [30] INFO  jwt.internals.jwtAppManager - nav3
 2015-03-09 21:56:38,158 [46] INFO  jwt.internals.jwtAppManager - root
 2015-03-09 22:03:21,251 [19] INFO  jwt.internals.jwtAppManager - complex
+2015-03-10 17:31:15,184 [29] INFO  jwt.internals.jwtAppManager - root
