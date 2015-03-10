@@ -30,7 +30,8 @@ namespace Components
                       "~/Content/site.css",
                       "~/Content/font-awesome/css/font-awesome.css",
                      "~/Content/toastr/toastr.css",
-                     "~/Scripts/UI-Grid/ui-grid-unstable.css"
+                     "~/Scripts/UI-Grid/ui-grid-unstable.css",
+                      "~/Scripts/jqPlot/jquery.jqplot.min.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/uigrid").Include(
@@ -39,6 +40,12 @@ namespace Components
                        "~/Scripts/UI-Grid/vfs_fonts.js",
                         "~/Scripts/UI-Grid/ui-grid-unstable.js"
                      ));
+            bundles.Add(new ScriptBundle("~/bundles/jqPlot")
+                .Include(
+                "~/Scripts/jqPlot/jquery.jqplot.min.js",
+                "~/Scripts/jqPlot/plugins/jqplot.donutRenderer.min.js",
+                 "~/Scripts/jqPlot/plugins/jqplot.pieRenderer.min.js"
+                ));
             BundleTable.EnableOptimizations = false;
         }
     }

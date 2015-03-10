@@ -4,8 +4,6 @@ export default function config(stateprovider, routeProvider){
 
 	stateprovider.state('root',{abstract:true,url:'/root',templateUrl:'Scripts/Layouts/root/root.html',controller:'rootCtrl as vm'});
 
-	stateprovider.state('root.mac',{url:'/mac',templateUrl:'Scripts/Components/MacWidget/MacWidget.html',controller:'MacWidgetCtrl as vm'});
-	stateprovider.state('root.jwtFilter',{url:'/jwtFilter',templateUrl:'Scripts/Components/jwtFilterWidget/jwtFilterWidget.html',controller:'jwtFilterWidgetCtrl as vm'});
-	stateprovider.state('root.dog',{url:'/dog',templateUrl:'Scripts/Components/dogWidget/dogWidget.html',controller:'dogWidgetCtrl as vm'});
+	stateprovider.state('root.chart',{url:'/chart',templateUrl:'Scripts/Components/chartWidget/chartWidget.html',controller:'chartWidgetCtrl as vm'});
 }
 config.$inject=['$stateProvider', '$urlRouterProvider'];
