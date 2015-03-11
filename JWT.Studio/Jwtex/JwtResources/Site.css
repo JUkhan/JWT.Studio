@@ -39,13 +39,68 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
-.CodeMirror{
-    height:550px !important;
+
+.CodeMirror {
+    height: 550px !important;
 }
-.editor{
-    height:550px;
+
+.editor {
+    height: 550px;
 }
-.form-control{
-    display:inline-block;
-    width:auto;
+
+.form-control {
+    display: inline-block;
+    width: auto;
+}
+
+label span {
+    padding-left: .3em;
+}
+
+.mac {
+    padding: 1em;
+}
+
+.msg {
+    display: block;
+    width: 100%;
+}
+
+xinput[type=text] {
+    width: 300px;
+}
+
+.modal-body input[type=text] {
+    width: 160px;
+}
+
+.alert {
+    padding: 4px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  display:none;
+  background-color: rgba(0,0,0,0.01);
+}
+.jwt-spinner {
+    /* some styles to position the modal at the center of the page */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    line-height: 100px;
+    height: 100px;
+    margin-left: -150px;
+    margin-top: -100px;   
+    text-align: center;   
+    z-index: 1001;
+    background-color:#cfc4c4;
 }

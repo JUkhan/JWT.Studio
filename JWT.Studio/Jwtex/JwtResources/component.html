@@ -31,7 +31,9 @@
     </div>
 
     <iframe frameborder="0" id="iframe" src="COMPONENT_SITE_URL"></iframe>
-    
+    <div class="overlay">
+        <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></i></div>
+    </div>
     <script>
         var load = true;
         $(function () {
@@ -47,29 +49,32 @@
             load = true;
             document.getElementById('iframe').contentWindow.postMessage("data from Parent", "COMPONENT_SITE_URL");
         }
-        function listener(event) {
-           
-            if (!load) return;                      
+        function listener(event) {           
+            if (!load) return;           
             if (event.data.id === 'jwt') {
                 load = false;
-                $.get("JwtComponent/IsInstalled?name=" + event.data.comName, function (res) {
-                    
+                $.get("JwtComponent/IsInstalled?name=" + event.data.comName, function (res) {                    
                     if (res.msg) {
                         if (confirm('This component is already installed in your site. Do you want to reinstall it?')) {
-                            $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { alert(res.msg); load = true; });
+                            overlay(1);
+                            $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { overlay(0); alert(res.msg); load = true; });
                         } else {
-                            load = true;
+                            load = true; 
                         }
                     }
-                    else {                        
-                        $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { alert(res.msg); load = true; });
+                    else {
+                        overlay(1);
+                        $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { overlay(0); alert(res.msg); load = true; });
                     }
                 });
 
             } else {                
-                load = true;
+                load = true; overlay(0);
             }
 
+        }
+        function overlay(val) {
+            val ? $('.overlay').show() : $('.overlay').hide();
         }
     </script>
 

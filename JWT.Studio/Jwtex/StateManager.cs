@@ -298,7 +298,7 @@ namespace jwt.internals
                     return string.Format("'{0}' not exist.");
                 }
                 //remove files               
-                Remove(RootPath + "Scripts\\Components\\" + temp.WidgetName);
+                //Remove(RootPath + "Scripts\\Components\\" + temp.WidgetName);
 
                 app.UINavigations.Remove(temp);
                 Serialize();

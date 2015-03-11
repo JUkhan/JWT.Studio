@@ -31,9 +31,6 @@
     </div>
     <div class="container body-content" ng-controller="mainController">
 
-        <h5 ng-bind="msg"></h5>
-        <hr />
-
         <tabset>
             <tab heading="Navigation">
                 <div class="mac">
@@ -220,36 +217,7 @@
             <p>&copy; jwt</p>
         </footer>
     </div>
-    <style>
-        
-        label span {
-            padding-left: .3em;
-        }
-
-        .mac {
-            padding: 1em;
-        }
-
-        .msg {
-            display: block;
-            width: 100%;
-        }
-
-        input[type=text] {
-            width: 300px;
-        }
-
-        .modal-body input[type=text] {
-            width: 160px;
-        }
-
-        .alert {
-            padding: 4px;
-            margin-bottom: 10px;
-            margin-top: 10px;
-        }
-    </style>
-
+   
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3 class="modal-title">Map widgets with view names</h3>
@@ -273,7 +241,9 @@
 
         </div>
     </script>
-
+    <div class="overlay">
+        <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></i></div>
+    </div>
     <script src="Jwt/Resources/?file=angular.js"></script>
     <script src="Jwt/Resources/?file=angular-resource.js"></script>
     <script src="Jwt/Resources/?file=angular-ui-router.js"></script>
@@ -281,6 +251,6 @@
     <script src="Jwt/Resources/?file=app2.js"></script>
     <script src="Jwt/Resources/?file=Utilities.js"></script>
     <script src="Jwt/Resources/?file=mainController_jwt.js"></script>
-
+    <script src="Jwt/Resources/?file=jquery.js"></script>
 </body>
 </html>

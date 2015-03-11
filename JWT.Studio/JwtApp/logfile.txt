@@ -56,3 +56,12 @@
 2015-03-09 21:56:38,158 [46] INFO  jwt.internals.jwtAppManager - root
 2015-03-09 22:03:21,251 [19] INFO  jwt.internals.jwtAppManager - complex
 2015-03-10 17:31:15,184 [29] INFO  jwt.internals.jwtAppManager - root
+2015-03-11 20:24:23,876 [7] INFO  jwt.internals.jwtAppManager - root
+2015-03-11 20:24:33,830 [9] INFO  jwt.internals.jwtAppManager - complex
+2015-03-11 20:24:40,935 [6] INFO  jwt.internals.jwtAppManager - nav2
+2015-03-11 20:25:11,671 [5] INFO  jwt.internals.jwtAppManager - root
+2015-03-11 20:26:35,543 [19] INFO  jwt.internals.jwtAppManager - complex
+2015-03-11 20:35:11,036 [42] INFO  jwt.internals.jwtAppManager - nav1
+2015-03-11 20:35:17,851 [42] INFO  jwt.internals.jwtAppManager - nav2
+2015-03-11 20:35:25,211 [54] INFO  jwt.internals.jwtAppManager - nav3
+2015-03-11 20:41:59,657 [47] INFO  jwt.internals.jwtAppManager - root

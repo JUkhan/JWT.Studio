@@ -9,21 +9,25 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
             return;
         }
         var url = 'Jwt/';
-        url += (typeof (vm._id) === 'undefined') ? 'AddLayout' : 'UpdateLayout'
+        url += (typeof (vm._id) === 'undefined') ? 'AddLayout' : 'UpdateLayout';
+        overlay(1);
         http.post(url, vm).success(function (res) {
             getLayouts();
             scope.lvm = {};
             scope.generateConfig();
+            overlay(0);
         });
     }
     scope.updateLayout = function (vm) {
         scope.lvm = vm;
     }
     scope.removeLayout = function (vm) {
-        if (!confirm('Sure to remove?')) { return;}
+        if (!confirm('Sure to remove?')) { return; }
+        overlay(1);
         http.post('Jwt/RemoveLayout', vm).success(function (res) {
             getLayouts(); scope.lvm = {};
             scope.generateConfig();
+            overlay(0);
         });
     }
     function getLayouts() {
@@ -38,11 +42,13 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
             return;
         }
         var url = 'Jwt/';
-        url += (typeof (vm._id) === 'undefined') ? 'AddNavigation' : 'UpdateNavigation'
+        url += (typeof (vm._id) === 'undefined') ? 'AddNavigation' : 'UpdateNavigation';
+        overlay(1);
         http.post(url, vm).success(function (res) {
             getNavs();
             scope.nvm = {};
             scope.generateConfig();
+            overlay(0);
         });
     }
     scope.updateNav = function (vm) {
@@ -50,9 +56,11 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
     }
     scope.removeNav = function (vm) {
         if (!confirm('Sure to remove?')) { return; }
+        overlay(1);
         http.post('Jwt/RemoveNavigation', vm).success(function (res) {
             getNavs(); scope.nvm = {};
             scope.generateConfig();
+            overlay(0);
         });
     }
     function getNavs() {
@@ -149,5 +157,7 @@ function root() {
     var path = window.location.pathname.toLowerCase().replace('/jwt', '');
     return path;
 }
-
+function overlay(val) {
+    val ? $('.overlay').show() : $('.overlay').hide();
+}
 app.controller('ModalInstanceCtrl', ModalInstanceCtrl);

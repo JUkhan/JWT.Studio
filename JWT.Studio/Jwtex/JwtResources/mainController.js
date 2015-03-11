@@ -53,6 +53,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         createItem(name, 'Components');
     };
     function createItem(name, mode) {
+        overlay(1);
         http.get('JwtEx/IsExist/?name={0}&mode={1}'.format(name, mode))
         .success(function (res) {
             if (!res.exist) {
@@ -64,10 +65,12 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                     else {
                         info(res.msg);
                     }
+                    overlay(0);
                 });
             }
             else {
                 info('Already exist.');
+                overlay(0);
             }
         });
     }
@@ -153,4 +156,7 @@ function setHtmlEditor(scope) {
             styleActiveLine: true
         });
     }, 200);
+}
+function overlay(val) {
+    val ? $('.overlay').show() : $('.overlay').hide();
 }

@@ -1,6 +1,6 @@
 
 export default function config(stateprovider, routeProvider){
-	routeProvider.otherwise('root/jwtFilter');
+	routeProvider.otherwise('root/chart');
 
 	stateprovider.state('root',{abstract:true,url:'/root',templateUrl:'Scripts/Layouts/root/root.html',controller:'rootCtrl as vm'});
 
