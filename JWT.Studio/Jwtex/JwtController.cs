@@ -10,6 +10,7 @@ using System.Reflection;
 using jwt.CodeGen;
 using System.Text.RegularExpressions;
 using log4net;
+using Jwtex.DummyData;
 namespace Jwt.Controller
 {
     public class JwtController : BaseController
@@ -87,7 +88,14 @@ namespace Jwt.Controller
             return Json(new jwtAppManager(Config.Root).GetNavigationList(), JsonRequestBehavior.AllowGet);
         }
         #endregion
-        
+
+        public async Task<JsonResult> GetDummyData(DDObject obj)
+        {
+            obj = obj ?? new DDObject();
+            DDManager ddManager = new DDManager();
+            string data = await ddManager.GetData(obj);
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GenerateConfig()
         {
             try

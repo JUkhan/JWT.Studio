@@ -76,3 +76,4 @@
 2015-03-14 13:02:24,778 [167] INFO  jwt.internals.jwtAppManager - complex
 2015-03-14 13:03:53,612 [186] INFO  jwt.internals.jwtAppManager - all
 2015-03-14 14:52:19,989 [178] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 00:26:58,119 [97] INFO  jwt.internals.jwtAppManager - all

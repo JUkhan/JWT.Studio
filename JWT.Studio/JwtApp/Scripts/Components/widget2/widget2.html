@@ -1,1 +1,15 @@
 <h3>widget Name : {{vm.title}}</h3>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>ID</th><th>Name</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in vm.list">
+      <td ng-bind="item.id"></td>
+		<td ng-bind="item.name"></td>
+    </tr>
+  </tbody>
+</table>

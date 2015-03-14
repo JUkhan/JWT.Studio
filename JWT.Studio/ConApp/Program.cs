@@ -4,25 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jwtex;
-
+using Jwtex.DummyData;
 
 namespace ConApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static  void Main(string[] args)
         {
-            Fluently.With(new jwtApp())
-                .Do(app => app.Layout = new Layout { LayoutName = "layout1" })
-                .Do(app => app.Layout = new Layout { LayoutName = "layout2", Extend="layout1" })
-                //.Do(app => app.Navigation = new Navigation { NavigationName="nav1", HasLayout="layout1", Widget="Student" })
-                .Do(app => app.Navigation = Fluently.With(new Navigation { NavigationName = "nav2", HasLayout = "layout2" })
-                    .Do(nav => nav.View = new View { ViewName="box1", WidgetName="Student" })
-                    .Do(nav => nav.View = new View {  ViewName="box2", WidgetName="Department" })
-                    .Done())              
-                .Done()
-                .Execute();
+           
+            GetData();
+            Console.WriteLine(DateTime.Now.ToLongTimeString());
             Console.ReadKey();
+        }
+
+        static async Task GetData()
+        {
+            DDObject obj = new DDObject();
+            obj.limit = 25;
+            obj.columns = new List<DDColumn>
+            {
+                new DDColumn{ name="id", type="int", min=1, max=20},
+                 new DDColumn{ name="name", type="animal"},
+                  new DDColumn{ name="product", type="datetime", min=2010, max=2015}
+            };
+            DDManager dd = new DDManager();
+            string data= await dd.GetData(obj);
+            Console.WriteLine(data);
+           
         }
     }
 }

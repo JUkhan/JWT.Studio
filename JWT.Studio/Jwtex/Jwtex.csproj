@@ -60,6 +60,9 @@
     <Compile Include="CodeGen\JSController.cs" />
     <Compile Include="CodeGen\JSService.cs" />
     <Compile Include="CodeGen\TemplateCode.cs" />
+    <Compile Include="DummyData\DDColumn.cs" />
+    <Compile Include="DummyData\DDManager.cs" />
+    <Compile Include="DummyData\DDObject.cs" />
     <Compile Include="JResult.cs" />
     <Compile Include="jwtApp.cs" />
     <Compile Include="FluentApi.cs" />

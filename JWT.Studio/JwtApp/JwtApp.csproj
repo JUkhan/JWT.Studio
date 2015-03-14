@@ -206,6 +206,7 @@
     <Content Include="Scripts\app.directives.js" />
     <Content Include="Scripts\app.services.js" />
     <Content Include="Scripts\appStarter.js" />
+    <Content Include="Scripts\base\BaseSvc.js" />
     <Content Include="Scripts\base\BaseEntityCtrl.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
