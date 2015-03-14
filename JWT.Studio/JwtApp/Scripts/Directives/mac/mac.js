@@ -1,7 +1,7 @@
 class mac{ 
   
   constructor(){
-    this.restrict='E'; 
+    this.restrict='EA'; 
     
     this.templateUrl='Scripts/Directives/mac/mac.html';
   }     

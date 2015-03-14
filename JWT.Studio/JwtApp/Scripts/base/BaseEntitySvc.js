@@ -1,6 +1,6 @@
 
 const HTTP=new WeakMap();
-class BaseSvc{       
+class BaseEntitySvc{       
     constructor(controllerName, http) {
         this.controllerName = controllerName;
         HTTP.set(this,http);
@@ -46,4 +46,4 @@ class BaseSvc{
     }
 }
 
-export default BaseSvc;
+export default BaseEntitySvc;

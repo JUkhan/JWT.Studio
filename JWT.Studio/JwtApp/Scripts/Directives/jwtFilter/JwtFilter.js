@@ -1,6 +1,6 @@
 ﻿
 const ROOTSCOPE=new WeakMap();
-class JwtFilter{
+class jwtFilter{
     constructor(rootScope){
         console.log('gwt-filter initialized succ...');
         this.restrict='A';
@@ -16,15 +16,15 @@ class JwtFilter{
         var filterNaame = attrs.dbFilter || attrs.ngModel;
         scope.$watch(filterNaame, function (newVal, oldVal) {
             filterNaame=filterNaame.replace('vm.','');
-            ROOTSCOPE.get(JwtFilter.instance).$broadcast("FilterValueChanged", { name: filterNaame, newValue: newVal, oldValue: oldVal });
-            JwtFilter.instance.setVal(filterNaame, newVal);
+            ROOTSCOPE.get(jwtFilter.instance).$broadcast("FilterValueChanged", { name: filterNaame, newValue: newVal, oldValue: oldVal });
+            jwtFilter.instance.setVal(filterNaame, newVal);
         });
     }
     static builder(rootScope){
-        JwtFilter.instance=new JwtFilter(rootScope);
-        return  JwtFilter.instance;
+        jwtFilter.instance=new jwtFilter(rootScope);
+        return  jwtFilter.instance;
     }
 
 }
-JwtFilter.builder.$inject =['$rootScope'];
-export default JwtFilter;
+jwtFilter.builder.$inject =['$rootScope'];
+export default jwtFilter;

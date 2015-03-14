@@ -149,7 +149,8 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
-                Rename(RootPath + "Scripts\\Layouts\\" + temp.LayoutName, layout.LayoutName, temp.LayoutName);
+                if (!(string.IsNullOrEmpty(layout.LayoutName) || string.IsNullOrEmpty(temp.LayoutName)) && (layout.LayoutName != temp.LayoutName))
+                    Rename(RootPath + "Scripts\\Layouts\\" + temp.LayoutName, layout.LayoutName, temp.LayoutName);
                 UpdateLayout(temp.LayoutName, layout.LayoutName);
 
                 temp.LayoutName = layout.LayoutName;
@@ -251,7 +252,8 @@ namespace jwt.internals
                 {
                     return string.Format("'{0}' not exist.");
                 }
-                Rename(RootPath + "Scripts\\Components\\" + temp.WidgetName, navigation.WidgetName, temp.WidgetName);
+                if (!(string.IsNullOrEmpty(navigation.NavigationName) || string.IsNullOrEmpty(temp.NavigationName)) && (navigation.NavigationName != temp.NavigationName))
+                    Rename(RootPath + "Scripts\\Components\\" + temp.WidgetName, navigation.WidgetName, temp.WidgetName);
                 UpdateNavigation(temp.WidgetName, navigation.WidgetName);
 
                 temp.NavigationName = navigation.NavigationName;

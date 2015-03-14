@@ -101,6 +101,10 @@ namespace Jwtex
             {
                 switch (mode)
                 {
+                    case "Base":
+                        path += string.Format("Scripts\\Base\\{0}",  fileName);
+                        res.data = System.IO.File.ReadAllText(path);
+                        break;
                    
                     case "Layouts":
                         path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
@@ -133,8 +137,12 @@ namespace Jwtex
             try
             {
                 switch (mode)
-                {                    
-                    
+                {
+
+                    case "Base":
+                        path += string.Format("Scripts\\Base\\{0}",  fileName);
+                        System.IO.File.WriteAllText(path, content);
+                        break;
                     case "Layouts":
                         path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
                         System.IO.File.WriteAllText(path, content);
@@ -166,6 +174,7 @@ namespace Jwtex
             List<string> list = new List<string>();
             switch (name)
             {
+               
                 case "Layouts":
                     list.Add("Select a layout");
                     list.AddRange(GetSubdirectories(Config.Root + "Scripts\\Layouts"));
@@ -187,6 +196,10 @@ namespace Jwtex
             List<string> list = null;
             switch (mode)
             {
+                case "Base":
+                    list = GetFiles(Config.Root + "Scripts\\Base" );
+                    break;
+
                 case "Layouts":
                     list = GetFiles(Config.Root + "Scripts\\Layouts\\" + name);
                     break;
@@ -199,7 +212,7 @@ namespace Jwtex
 
                     break;
             }
-            return Json(new {  js=list.Where(x=>x.EndsWith(".js")), html=list.Where(x=>x.EndsWith(".css")||x.EndsWith(".html"))}, JsonRequestBehavior.AllowGet);
+            return Json(new { js = list.Where(x => x.EndsWith(".js")), html = list.Where(x =>  x.EndsWith(".html")), css = list.Where(x => x.EndsWith(".css")) }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult IsExist(string mode, string name)

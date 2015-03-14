@@ -104,3 +104,10 @@ xinput[type=text] {
     z-index: 1001;
     background-color:#cfc4c4;
 }
+
+.padding-top{
+    padding-top:.4em;
+}
+.padding-bottom{
+    padding-bottom:.4em;
+}

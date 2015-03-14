@@ -13,10 +13,12 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.jsFileName = '';
     scope.htmlList = [];
     scope.htmlFileName = '';
+    scope.cssList = [];
     scope.jsEditor = null;
     scope.htmlEditor = null;
     setJsEditor(scope);
     setHtmlEditor(scope);
+    setCssEditor(scope);
 
     //new style
     scope.dataMode = '';
@@ -24,6 +26,11 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.items = [];
     scope.changeDataMode = function (val) {
         if (val !== scope.dataMode) {
+            if (val === 'Base') {                
+                scope.dataMode = val;
+                scope.changeItemValue();
+                return;
+            }
             http.get('JwtEx/GetItems/?name=' + val)
             .success(function (res) {
                 scope.items = res;
@@ -40,13 +47,14 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         .success(function (res) {
             scope.jsList = res.js;
             scope.htmlList = res.html;
+            scope.cssList = res.css;
             setEditorDefault();
         });
     };
     scope.newWidget = function (name) {
         if (!name) return;
         createItem(name, 'Widgets');
-       
+
     };
     scope.newComponent = function (name) {
         if (!name) return
@@ -77,8 +85,10 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     function setEditorDefault() {
         scope.htmlEditor.setValue('');
         scope.jsEditor.setValue('');
+        scope.cssEditor.setValue('');
         scope.jsFileName = '';
         scope.htmlFileName = '';
+        scope.cssFileName = '';
     }
     //end of new style
 
@@ -114,6 +124,23 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         http.post('JwtEx/SaveFile', { mode: scope.dataMode, directoryName: scope.items[scope.itemValue], fileName: scope.htmlFileName, content: scope.htmlEditor.getValue() })
         .success(function (data) { if (data.isSuccess) { success('Saved successfully.'); } });
     }
+
+    //tab_css
+
+    scope.cssLoad = function (fileName) {
+        scope.cssFileName = fileName;
+        if (!fileName) { info('File name is required.'); return; }
+        http.get('JwtEx/GetFileContent/?mode={0}&directoryName={1}&fileName={2}'.format(scope.dataMode, scope.items[scope.itemValue], fileName))
+           .success(function (data) {
+               scope.cssEditor.setValue(data.data);
+           });
+
+    }
+    scope.saveCssFile = function () {
+        if (!scope.cssFileName) { info('There is no file to be saved.'); return; }
+        http.post('JwtEx/SaveFile', { mode: scope.dataMode, directoryName: scope.items[scope.itemValue], fileName: scope.cssFileName, content: scope.cssEditor.getValue() })
+        .success(function (data) { if (data.isSuccess) { success('Saved successfully.'); } });
+    }
     //scope.jsSearch('Controllers');
     //scope.htmlSearch('Layouts');
     info('Welcome to jwt.');
@@ -135,9 +162,10 @@ function setJsEditor(scope) {
             mode: { name: 'javascript', globalVars: true },
             matchBrackets: true,
             autoCloseBrackets: true,
-            extraKeys: { "Ctrl-Space": "autocomplete" },
+            extraKeys: { "Ctrl-Space": "autocomplete", "Ctrl-S": function (ins) { scope.saveJsFile(); } },
             enableSearchTools: true,
             styleActiveLine: true
+
         });
     }, 100);
 }
@@ -147,15 +175,33 @@ function setHtmlEditor(scope) {
             lineNumbers: true,
             theme: 'rubyblue',
             lineWrapping: true,
-            mode: 'htmlmixed',
+            mode: 'text/html',
             matchBrackets: true,
             matchTags: { bothTags: true },
             autoCloseBrackets: true,
             autoCloseTags: true,
             enableSearchTools: true,
-            styleActiveLine: true
+            styleActiveLine: true,
+            extraKeys: { "Ctrl-Space": "autocomplete", "Ctrl-S": function (ins) { scope.saveHtmlFile(); } },
         });
     }, 200);
+}
+function setCssEditor(scope) {
+    setTimeout(function () {
+        scope.cssEditor = CodeMirror.fromTextArea(document.getElementById("cssEditor"), {
+            lineNumbers: true,
+            theme: 'rubyblue',
+            lineWrapping: true,
+            mode: 'text/css',
+            matchBrackets: true,
+            matchTags: { bothTags: true },
+            autoCloseBrackets: true,
+            autoCloseTags: true,
+            enableSearchTools: true,
+            styleActiveLine: true,
+            extraKeys: { "Ctrl-Space": "autocomplete", "Ctrl-S": function (ins) { scope.saveCssFile(); } },
+        });
+    }, 300);
 }
 function overlay(val) {
     val ? $('.overlay').show() : $('.overlay').hide();

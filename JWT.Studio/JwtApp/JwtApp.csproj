@@ -206,6 +206,7 @@
     <Content Include="Scripts\app.directives.js" />
     <Content Include="Scripts\app.services.js" />
     <Content Include="Scripts\appStarter.js" />
+    <Content Include="Scripts\base\BaseEntityCtrl.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -252,7 +253,7 @@
     <Content Include="Scripts\Components\widget2\widget2Ctrl.js" />
     <Content Include="Scripts\Components\widget2\widget2Svc.js" />
     <Content Include="Scripts\config.js" />
-    <Content Include="Scripts\Directives\JwtFilter.js" />
+    <Content Include="Scripts\Directives\jwtFilter\jwtFilter.js" />
     <Content Include="Scripts\Directives\mac\mac.css" />
     <Content Include="Scripts\Directives\mac\mac.html" />
     <Content Include="Scripts\Directives\mac\mac.js" />
@@ -275,7 +276,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\base\BaseSvc.js" />
+    <Content Include="Scripts\base\BaseEntitySvc.js" />
     <Content Include="Scripts\UI-Grid\csv.js" />
     <Content Include="Scripts\UI-Grid\pdfmake.js" />
     <Content Include="Scripts\UI-Grid\ui-grid-unstable.css" />

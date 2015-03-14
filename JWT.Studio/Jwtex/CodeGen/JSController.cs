@@ -150,12 +150,12 @@ namespace jwt.CodeGen
         private void AddUsing(string entity)
         {         
             _res.AppendLine();
-            _res.Append("import BaseCtrl from 'Scripts/base/BaseCtrl.js';");
+            _res.Append("import BaseEntityCtrl from 'Scripts/base/BaseEntityCtrl.js';");
             _res.AppendLine();
             _res.AppendFormat("const SVC=new WeakMap();");
             _res.AppendLine();
-           
-            _res.AppendFormat("class {0}Ctrl extends BaseCtrl", entity);
+
+            _res.AppendFormat("class {0}Ctrl extends BaseEntityCtrl", entity);
             _res.AppendLine();
             _res.AppendLine("{");
 
