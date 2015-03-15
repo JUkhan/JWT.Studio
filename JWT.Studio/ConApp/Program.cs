@@ -18,7 +18,7 @@ namespace ConApp
             Console.ReadKey();
         }
 
-        static async Task GetData()
+        static  void GetData()
         {
             DDObject obj = new DDObject();
             obj.limit = 25;
@@ -26,10 +26,10 @@ namespace ConApp
             {
                 new DDColumn{ name="id", type="int", min=1, max=20},
                  new DDColumn{ name="name", type="animal"},
-                  new DDColumn{ name="product", type="datetime", min=2010, max=2015}
+                  new DDColumn{ name="product", type="date"}
             };
             DDManager dd = new DDManager();
-            string data= await dd.GetDataAsync(obj);
+            string data=  dd.GetData(obj);
             Console.WriteLine(data);
            
         }

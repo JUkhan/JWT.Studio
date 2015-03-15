@@ -117,14 +117,14 @@ namespace Jwtex.DummyData
         }
         private string GetDate(DDColumn col)
         {
-            DateTime date = new DateTime();
+            DateTime date = DateTime.Now;
             if (col.min < 1970)
             {
                 col.min = date.Year-5;
             }
             if (col.max < 1970)
             {
-                col.min = date.Year;
+                col.max = date.Year;
             }
 
             return string.Format("{0:0#}/{1:0#}/{2}", GetRandomNumber(1, 12), GetRandomNumber(1, 30), GetRandomNumber(col.min, col.max));

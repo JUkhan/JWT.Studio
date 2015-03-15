@@ -21,7 +21,7 @@ class widget2Ctrl extends BaseCtrl
       
       let obj={limit:Math.floor(Math.random()*11)+1, columns:[
         {name:'id', type:'int'},
-        {name:'name', type:'human'}
+        {name:'name', type:'animal'}
       ]};
       let me=this;
       SVC.get(this).getDummyData(obj)
