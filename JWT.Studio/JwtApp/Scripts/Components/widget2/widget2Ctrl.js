@@ -8,25 +8,28 @@ class widget2Ctrl extends BaseCtrl
 	constructor(scope, svc){
       	super(scope);
 		this.title='widget2';
-      	SVC.set(this, svc);
-      	this.list=[{id:101, name:'Bangladesh'}];
-      	
+      	SVC.set(this, svc);    	
+        
 	}
   
   	filterValueChanged(obj){
+      this.country=obj.newValue;
       this.loadData();
     }
   	
   	loadData(){
-      let obj={limit:5, columns:[
-        {name:'id', type:'int'},
-        {name:'name', type:'country'}
-      ]};
       
+      let obj={limit:Math.floor(Math.random()*11)+1, columns:[
+        {name:'id', type:'int'},
+        {name:'name', type:'human'}
+      ]};
+      let me=this;
       SVC.get(this).getDummyData(obj)
-      .then(data=>{ this.list=data; });
+      .success(res=>{ me.list=angular.fromJson(res.data); });  
+   
       
     }
+  	
 }
 
 widget2Ctrl.$inject=['$scope', 'widget2Svc'];

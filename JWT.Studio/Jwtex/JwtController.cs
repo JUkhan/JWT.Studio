@@ -14,8 +14,8 @@ using Jwtex.DummyData;
 namespace Jwt.Controller
 {
     public class JwtController : BaseController
-    {  
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);     
+    {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public void Index()
         {
             string nameSpace = GetType().Assembly.GetName().Name;
@@ -65,8 +65,8 @@ namespace Jwt.Controller
         }
         public JsonResult GetLayoutList()
         {
-            return Json(new jwtAppManager(Config.Root).GetLayoutList() , JsonRequestBehavior.AllowGet);
-        } 
+            return Json(new jwtAppManager(Config.Root).GetLayoutList(), JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Navigtions
@@ -76,7 +76,7 @@ namespace Jwt.Controller
         }
         public JsonResult UpdateNavigation(Jwtex.Navigation navigation)
         {
-           // log.Info(navigation.NavigationName);
+            // log.Info(navigation.NavigationName);
             return Json(new { msg = new jwtAppManager(Config.Root).UpdateNavigation(navigation) });
         }
         public JsonResult RemoveNavigation(Jwtex.Navigation navigation)
@@ -93,7 +93,7 @@ namespace Jwt.Controller
         {
             obj = obj ?? new DDObject();
             DDManager ddManager = new DDManager();
-            string data = await ddManager.GetData(obj);
+            string data = await ddManager.GetDataAsync(obj);
             return Json(new { data = data }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GenerateConfig()
@@ -103,28 +103,16 @@ namespace Jwt.Controller
                 new jwtAppManager(Config.Root, GetDefaultNavigation()).GenerateConfig();
 
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
 
                 return Json(new { msg = ex.Message }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { msg = "Successfully generated." }, JsonRequestBehavior.AllowGet);
         }
-       
-        private void createDirectory(string path)
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-        }
+
        
 
-        private bool IsExist(string path)
-        {
-            return System.IO.File.Exists(path);
-        }
-      
         #region Code Gen
 
         public JsonResult GetTemplateList()
@@ -197,7 +185,7 @@ namespace Jwt.Controller
                 }
                 res.success = true;
 
-                res.data =SyncWithSavedWidget(list, entityName);
+                res.data = SyncWithSavedWidget(list, entityName);
             }
             catch (Exception ex)
             {
@@ -230,29 +218,30 @@ namespace Jwt.Controller
         {
             try
             {
-                
-                createDirectory(Config.Root + "Scripts");               
-                createDirectory(Config.Root + "Scripts\\Components");
-                createDirectory(Config.Root + "Scripts\\Components\\"+entity); 
-               
-                createDirectory(Config.ServiceProject + "\\Interfaces");              
-                createDirectory(Config.ServiceProject + "\\Implementation");
+                JwtFile file = new JwtFile();
+
+                file.CreateDirectory(Config.Root + "Scripts");
+                file.CreateDirectory(Config.Root + "Scripts\\Components");
+                file.CreateDirectory(Config.Root + "Scripts\\Components\\" + entity);
+
+                file.CreateDirectory(Config.ServiceProject + "\\Interfaces");
+                file.CreateDirectory(Config.ServiceProject + "\\Implementation");
 
                 ICode code = new TemplateCode();
                 string path = Config.Root + "Scripts\\Components\\" + entity;
-                System.IO.File.WriteAllText(path + "\\" + entity + ".html", code.CodeGenerate(entity, props));
+                file.Write(path + "\\" + entity + ".html", code.CodeGenerate(entity, props));
                 code = new JSController();
                 code.Config = this.Config;
-                System.IO.File.WriteAllText(path + "\\"+entity + "Ctrl.js", code.CodeGenerate(entity, props));
+                file.Write(path + "\\" + entity + "Ctrl.js", code.CodeGenerate(entity, props));
                 code = new JSService();
                 code.Config = this.Config;
-                System.IO.File.WriteAllText(path + "\\" + entity + "Svc.js", code.CodeGenerate(entity, props));
+                file.Write(path + "\\" + entity + "Svc.js", code.CodeGenerate(entity, props));
                 code = new CSController();
-                System.IO.File.WriteAllText(Config.Root + "Controllers\\" + entity + "Controller.cs", code.CodeGenerate(entity, props));
+                file.Write(Config.Root + "Controllers\\" + entity + "Controller.cs", code.CodeGenerate(entity, props));
                 code = new CSServiceInterface();
-                System.IO.File.WriteAllText(Config.ServiceProject + "\\Interfaces\\I" + entity + "Service.cs", code.CodeGenerate(entity, props));
+                file.Write(Config.ServiceProject + "\\Interfaces\\I" + entity + "Service.cs", code.CodeGenerate(entity, props));
                 code = new CSServiceImplementation();
-                System.IO.File.WriteAllText(Config.ServiceProject + "\\Implementation\\" + entity + "Service.cs", code.CodeGenerate(entity, props));
+                file.Write(Config.ServiceProject + "\\Implementation\\" + entity + "Service.cs", code.CodeGenerate(entity, props));
 
                 WidgetManager widgetManager = new WidgetManager();
                 widgetManager.RootPath = Config.Root;
@@ -264,7 +253,7 @@ namespace Jwt.Controller
                 return Json(new { message = ex.ToString() });
             }
         }
-        
+
         private List<JPropertyInfo> GetSubProperties(string entityName, Assembly assembly, string type)
         {
             List<JPropertyInfo> list = new List<JPropertyInfo>();
@@ -302,7 +291,7 @@ namespace Jwt.Controller
         private List<string> GetTemplateList(string path)
         {
             path += "Scripts\\Components";
-           
+
             List<string> list = new List<string>();
             if (Directory.Exists(path))
             {
@@ -321,12 +310,12 @@ namespace Jwt.Controller
             JSONData res = new JSONData();
             try
             {
-                string input = System.IO.File.ReadAllText(Config.Root + "Scripts\\Layouts\\"+layoutName+"\\" + layoutName+".html");
+                string input = System.IO.File.ReadAllText(Config.Root + "Scripts\\Layouts\\" + layoutName + "\\" + layoutName + ".html");
                 var matches = Regex.Matches(input, "ui-view=\"([a-zA-Z0-9]+)\"", RegexOptions.IgnoreCase);
                 List<Jwtex.View> views = new List<Jwtex.View>();
                 foreach (Match item in matches)
                 {
-                    views.Add(new Jwtex.View { ViewName = item.Groups[1].Value, WidgetName="" });
+                    views.Add(new Jwtex.View { ViewName = item.Groups[1].Value, WidgetName = "" });
                 }
                 var nav = new jwtAppManager(Config.Root).GetNavigationList().FirstOrDefault(n => n.NavigationName == navName);
                 if (nav != null)
@@ -354,7 +343,7 @@ namespace Jwt.Controller
 
             return Json(res, JsonRequestBehavior.AllowGet);
         }
-       
+
     }
     public class JSONData
     {

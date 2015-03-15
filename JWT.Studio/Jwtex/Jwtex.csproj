@@ -63,6 +63,7 @@
     <Compile Include="DummyData\DDColumn.cs" />
     <Compile Include="DummyData\DDManager.cs" />
     <Compile Include="DummyData\DDObject.cs" />
+    <Compile Include="CodeGen\JwtFile.cs" />
     <Compile Include="JResult.cs" />
     <Compile Include="jwtApp.cs" />
     <Compile Include="FluentApi.cs" />
@@ -97,9 +98,9 @@
     <EmbeddedResource Include="JwtResources\angular-ui-router.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closebrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closetag.js" />
-    <EmbeddedResource Include="JwtResources\angular.js" />
     <EmbeddedResource Include="JwtResources\angular-sanitize.js" />
     <EmbeddedResource Include="JwtResources\app2.js" />
+    <EmbeddedResource Include="JwtResources\angular.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />

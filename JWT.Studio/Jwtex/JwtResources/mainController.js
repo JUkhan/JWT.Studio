@@ -26,9 +26,13 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.items = [];
     scope.changeDataMode = function (val) {
         if (val !== scope.dataMode) {
+            scope.items = [];
+            scope.jsList = [];
+            scope.htmlList = [];
+            scope.cssList = [];
             if (val === 'Base') {                
                 scope.dataMode = val;
-                scope.changeItemValue();
+                scope.changeItemValue();               
                 return;
             }
             http.get('JwtEx/GetItems/?name=' + val)
@@ -175,7 +179,7 @@ function setHtmlEditor(scope) {
             lineNumbers: true,
             theme: 'rubyblue',
             lineWrapping: true,
-            mode: 'text/html',
+            mode: 'htmlmixed',
             matchBrackets: true,
             matchTags: { bothTags: true },
             autoCloseBrackets: true,

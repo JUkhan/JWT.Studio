@@ -77,3 +77,39 @@
 2015-03-14 13:03:53,612 [186] INFO  jwt.internals.jwtAppManager - all
 2015-03-14 14:52:19,989 [178] INFO  jwt.internals.jwtAppManager - all
 2015-03-15 00:26:58,119 [97] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 07:44:06,789 [133] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 08:18:23,630 [113] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 08:53:53,497 [152] INFO  jwt.internals.jwtAppManager - nav1
+2015-03-15 09:02:20,372 [115] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 09:08:41,188 [150] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 09:21:34,747 [117] ERROR Jwtex.JwtExController - System.IO.FileNotFoundException: Could not find file 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Components\widget3\w'.
+File name: 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Components\widget3\w'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding, Boolean checkHost)
+   at Jwtex.JwtExController.GetFileContent(String mode, String directoryName, String fileName)
+2015-03-15 15:20:45,522 [78] ERROR Jwtex.JwtExController - System.IO.IOException: The process cannot access the file 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Components\widget1\widget1Ctrl.js' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.File.InternalWriteAllText(String path, String contents, Encoding encoding, Boolean checkHost)
+   at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content)
+2015-03-15 15:20:45,522 [63] ERROR Jwtex.JwtExController - System.IO.IOException: The process cannot access the file 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Components\widget1\widget1Ctrl.js' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.File.InternalWriteAllText(String path, String contents, Encoding encoding, Boolean checkHost)
+   at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content)
+2015-03-15 15:56:51,646 [85] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 17:20:57,979 [85] INFO  jwt.internals.jwtAppManager - nav2
+2015-03-15 17:21:51,390 [98] INFO  jwt.internals.jwtAppManager - nav2
+2015-03-15 19:27:34,585 [71] INFO  jwt.internals.jwtAppManager - nav1
+2015-03-15 20:07:01,890 [65] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 20:07:21,032 [57] INFO  jwt.internals.jwtAppManager - nav1
+2015-03-15 20:07:30,865 [61] INFO  jwt.internals.jwtAppManager - all
+2015-03-15 20:07:34,849 [65] INFO  jwt.internals.jwtAppManager - nav2
+2015-03-15 20:07:37,949 [66] INFO  jwt.internals.jwtAppManager - nav3

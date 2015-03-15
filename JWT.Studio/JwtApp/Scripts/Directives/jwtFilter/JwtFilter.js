@@ -1,8 +1,7 @@
-﻿
+
 const ROOTSCOPE=new WeakMap();
 class jwtFilter{
-    constructor(rootScope){
-        console.log('gwt-filter initialized succ...');
+    constructor(rootScope){       
         this.restrict='A';
         ROOTSCOPE.set(this,rootScope);
     }

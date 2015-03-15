@@ -29,7 +29,7 @@ namespace ConApp
                   new DDColumn{ name="product", type="datetime", min=2010, max=2015}
             };
             DDManager dd = new DDManager();
-            string data= await dd.GetData(obj);
+            string data= await dd.GetDataAsync(obj);
             Console.WriteLine(data);
            
         }

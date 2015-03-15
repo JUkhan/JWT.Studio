@@ -7,8 +7,6 @@ using System.Web;
 using System.IO;
 //using log4net;
 using System.Reflection;
-using log4net;
-using jwt.CodeGen;
 namespace Jwtex
 {
     public class jwtApp
@@ -89,8 +87,7 @@ namespace Jwtex
 
     public class CodeGen
     {
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private static object locker = new Object();
+        //private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private const string TAB1 = "\t";
         private const string TAB2 = "\t\t";
         private const string TAB3 = "\t\t\t";
@@ -112,38 +109,34 @@ namespace Jwtex
         private List<String> layoutControllers = new List<string>();
         public jwtApp App { get; set; }
         public string DefaultNavigation { get; set; }
-        public void Execute()
+        public  void  Execute()
         {
-            lock (locker)
+            CreateDirectory(Root + "Scripts");
+            CreateDirectory(Root + "Scripts\\Components");
+            CreateDirectory(Root + "Scripts\\Layouts");
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine();
+            sb.Append("export default function config(stateprovider, routeProvider){");
+            if (!string.IsNullOrEmpty(DefaultNavigation))
             {
-                JwtFile file = new JwtFile();
-                file.CreateDirectory(Root + "Scripts");
-                file.CreateDirectory(Root + "Scripts\\Components");
-                file.CreateDirectory(Root + "Scripts\\Layouts");
-
-                StringBuilder sb = new StringBuilder();
                 sb.AppendLine();
-                sb.Append("export default function config(stateprovider, routeProvider){");
-                if (!string.IsNullOrEmpty(DefaultNavigation))
-                {
-                    sb.AppendLine();
-                    sb.AppendFormat(TAB1 + "routeProvider.otherwise('{0}');", DefaultNavigation);
-                    sb.AppendLine();
-                }
-                SetLayout(sb);
-                SetNavigation(sb);
+                sb.AppendFormat(TAB1 + "routeProvider.otherwise('{0}');", DefaultNavigation);
                 sb.AppendLine();
-                sb.Append("}");
-                sb.AppendLine();
-                sb.Append("config.$inject=['$stateProvider', '$urlRouterProvider'];");
-                sb.AppendLine();
-                file.Write(this.Root + "Scripts\\config.js", sb.ToString());
-
-
-                GenAllControllers();
-                GenAllServices();
-                GenAppDirectives();
             }
+            SetLayout(sb);
+            SetNavigation(sb);
+            sb.AppendLine();
+            sb.Append("}");
+            sb.AppendLine();
+            sb.Append("config.$inject=['$stateProvider', '$urlRouterProvider'];");
+            sb.AppendLine();
+            System.IO.File.WriteAllText(this.Root + "Scripts\\config.js", sb.ToString());
+
+
+            GenAllControllers();
+            GenAllServices();
+            GenAppDirectives();
         }
         private void GenAppDirectives()
         {
@@ -194,10 +187,10 @@ namespace Jwtex
         }
         private void SetLayout(StringBuilder sb)
         {
-            JwtFile file = new JwtFile();
+
             foreach (Layout item in App.GetLayout().Values)
             {
-                file.CreateDirectory(Root + "Scripts\\Layouts\\" + item.LayoutName);
+                CreateDirectory(Root + "Scripts\\Layouts\\" + item.LayoutName);
                 sb.AppendLine();
                 sb.Append(TAB1);
                 sb.AppendFormat("stateprovider.state('{0}'", GetStateName(item));
@@ -205,17 +198,17 @@ namespace Jwtex
                 sb.AppendFormat(@"url:'/{0}'", item.LayoutName);
 
                 PathString = Root + string.Format("Scripts\\Layouts\\{0}\\{0}.html", item.LayoutName);
-                if (!file.FileExists(PathString))
+                if (!File.Exists(PathString))
                 {
-                    file.Write(PathString, string.Format("<h3>Layout Name : {0}</h3><div ui-view></div>", item.LayoutName));
+                    File.WriteAllText(PathString, string.Format("<h3>Layout Name : {0}</h3><div ui-view></div>", item.LayoutName));
                 }
                 sb.AppendFormat(",templateUrl:'Scripts/Layouts/{0}/{0}.html'", item.LayoutName);
 
 
                 PathString = Root + string.Format("Scripts\\Layouts\\{0}\\{0}Ctrl.js", item.LayoutName);
-                if (!file.FileExists(PathString))
+                if (!File.Exists(PathString))
                 {
-                    file.Write(PathString, getEmptyControllerForLayout(item.LayoutName));
+                    File.WriteAllText(PathString, getEmptyController(item.LayoutName));
                 }
                 sb.AppendFormat(",controller:'{0}Ctrl as vm'", item.LayoutName);
                 layoutControllers.Add(item.LayoutName);
@@ -224,7 +217,7 @@ namespace Jwtex
             }
 
         }
-        public void CreateDirectoryx(string name)
+        public void CreateDirectory(string name)
         {
             if (!Directory.Exists(name))
             {
@@ -233,11 +226,11 @@ namespace Jwtex
         }
         private void SetNavigation(StringBuilder sb)
         {
-            JwtFile file = new JwtFile();
+
             sb.AppendLine();
             foreach (var item in App.GetNavigation().Values)
             {
-                file.CreateDirectory(Root + "Scripts\\Components\\" + item.WidgetName);
+                CreateDirectory(Root + "Scripts\\Components\\" + item.WidgetName);
                 sb.AppendLine();
                 sb.Append(TAB1);
                 sb.AppendFormat("stateprovider.state('{0}'", GetStateName(item));
@@ -258,22 +251,22 @@ namespace Jwtex
                         if (!string.IsNullOrEmpty(item2.WidgetName))
                         {
                             PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}.html", item2.WidgetName);
-                            if (!file.FileExists(PathString))
+                            if (!File.Exists(PathString))
                             {
-                                file.Write(PathString, "<h3>widget Name : {{vm.title}}</h3>");
+                                File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
                             }
                             sb.AppendFormat("templateUrl:'Scripts/Components/{0}/{0}.html'", item2.WidgetName);
                             mControllers.Add(item2.WidgetName);
 
                             PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Ctrl.js", item2.WidgetName);
-                            if (!file.FileExists(PathString))
+                            if (!File.Exists(PathString))
                             {
-                               file.Write(PathString, getEmptyController(item2.WidgetName));
+                                File.WriteAllText(PathString, getEmptyController(item2.WidgetName));
                             }
                             PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Svc.js", item2.WidgetName);
-                            if (!file.FileExists(PathString))
+                            if (!File.Exists(PathString))
                             {
-                                file.Write(PathString, getEmptyService(item2.WidgetName));
+                                File.WriteAllText(PathString, getEmptyService(item2.WidgetName));
                             }
                             sb.AppendFormat(",controller:'{0}Ctrl as vm'", item2.WidgetName);
                         }
@@ -285,20 +278,20 @@ namespace Jwtex
                 if (!string.IsNullOrEmpty(item.WidgetName))
                 {
                     PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}.html", item.WidgetName);
-                    if (!file.FileExists(PathString))
+                    if (!File.Exists(PathString))
                     {
-                        file.Write(PathString, "<h3>widget Name : {{vm.title}}</h3>");
+                        File.WriteAllText(PathString, "<h3>widget Name : {{vm.title}}</h3>");
                     }
                     sb.AppendFormat(",templateUrl:'Scripts/Components/{0}/{0}.html'", item.WidgetName);
                     PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Ctrl.js", item.WidgetName);
-                    if (!file.FileExists(PathString))
+                    if (!File.Exists(PathString))
                     {
-                        file.Write(PathString, getEmptyController(item.WidgetName));
+                        File.WriteAllText(PathString, getEmptyController(item.WidgetName));
                     }
                     PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Svc.js", item.WidgetName);
-                    if (!file.FileExists(PathString))
+                    if (!File.Exists(PathString))
                     {
-                        file.Write(PathString, getEmptyService(item.WidgetName));
+                        File.WriteAllText(PathString, getEmptyService(item.WidgetName));
                     }
                     sb.AppendFormat(",controller:'{0}Ctrl as vm'", item.WidgetName);
                     mControllers.Add(item.WidgetName);
@@ -406,21 +399,6 @@ namespace Jwtex
             sb.AppendFormat(Environment.NewLine + "export default {0}Ctrl;", name);
             return sb.ToString();
         }
-        public string getEmptyControllerForLayout(string name)
-        {
-            StringBuilder sb = new StringBuilder();
-            
-            sb.AppendFormat("class {0}Ctrl", name);
-            sb.AppendLine();
-            sb.Append("{");
-            sb.Append(Environment.NewLine + TAB1 + "constructor(){");           
-            sb.AppendFormat(Environment.NewLine + TAB2 + "this.title='{0}';", name);
-            sb.Append(Environment.NewLine + TAB1 + "}");
-            sb.AppendLine();
-            sb.Append("}");            
-            sb.AppendFormat(Environment.NewLine + "export default {0}Ctrl;", name);
-            return sb.ToString();
-        }
         public string getEmptyDirective(string name)
         {
             StringBuilder sb = new StringBuilder();
@@ -432,7 +410,7 @@ namespace Jwtex
             sb.AppendFormat(Environment.NewLine + TAB2 + "this.templateUrl='Scripts/Directives/{0}/{0}.html';", name);
             sb.Append(Environment.NewLine + TAB1 + "}");
             sb.AppendLine();
-
+           
             sb.Append(TAB1 + "static builder()");
             sb.Append(TAB1 + "{");
             sb.AppendLine();
@@ -515,46 +493,42 @@ namespace Jwtex
         }
         public void CreateItem(string mode, string name)
         {
-            JwtFile file = new JwtFile();
-            lock (locker)
+            CreateDirectory(Root + "Scripts");
+            CreateDirectory(Root + "Scripts\\Components");
+            CreateDirectory(Root + "Scripts\\Directives");
+            try
             {
-                file.CreateDirectory(Root + "Scripts");
-                file.CreateDirectory(Root + "Scripts\\Components");
-                file.CreateDirectory(Root + "Scripts\\Directives");
-                try
+                string path = Root;
+                switch (mode)
                 {
-                    string path = Root;
-                    switch (mode)
-                    {
-                        case "Widgets":
-                            path += "Scripts\\Components\\" + name;
-                            file.CreateDirectory(path);
-                            path = Root + string.Format("Scripts\\Components\\{0}\\{0}Ctrl.js", name);
-                            file.Write(path, getEmptyController(name));
-                            path = Root + string.Format("Scripts\\Components\\{0}\\{0}Svc.js", name);
-                            file.Write(path, getEmptyService(name));
-                            path = Root + string.Format("Scripts\\Components\\{0}\\{0}.html", name);
-                            file.Write(path, "<h3>widget Name : {{vm.title}}</h3>");
+                    case "Widgets":
+                        path += "Scripts\\Components\\" + name;
+                        CreateDirectory(path);
+                        path = Root + string.Format("Scripts\\Components\\{0}\\{0}Ctrl.js", name);
+                        File.WriteAllText(path, getEmptyController(name));
+                        path = Root + string.Format("Scripts\\Components\\{0}\\{0}Svc.js", name);
+                        File.WriteAllText(path, getEmptyService(name));
+                        path = Root + string.Format("Scripts\\Components\\{0}\\{0}.html", name);
+                        File.WriteAllText(path, "<h3>widget Name : {{vm.title}}</h3>");
 
-                            break;
-                        case "Components":
-                            path += "Scripts\\Directives\\" + name;
-                            file.CreateDirectory(path);
-                            path = Root + string.Format("Scripts\\Directives\\{0}\\{0}.js", name);
-                            file.Write(path, getEmptyDirective(name));
-                            path = Root + string.Format("Scripts\\Directives\\{0}\\{0}.html", name);
-                            file.Write(path, "<b>Hello world</b>");
-                            path = Root + string.Format("Scripts\\Directives\\{0}\\{0}.css", name);
-                            file.Write(path, "/*css goes here*/");
-                            break;
-                    }
-
+                        break;
+                    case "Components":
+                        path += "Scripts\\Directives\\" + name;
+                        CreateDirectory(path);
+                        path = Root + string.Format("Scripts\\Directives\\{0}\\{0}.js", name);
+                        File.WriteAllText(path, getEmptyDirective(name));
+                        path = Root + string.Format("Scripts\\Directives\\{0}\\{0}.html", name);
+                        File.WriteAllText(path, "<b>Hello world</b>");
+                        path = Root + string.Format("Scripts\\Directives\\{0}\\{0}.css", name);
+                        File.WriteAllText(path, "/*css goes here*/");
+                        break;
                 }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
 
-                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
 
         }

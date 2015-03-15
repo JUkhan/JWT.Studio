@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using log4net;
 using System.Reflection;
+using jwt.CodeGen;
 
 namespace Jwtex
 {
@@ -51,7 +52,7 @@ namespace Jwtex
             JResult res = new JResult();
             try
             {
-                string path =Config.Root;
+                string path = Config.Root;
                 switch (directory)
                 {
                     case "Controllers":
@@ -83,40 +84,42 @@ namespace Jwtex
         }
         private void setFiles(string path, JResult res, string directory)
         {
-            if (!Directory.Exists(path))
+            JwtFile file = new JwtFile();
+            if (!file.DirectoryExists(path))
             {
                 res.msg = directory + " not exist";
             }
             else
             {
-                res.data = GetFiles(path);
+                res.data = file.GetFiles(path);
                 res.isSuccess = true;
             }
         }
         public JsonResult GetFileContent(string mode, string directoryName, string fileName)
         {
             string path = Config.Root;
+            JwtFile file = new JwtFile();
             JResult res = new JResult();
             try
             {
                 switch (mode)
                 {
                     case "Base":
-                        path += string.Format("Scripts\\Base\\{0}",  fileName);
-                        res.data = System.IO.File.ReadAllText(path);
+                        path += string.Format("Scripts\\Base\\{0}", fileName);
+                        res.data = file.Read(path);// System.IO.File.ReadAllText(path);
                         break;
-                   
+
                     case "Layouts":
                         path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
-                        res.data = System.IO.File.ReadAllText(path);
+                        res.data = file.Read(path);
                         break;
                     case "Components":
                         path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
-                        res.data = System.IO.File.ReadAllText(path);
+                        res.data = file.Read(path);
                         break;
                     case "Widgets":
                         path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
-                        res.data = System.IO.File.ReadAllText(path);
+                        res.data = file.Read(path);
                         break;
                 }
                 res.isSuccess = true;
@@ -133,6 +136,7 @@ namespace Jwtex
         public JsonResult SaveFile(string mode, string directoryName, string fileName, string content)
         {
             string path = Config.Root;
+            JwtFile file = new JwtFile();
             JResult res = new JResult();
             try
             {
@@ -140,20 +144,20 @@ namespace Jwtex
                 {
 
                     case "Base":
-                        path += string.Format("Scripts\\Base\\{0}",  fileName);
-                        System.IO.File.WriteAllText(path, content);
+                        path += string.Format("Scripts\\Base\\{0}", fileName);
+                        file.Write(path, content);
                         break;
                     case "Layouts":
                         path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
-                        System.IO.File.WriteAllText(path, content);
+                        file.Write(path, content);
                         break;
                     case "Components":
                         path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
-                        System.IO.File.WriteAllText(path, content);
+                        file.Write(path, content);
                         break;
                     case "Widgets":
                         path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
-                        System.IO.File.WriteAllText(path, content);
+                        file.Write(path, content);
                         break;
                 }
                 res.isSuccess = true;
@@ -171,21 +175,22 @@ namespace Jwtex
         #region New Style
         public JsonResult GetItems(string name)
         {
+            JwtFile file = new JwtFile();
             List<string> list = new List<string>();
             switch (name)
             {
-               
+
                 case "Layouts":
                     list.Add("Select a layout");
-                    list.AddRange(GetSubdirectories(Config.Root + "Scripts\\Layouts"));
+                    list.AddRange(file.GetSubdirectories(Config.Root + "Scripts\\Layouts"));
                     break;
                 case "Widgets":
                     list.Add("Select a widgets");
-                    list.AddRange(GetSubdirectories(Config.Root + "Scripts\\Components"));
+                    list.AddRange(file.GetSubdirectories(Config.Root + "Scripts\\Components"));
                     break;
                 case "Components":
                     list.Add("Select a component");
-                    list.AddRange(GetSubdirectories(Config.Root + "Scripts\\Directives"));
+                    list.AddRange(file.GetSubdirectories(Config.Root + "Scripts\\Directives"));
 
                     break;
             }
@@ -193,30 +198,32 @@ namespace Jwtex
         }
         public JsonResult GetItemDetail(string name, string mode)
         {
+            JwtFile file = new JwtFile();
             List<string> list = null;
             switch (mode)
             {
                 case "Base":
-                    list = GetFiles(Config.Root + "Scripts\\Base" );
+                    list = file.GetFiles(Config.Root + "Scripts\\Base");
                     break;
 
                 case "Layouts":
-                    list = GetFiles(Config.Root + "Scripts\\Layouts\\" + name);
+                    list = file.GetFiles(Config.Root + "Scripts\\Layouts\\" + name);
                     break;
                 case "Widgets":
-                    list = GetFiles(Config.Root + "Scripts\\Components\\" + name);
+                    list = file.GetFiles(Config.Root + "Scripts\\Components\\" + name);
                     break;
                 case "Components":
 
-                    list = GetFiles(Config.Root + "Scripts\\Directives\\" + name);
+                    list = file.GetFiles(Config.Root + "Scripts\\Directives\\" + name);
 
                     break;
             }
-            return Json(new { js = list.Where(x => x.EndsWith(".js")), html = list.Where(x =>  x.EndsWith(".html")), css = list.Where(x => x.EndsWith(".css")) }, JsonRequestBehavior.AllowGet);
+            return Json(new { js = list.Where(x => x.EndsWith(".js")), html = list.Where(x => x.EndsWith(".html")), css = list.Where(x => x.EndsWith(".css")) }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult IsExist(string mode, string name)
         {
+            JwtFile file = new JwtFile();
             string path = Config.Root;
             switch (mode)
             {
@@ -227,7 +234,7 @@ namespace Jwtex
                     path += "Scripts\\Derictives\\" + name;
                     break;
             }
-            return Json(new { exist = Directory.Exists(path) }, JsonRequestBehavior.AllowGet);
+            return Json(new { exist = file.DirectoryExists(path) }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult CreateItem(string mode, string name)
         {
@@ -246,24 +253,6 @@ namespace Jwtex
 
         }
         #endregion
-        private List<string> GetFiles(string directoryName)
-        {
-            List<string> files = new List<string>();
-            foreach (var item in Directory.GetFiles(directoryName))
-            {
-                files.Add(Path.GetFileName(item));
-            }
-            return files;
-        }
-        private List<string> GetSubdirectories(string path)
-        {
-            DirectoryInfo dir = new DirectoryInfo(path);
-            List<string> list = new List<string>();
-            foreach (var item in dir.GetDirectories())
-            {
-                list.Add(item.Name);
-            }
-            return list;
-        }
+       
     }
 }

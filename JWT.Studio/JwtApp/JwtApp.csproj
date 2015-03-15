@@ -253,6 +253,9 @@
     <Content Include="Scripts\Components\widget2\widget2.html" />
     <Content Include="Scripts\Components\widget2\widget2Ctrl.js" />
     <Content Include="Scripts\Components\widget2\widget2Svc.js" />
+    <Content Include="Scripts\Components\widget3\widget3.html" />
+    <Content Include="Scripts\Components\widget3\widget3Ctrl.js" />
+    <Content Include="Scripts\Components\widget3\widget3Svc.js" />
     <Content Include="Scripts\config.js" />
     <Content Include="Scripts\Directives\jwtFilter\jwtFilter.js" />
     <Content Include="Scripts\Directives\mac\mac.css" />

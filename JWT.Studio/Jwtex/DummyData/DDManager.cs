@@ -17,7 +17,11 @@ namespace Jwtex.DummyData
             SetAnimal();
         }
 
-        public async Task<string> GetData(DDObject obj)
+        public async Task<string> GetDataAsync(DDObject obj)
+        {
+            return await Task.FromResult<string>(GetData(obj));
+        }
+        public  string GetData(DDObject obj)
         {
             StringBuilder stringBuilder = new StringBuilder();
            

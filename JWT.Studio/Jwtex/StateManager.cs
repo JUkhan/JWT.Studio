@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using log4net;
 using System.Reflection;
+using jwt.CodeGen;
 
 namespace jwt.internals
 {
@@ -68,6 +69,7 @@ namespace jwt.internals
 
     public class jwtAppManager
     {
+        private static object locker = new Object();
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private string defaultNavigation = "";
         private jwtApp app = null;
@@ -85,29 +87,36 @@ namespace jwt.internals
         {
             try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(jwtApp));
-                using (TextWriter writer = new StreamWriter(this.RootPath + @"jwtApp.config"))
+                lock (locker)
                 {
-                    serializer.Serialize(writer, this.app);
+                    XmlSerializer serializer = new XmlSerializer(typeof(jwtApp));
+                    using (TextWriter writer = new StreamWriter(this.RootPath + @"jwtApp.config"))
+                    {
+                        serializer.Serialize(writer, this.app);
+                    }
                 }
             }
-            catch
+            catch(Exception ex)
             {
-
+                log.Error(ex);
             }
         }
         private void Deserialize()
         {
             try
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(jwtApp));
-                TextReader reader = new StreamReader(this.RootPath + @"jwtApp.config");
-                object obj = deserializer.Deserialize(reader);
-                app = (jwtApp)obj;
-                reader.Close();
+                lock (locker)
+                {
+                    XmlSerializer deserializer = new XmlSerializer(typeof(jwtApp));
+                    TextReader reader = new StreamReader(this.RootPath + @"jwtApp.config");
+                    object obj = deserializer.Deserialize(reader);
+                    app = (jwtApp)obj;
+                    reader.Close();
+                }
             }
-            catch
+            catch(Exception ex)
             {
+                log.Error(ex);
                 this.app = new jwtApp();
                 this.app.UILayouts = new List<Layout>();
                 this.app.UINavigations = new List<Navigation>();
@@ -120,43 +129,49 @@ namespace jwt.internals
         {
             try
             {
-                Deserialize();
-                var temp = app.UILayouts.Find(u => u.LayoutName == layout.LayoutName);
-                if (temp != null)
+                lock (locker)
                 {
-                    return string.Format("'{0}' already exist.");
-                }
-                layout._id = Guid.NewGuid().ToString();
-                app.UILayouts.Add(layout);
-                Serialize();
+                    Deserialize();
+                    var temp = app.UILayouts.Find(u => u.LayoutName == layout.LayoutName);
+                    if (temp != null)
+                    {
+                        return string.Format("'{0}' already exist.");
+                    }
+                    layout._id = Guid.NewGuid().ToString();
+                    app.UILayouts.Add(layout);
+                    Serialize();
 
-                return layout._id;
+                    return layout._id;
+                }
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return ex.ToString();
             }
         }
         public string UpdateLayout(Layout layout)
-        {
-            log.Info(layout.LayoutName);
+        {           
             try
             {
-                Deserialize();
-                var temp = app.UILayouts.Find(u => u._id == layout._id);
-                if (temp == null)
+                lock (locker)
                 {
-                    return string.Format("'{0}' not exist.");
-                }
-                if (!(string.IsNullOrEmpty(layout.LayoutName) || string.IsNullOrEmpty(temp.LayoutName)) && (layout.LayoutName != temp.LayoutName))
-                    Rename(RootPath + "Scripts\\Layouts\\" + temp.LayoutName, layout.LayoutName, temp.LayoutName);
-                UpdateLayout(temp.LayoutName, layout.LayoutName);
+                    JwtFile file = new JwtFile();
+                    Deserialize();
+                    var temp = app.UILayouts.Find(u => u._id == layout._id);
+                    if (temp == null)
+                    {
+                        return string.Format("'{0}' not exist.");
+                    }
+                    if (!(string.IsNullOrEmpty(layout.LayoutName) || string.IsNullOrEmpty(temp.LayoutName)) && (layout.LayoutName != temp.LayoutName))
+                        file.Rename(RootPath + "Scripts\\Layouts\\" + temp.LayoutName, layout.LayoutName, temp.LayoutName);
+                    UpdateLayout(temp.LayoutName, layout.LayoutName);
 
-                temp.LayoutName = layout.LayoutName;
-                temp.Extend = layout.Extend;
-                Serialize();
-                return "Successfully Updted.";
+                    temp.LayoutName = layout.LayoutName;
+                    temp.Extend = layout.Extend;
+                    Serialize();
+                    return "Successfully Updted.";
+                }
             }
             catch (Exception ex)
             {
@@ -166,40 +181,47 @@ namespace jwt.internals
         }
         public void UpdateLayout(string oldName, string newName)
         {
-            if (oldName == newName) return;
-            foreach (var item in app.UILayouts)
+            lock (locker)
             {
-                if (item.Extend == oldName)
-                    item.Extend = oldName;
-            }
-            if (app.UINavigations != null)
-                foreach (var item in app.UINavigations)
+                if (oldName == newName) return;
+                foreach (var item in app.UILayouts)
                 {
-                    if (item.HasLayout == oldName)
-                        item.HasLayout = newName;
+                    if (item.Extend == oldName)
+                        item.Extend = oldName;
                 }
+                if (app.UINavigations != null)
+                    foreach (var item in app.UINavigations)
+                    {
+                        if (item.HasLayout == oldName)
+                            item.HasLayout = newName;
+                    }
+            }
         }
         public string RemoveLayout(Layout layout)
         {
             try
             {
-                Deserialize();
-                var temp = app.UILayouts.Find(u => u._id == layout._id);
-                if (temp == null)
+                lock (locker)
                 {
-                    return string.Format("'{0}' not exist.");
+                    JwtFile file = new JwtFile();
+                    Deserialize();
+                    var temp = app.UILayouts.Find(u => u._id == layout._id);
+                    if (temp == null)
+                    {
+                        return string.Format("'{0}' not exist.");
+                    }
+                    //rename files               
+                    file.Remove(RootPath + "Scripts\\Layouts\\" + temp.LayoutName);
+
+                    app.UILayouts.Remove(temp);
+                    Serialize();
+
+                    return "Successfully Removed.";
                 }
-                //rename files               
-                Remove(RootPath + "Scripts\\Layouts\\" + temp.LayoutName);
-
-                app.UILayouts.Remove(temp);
-                Serialize();
-
-                return "Successfully Removed.";
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return ex.ToString();
             }
         }
@@ -207,12 +229,15 @@ namespace jwt.internals
         {
             try
             {
-                Deserialize();
-                return app.UILayouts ?? new List<Layout>();
+                lock (locker)
+                {
+                    Deserialize();
+                    return app.UILayouts ?? new List<Layout>();
+                }
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return new List<Layout>();
             }
         }
@@ -223,47 +248,54 @@ namespace jwt.internals
         {
             try
             {
-                Deserialize();
-                var temp = app.UINavigations.Find(u => u.NavigationName == navigation.NavigationName);
-                if (temp != null)
+                lock (locker)
                 {
-                    return string.Format("'{0}' already exist.");
-                }
-                navigation._id = Guid.NewGuid().ToString();
-                app.UINavigations.Add(navigation);
-                Serialize();
+                    Deserialize();
+                    var temp = app.UINavigations.Find(u => u.NavigationName == navigation.NavigationName);
+                    if (temp != null)
+                    {
+                        return string.Format("'{0}' already exist.");
+                    }
+                    navigation._id = Guid.NewGuid().ToString();
+                    app.UINavigations.Add(navigation);
+                    Serialize();
 
-                return navigation._id;
+                    return navigation._id;
+                }
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return ex.ToString();
             }
         }
         public string UpdateNavigation(Navigation navigation)
         {
             log.Info(navigation.NavigationName);
+            JwtFile file = new JwtFile();
             try
             {
-                Deserialize();
-                var temp = app.UINavigations.Find(u => u._id == navigation._id);
-                if (temp == null)
+                lock (locker)
                 {
-                    return string.Format("'{0}' not exist.");
+                    Deserialize();
+                    var temp = app.UINavigations.Find(u => u._id == navigation._id);
+                    if (temp == null)
+                    {
+                        return string.Format("'{0}' not exist.");
+                    }
+                    if (!(string.IsNullOrEmpty(navigation.NavigationName) || string.IsNullOrEmpty(temp.NavigationName)) && (navigation.NavigationName != temp.NavigationName))
+                        file.Rename(RootPath + "Scripts\\Components\\" + temp.WidgetName, navigation.WidgetName, temp.WidgetName);
+                    UpdateNavigation(temp.WidgetName, navigation.WidgetName);
+
+                    temp.NavigationName = navigation.NavigationName;
+                    temp.WidgetName = navigation.WidgetName;
+                    temp.ParamName = navigation.ParamName;
+                    temp.UIViews = navigation.UIViews;
+                    temp.HasLayout = navigation.HasLayout;
+                    Serialize();
+
+                    return "Successfully Updted.";
                 }
-                if (!(string.IsNullOrEmpty(navigation.NavigationName) || string.IsNullOrEmpty(temp.NavigationName)) && (navigation.NavigationName != temp.NavigationName))
-                    Rename(RootPath + "Scripts\\Components\\" + temp.WidgetName, navigation.WidgetName, temp.WidgetName);
-                UpdateNavigation(temp.WidgetName, navigation.WidgetName);
-
-                temp.NavigationName = navigation.NavigationName;
-                temp.WidgetName = navigation.WidgetName;
-                temp.ParamName = navigation.ParamName;
-                temp.UIViews = navigation.UIViews;
-                temp.HasLayout = navigation.HasLayout;
-                Serialize();
-
-                return "Successfully Updted.";
             }
             catch (Exception ex)
             {
@@ -293,23 +325,26 @@ namespace jwt.internals
         {
             try
             {
-                Deserialize();
-                var temp = app.UINavigations.Find(u => u._id == navigation._id);
-                if (temp == null)
+                lock (locker)
                 {
-                    return string.Format("'{0}' not exist.");
+                    Deserialize();
+                    var temp = app.UINavigations.Find(u => u._id == navigation._id);
+                    if (temp == null)
+                    {
+                        return string.Format("'{0}' not exist.");
+                    }
+                    //remove files               
+                    //Remove(RootPath + "Scripts\\Components\\" + temp.WidgetName);
+
+                    app.UINavigations.Remove(temp);
+                    Serialize();
+
+                    return "Successfully Removed.";
                 }
-                //remove files               
-                //Remove(RootPath + "Scripts\\Components\\" + temp.WidgetName);
-
-                app.UINavigations.Remove(temp);
-                Serialize();
-
-                return "Successfully Removed.";
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return ex.ToString();
             }
         }
@@ -317,12 +352,15 @@ namespace jwt.internals
         {
             try
             {
-                Deserialize();
-                return app.UINavigations ?? new List<Navigation>();
+                lock (locker)
+                {
+                    Deserialize();
+                    return app.UINavigations ?? new List<Navigation>();
+                }
             }
             catch (Exception ex)
             {
-
+                log.Error(ex);
                 return new List<Navigation>();
             }
         }
@@ -332,108 +370,37 @@ namespace jwt.internals
         {
             try
             {
-                Deserialize();
-                Jwtex.CodeGen codeGen = new Jwtex.CodeGen();
-                codeGen.App = this.app;
-                codeGen.Root = RootPath;
-                codeGen.DefaultNavigation = defaultNavigation;
-                foreach (var item in app.UILayouts)
+                lock (locker)
                 {
-                    app.Layout = item;
-                }
-                foreach (var item in app.UINavigations)
-                {
-                    foreach (var view in item.UIViews)
+                    Deserialize();
+                    Jwtex.CodeGen codeGen = new Jwtex.CodeGen();
+                    codeGen.App = this.app;
+                    codeGen.Root = RootPath;
+                    codeGen.DefaultNavigation = defaultNavigation;
+                    foreach (var item in app.UILayouts)
                     {
-                        item.View = view;
+                        app.Layout = item;
                     }
-                    app.Navigation = item;
+                    foreach (var item in app.UINavigations)
+                    {
+                        foreach (var view in item.UIViews)
+                        {
+                            item.View = view;
+                        }
+                        app.Navigation = item;
+                    }
+                    codeGen.Execute();
                 }
-                codeGen.Execute();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Error(ex);
                 throw;
             }
 
         }
 
-        #region File Operations
-        private bool IsExist(string path)
-        {
-            return System.IO.File.Exists(path);
-        }
-        private void RenameFile(string previousName, string newName)
-        {
-            if (previousName == newName) return;
-            if (IsExist(previousName))
-            {
-                System.IO.File.Copy(previousName, newName);
-                System.IO.File.Delete(previousName);
-            }
-        }
-        private void RemoveFile(string fileName)
-        {
-            if (IsExist(fileName))
-            {
-                System.IO.File.Delete(fileName);
-            }
-        }
-        private void Remove(string path)
-        {
-            if (!Directory.Exists(path)) return;
-            try
-            {
-                DirectoryInfo dir = new DirectoryInfo(path);
-                foreach (var item in dir.GetFiles())
-                {
-                    item.Delete();
-                }
-                dir.Delete();
-            }
-            catch (Exception)
-            {
-
-
-            }
-        }
-        private void Rename(string path, string newName, string oldName)
-        {
-            if (!Directory.Exists(path)) return;
-            string path2 = path.Replace(oldName, newName);
-            if (path != path2)
-                Directory.Move(path, path2);
-            DirectoryInfo dir = new DirectoryInfo(path2);
-
-            foreach (FileInfo item in dir.GetFiles())
-            {
-                var temp = item.FullName.Substring(0, item.FullName.LastIndexOf(item.Name));
-                if (item.Name.Contains("Svc"))
-                {
-                    temp += newName + "Svc" + item.Extension;
-                }
-                else if (item.Name.Contains("Ctrl"))
-                {
-                    temp += newName + "Ctrl" + item.Extension;
-                }
-                else
-                {
-                    temp += newName + item.Extension;
-                }
-                RenameFile(item.FullName, temp);
-                //replace into the file content
-                /* if (item.Name.Contains("Svc")||item.Name.Contains("Ctrl"))
-                 {
-                     var content= File.ReadAllText(temp);
-                     File.WriteAllText(temp, content.Replace(oldName, newName));
-                 }*/
-
-            }
-
-        }
-
-        #endregion
+        
     }
 
 }
