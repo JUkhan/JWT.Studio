@@ -1,15 +1,5 @@
 <h3>widget Name : {{vm.title}}</h3>
 <b ng-bind="vm.country"></b>
-<table class="table">
-  <thead>
-  <tr>
-    <th>ID</th><th>Name</th>
-  </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="item in vm.list">
-      <td ng-bind="item.id"></td>
-		<td ng-bind="item.name"></td>
-    </tr>
-  </tbody>
-</table>
+<div table-com data="vm.list">
+  
+</div>

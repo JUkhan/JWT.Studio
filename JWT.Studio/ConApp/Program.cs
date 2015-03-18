@@ -25,7 +25,7 @@ namespace ConApp
             obj.columns = new List<DDColumn>
             {
                 new DDColumn{ name="id", type="int", min=1, max=20},
-                 new DDColumn{ name="name", type="animal"},
+                 new DDColumn{ name="name", type="bool"},
                   new DDColumn{ name="product", type="date"}
             };
             DDManager dd = new DDManager();

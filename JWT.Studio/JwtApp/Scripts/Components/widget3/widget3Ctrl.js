@@ -12,13 +12,13 @@ class widget3Ctrl extends BaseCtrl
 	}
   	getData(){
       let obj={limit:5, columns:[
-               {name:'userId', type:'int'},
-          		{name:'userName', type:'human'},
-         		 {name:'country', type:'country'}
+               {name:'User Id', type:'int'},
+          		{name:'User Name', type:'human'},
+         		 {name:'Country', type:'country'}
                ]};
-      let me=this;
+    
       
-      SVC.get(this).getDummyData(obj) .success(res=>{ me.list=angular.fromJson(res.data); });  
+      SVC.get(this).getDummyData(obj) .success(res=>{ this.list=angular.fromJson(res.data); });  
     }
 }
 widget3Ctrl.$inject=['$scope', 'widget3Svc'];

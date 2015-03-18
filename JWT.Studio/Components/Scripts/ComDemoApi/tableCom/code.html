@@ -1,0 +1,21 @@
+﻿
+&lt;div table-com data="vm.list" &gt;
+
+&lt;/div&gt;
+<pre>
+<code>
+    loadData(){
+      
+      let dataConfig={limit:20, columns:[
+        {name:'Country', type:'country'},
+        {name:'Name', type:'human'},
+        {name:'Age', type:'int', min:20, max:100},
+        {name:'IsMarried', type:'bool'},
+        {name:'Beloved', type:'animal'}
+      ]};      
+      
+      SVC.get(this).getDummyData(dataConfig)
+        .success(res=>{ this.list=angular.fromJson(res.data); });
+    }
+</code>
+</pre>

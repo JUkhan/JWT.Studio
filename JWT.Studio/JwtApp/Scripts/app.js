@@ -7,8 +7,7 @@ import {default as filters} from 'Scripts/app.filters.js';
 
 var moduleName='app'; 
 
-angular.module(moduleName,["ui.router", "ngSanitize", "ngResource",
-    'ui.grid', 'ui.grid.paging', 'ui.bootstrap', controllers, services, directives, filters])
+angular.module(moduleName,["ui.router", "ngResource", controllers, services, directives, filters])
     .config(config)
     .run(function($rootScope, $templateCache) {
         $rootScope.$on('$viewContentLoaded', function() {

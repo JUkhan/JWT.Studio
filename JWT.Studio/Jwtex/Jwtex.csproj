@@ -74,8 +74,6 @@
     <Compile Include="StateManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="JwtResources\angular-resource.js" />
-    <EmbeddedResource Include="JwtResources\angularui.js" />
     <EmbeddedResource Include="JwtResources\app.js" />
     <EmbeddedResource Include="JwtResources\Site.css" />
     <EmbeddedResource Include="JwtResources\index.html" />
@@ -88,19 +86,21 @@
   <ItemGroup>
     <EmbeddedResource Include="JwtResources\component.html" />
     <EmbeddedResource Include="JwtResources\traceur.js" />
-    <EmbeddedResource Include="JwtResources\Utilities.js" />
     <EmbeddedResource Include="JwtResources\mainController_jwt.js" />
     <EmbeddedResource Include="JwtResources\index_jwt.html" />
-    <EmbeddedResource Include="JwtResources\jwt-filter.js" />
     <EmbeddedResource Include="JwtResources\jquery.js" />
     <EmbeddedResource Include="JwtResources\toastr\toastr.css" />
     <EmbeddedResource Include="JwtResources\toastr\toastr.js" />
-    <EmbeddedResource Include="JwtResources\angular-ui-router.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closebrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\closetag.js" />
-    <EmbeddedResource Include="JwtResources\angular-sanitize.js" />
     <EmbeddedResource Include="JwtResources\app2.js" />
-    <EmbeddedResource Include="JwtResources\angular.js" />
+    <EmbeddedResource Include="JwtResources\angular-animate.min.js" />
+    <EmbeddedResource Include="JwtResources\angular-cookies.min.js" />
+    <EmbeddedResource Include="JwtResources\angular-resource.min.js" />
+    <EmbeddedResource Include="JwtResources\angular-sanitize.min.js" />
+    <EmbeddedResource Include="JwtResources\angular-ui-router.min.js" />
+    <EmbeddedResource Include="JwtResources\angular.min.js" />
+    <EmbeddedResource Include="JwtResources\angularui.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />
@@ -143,7 +143,21 @@
     <EmbeddedResource Include="JwtResources\codemirror\mode\xml\xml.js" />
     <EmbeddedResource Include="JwtResources\codemirror\theme\rubyblue.css" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="JwtResources\angular-animate.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JwtResources\angular-cookies.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JwtResources\angular-resource.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JwtResources\angular-sanitize.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JwtResources\angular.min.js.map" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

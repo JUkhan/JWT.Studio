@@ -23,9 +23,9 @@ class widget2Ctrl extends BaseCtrl
         {name:'id', type:'int'},
         {name:'name', type:'animal'}
       ]};
-      let me=this;
+     
       SVC.get(this).getDummyData(obj)
-      .success(res=>{ me.list=angular.fromJson(res.data); });  
+      .success(res=>{ this.list=angular.fromJson(res.data); });  
    
       
     }

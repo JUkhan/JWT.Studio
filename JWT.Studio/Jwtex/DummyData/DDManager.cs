@@ -42,6 +42,9 @@ namespace Jwtex.DummyData
                     }
                     switch (item.type.ToLower())
                     {
+                        case "bool":
+                            stringBuilder.AppendFormat("\"{0}\":{1}", item.name, GetBool());
+                            break;
                         case "guid":
                             stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetGuid());
                             break;
@@ -80,6 +83,12 @@ namespace Jwtex.DummyData
             stringBuilder.Append("]");
 
             return   stringBuilder.ToString();
+        }
+
+        private string GetBool()
+        {
+            var list = new List<string> { "true", "false" };
+            return list[GetRandomNumber(0, 2)];
         }
 
         private string GetDataFromDic(string key, int index){

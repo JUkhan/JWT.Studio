@@ -30,7 +30,7 @@ namespace Components
                       "~/Content/site.css",
                       "~/Content/font-awesome/css/font-awesome.css",
                      "~/Content/toastr/toastr.css",
-                     "~/Scripts/UI-Grid/ui-grid-unstable.css",
+                     //"~/Scripts/UI-Grid/ui-grid-unstable.css",
                       "~/Scripts/jqPlot/jquery.jqplot.min.css"
                       ));
 
