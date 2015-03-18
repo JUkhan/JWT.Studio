@@ -33,6 +33,12 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-client\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -64,6 +70,9 @@
     <Compile Include="DummyData\DDManager.cs" />
     <Compile Include="DummyData\DDObject.cs" />
     <Compile Include="CodeGen\JwtFile.cs" />
+    <Compile Include="Hubs\FileInfo.cs" />
+    <Compile Include="Hubs\HubController.cs" />
+    <Compile Include="Hubs\JwtHub.cs" />
     <Compile Include="JResult.cs" />
     <Compile Include="jwtApp.cs" />
     <Compile Include="FluentApi.cs" />
@@ -84,6 +93,7 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\jquery.signalR-2.2.0.min.js" />
     <EmbeddedResource Include="JwtResources\component.html" />
     <EmbeddedResource Include="JwtResources\traceur.js" />
     <EmbeddedResource Include="JwtResources\mainController_jwt.js" />
@@ -101,6 +111,7 @@
     <EmbeddedResource Include="JwtResources\angular-ui-router.min.js" />
     <EmbeddedResource Include="JwtResources\angular.min.js" />
     <EmbeddedResource Include="JwtResources\angularui.js" />
+    <EmbeddedResource Include="JwtResources\angular-signalr-hub.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />

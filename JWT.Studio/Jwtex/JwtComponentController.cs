@@ -185,20 +185,7 @@ namespace Jwtex
             // Return the result as a byte array. 
             return content;
         }
-        private string StreamToString(Stream stream)
-        {
-            stream.Position = 0;
-            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public Stream StringToStream(string src)
-        {
-            byte[] byteArray = Encoding.UTF8.GetBytes(src);
-            return new MemoryStream(byteArray);
-        }
+       
         public JsonResult GetDemoInfo(string name, string mode)
         {
             try

@@ -183,44 +183,31 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         info('Disconnected from Development');
     });
     scope.$on('lockFile', function (event, file) {
-        var folder = scope.items[scope.itemValue] ;
-        if (scope.dataMode === file.Category) {
-            if (file.Category === 'Base') {
-                updateEditor(file.Name, true, false);
-            }
-            else if (file.Folder === folder) {
-                updateEditor(file.Name, true, false);
-            }
+        var folder = scope.items[scope.itemValue] || '';
+        if (scope.dataMode === file.Category && file.Folder === folder) {
+            updateEditor(file.Name, true, false);
         }
     });
     scope.$on('unlockFile', function (event, file) {
-        var folder = scope.items[scope.itemValue] ;
-        if (scope.dataMode === file.Category ) {
-            if (file.Category === 'Base') {
-                updateEditor(file.Name, false, false);
-            }
-            else if (file.Folder === folder) {
-                updateEditor(file.Name, false, false);
-            }
+        var folder = scope.items[scope.itemValue] || '';
+        if (scope.dataMode === file.Category && file.Folder === folder) {
+            updateEditor(file.Name, false, false);
         }
     });
     scope.jsChange = function () {        
         if (AWAIT.jsLock) {
-            if(scope.jsEditor.getValue())
             jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName });
             AWAIT.jsLock = 0;
         }
     };
     scope.htmlChange = function () {
         if (AWAIT.htmlLock) {
-            if (scope.htmlEditor.getValue())
             jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });
             AWAIT.htmlLock = 0;
         }
     };
     scope.cssChange = function () {
         if (AWAIT.cssLock) {
-            if (scope.cssEditor.getValue())
             jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });
             AWAIT.cssLock = 0;
         }

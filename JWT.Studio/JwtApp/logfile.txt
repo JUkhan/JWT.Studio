@@ -120,3 +120,7 @@ File name: 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Components\widget3
 2015-03-17 10:45:02,584 [44] INFO  jwt.internals.jwtAppManager - nav3
 2015-03-17 10:45:16,429 [42] INFO  jwt.internals.jwtAppManager - nav1
 2015-03-17 10:45:43,635 [44] INFO  jwt.internals.jwtAppManager - all
+2015-03-18 22:22:02,959 [11] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-03-18 22:22:03,041 [11] INFO  Jwtex.JwtExController - files found: 4
+2015-03-18 22:22:11,566 [8] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-03-18 22:22:11,567 [8] INFO  Jwtex.JwtExController - files found: 4

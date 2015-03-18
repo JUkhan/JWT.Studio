@@ -8,10 +8,12 @@ using System.Web.Mvc;
 using log4net;
 using System.Reflection;
 using jwt.CodeGen;
+using Jwtex.Hubs;
+using System.Configuration;
 
 namespace Jwtex
 {
-    public class JwtExController : Jwt.Controller.BaseController
+    public class JwtExController : HubController<JwtHub>
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public void Index()
@@ -43,9 +45,25 @@ namespace Jwtex
                         Response.ContentType = "text/javascript";
                         break;
                 }
-                stream.CopyTo(Response.OutputStream);
+                if (file.ToLower() == "app.js")
+                {
+                    string data = StreamToString(stream).Replace("ROOT_PATH", GetRootPath());
+
+                    StringToStream(data).CopyTo(Response.OutputStream);
+                }
+                else
+                {
+                    stream.CopyTo(Response.OutputStream);
+                }
             }
 
+        }
+        private string GetRootPath()
+        {
+            var url = ConfigurationManager.AppSettings["RootPath"] ?? "";
+            url = url.StartsWith("/") ? url : "/"+ url ;
+            url= url.EndsWith("/") ? url : url + "/";
+            return string.Format("rootPath:'{0}signalr',", url);
         }
         public JsonResult GetFileList(string directory)
         {
@@ -105,6 +123,7 @@ namespace Jwtex
                 switch (mode)
                 {
                     case "Base":
+                        directoryName = "base";
                         path += string.Format("Scripts\\Base\\{0}", fileName);
                         res.data = file.Read(path);// System.IO.File.ReadAllText(path);
                         break;
@@ -123,7 +142,7 @@ namespace Jwtex
                         break;
                 }
                 res.isSuccess = true;
-
+                res.locked = IsLock(new Hubs.FileInfo { Name = fileName, Folder = directoryName, Category = mode });
             }
             catch (Exception ex)
             {
@@ -198,6 +217,8 @@ namespace Jwtex
         }
         public JsonResult GetItemDetail(string name, string mode)
         {
+            var asd = Request.ServerVariables;
+            log.Info(string.Format("name:{0}, mode:{1}", name, mode));
             JwtFile file = new JwtFile();
             List<string> list = null;
             switch (mode)
@@ -218,6 +239,7 @@ namespace Jwtex
 
                     break;
             }
+            log.Info("files found: "+list.Count);
             return Json(new { js = list.Where(x => x.EndsWith(".js")), html = list.Where(x => x.EndsWith(".html")), css = list.Where(x => x.EndsWith(".css")) }, JsonRequestBehavior.AllowGet);
         }
 

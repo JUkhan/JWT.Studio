@@ -103,10 +103,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         if (!fileName) { info('File name is required.'); return; }
         http.get('JwtEx/GetFileContent/?mode={0}&directoryName={1}&fileName={2}'.format(scope.dataMode, scope.items[scope.itemValue], fileName))
            .success(function (data) {
-               AWAIT.jsLock = 0;
                scope.jsEditor.setValue(data.data);
-               setTimeout(function () { AWAIT.jsLock = 1; }, 100);
-               updateEditor(scope.jsFileName, data.locked, true);
            });
 
     }
@@ -116,9 +113,8 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         http.post('JwtEx/SaveFile', { mode: scope.dataMode, directoryName: scope.items[scope.itemValue], fileName: scope.jsFileName, content: scope.jsEditor.getValue() })
         .success(function (data) {
             if (data.isSuccess) {
-                jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.jsFileName });
+                jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue]||'base', Name: scope.jsFileName });
                 success('Saved successfully.');
-                AWAIT.jsLock = 1;
             }
         });
     }
@@ -129,10 +125,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         if (!fileName) { info('File name is required.'); return; }
         http.get('JwtEx/GetFileContent/?mode={0}&directoryName={1}&fileName={2}'.format(scope.dataMode, scope.items[scope.itemValue], fileName))
            .success(function (data) {
-               AWAIT.htmlLock = 0;
                scope.htmlEditor.setValue(data.data);
-               setTimeout(function () { AWAIT.htmlLock = 1; }, 100);
-               updateEditor(scope.htmlFileName, data.locked, true);
            });
 
     }
@@ -155,10 +148,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         if (!fileName) { info('File name is required.'); return; }
         http.get('JwtEx/GetFileContent/?mode={0}&directoryName={1}&fileName={2}'.format(scope.dataMode, scope.items[scope.itemValue], fileName))
            .success(function (data) {
-               AWAIT.cssLock = 0;
                scope.cssEditor.setValue(data.data);
-               setTimeout(function () { AWAIT.cssLock = 1; }, 100);
-               updateEditor(scope.cssFileName, data.locked, true);
            });
 
     }
@@ -174,8 +164,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         });
     }
     //signalR
-    var LOCK = { jsLock: 0, htmlLock: 0, cssLock: 0 };
-    var AWAIT = { jsLock: 0, htmlLock: 0, cssLock: 0 };
+    var LOCK = {jsLock:0, htmlLock:0, cssLock:0};
     scope.$on('newConnection', function (event, message) {
         info('Joined in Development');
     });
@@ -183,68 +172,46 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         info('Disconnected from Development');
     });
     scope.$on('lockFile', function (event, file) {
-        var folder = scope.items[scope.itemValue] ;
-        if (scope.dataMode === file.Category) {
-            if (file.Category === 'Base') {
-                updateEditor(file.Name, true, false);
-            }
-            else if (file.Folder === folder) {
-                updateEditor(file.Name, true, false);
-            }
+        var folder = scope.items[scope.itemValue] || '';
+        if (scope.dataMode === file.Category && file.Folder === folder) {
+            updateEditor(file.Name, true);
         }
     });
     scope.$on('unlockFile', function (event, file) {
-        var folder = scope.items[scope.itemValue] ;
-        if (scope.dataMode === file.Category ) {
-            if (file.Category === 'Base') {
-                updateEditor(file.Name, false, false);
-            }
-            else if (file.Folder === folder) {
-                updateEditor(file.Name, false, false);
-            }
+        var folder = scope.items[scope.itemValue] || '';
+        if (scope.dataMode === file.Category && file.Folder === folder) {
+            updateEditor(file.Name, false);
         }
     });
-    scope.jsChange = function () {        
-        if (AWAIT.jsLock) {
-            if(scope.jsEditor.getValue())
-            jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName });
-            AWAIT.jsLock = 0;
-        }
+    scope.jsChange = function () {
+        console.log('js...')
     };
     scope.htmlChange = function () {
-        if (AWAIT.htmlLock) {
-            if (scope.htmlEditor.getValue())
-            jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });
-            AWAIT.htmlLock = 0;
-        }
+        console.log('dox...')
     };
     scope.cssChange = function () {
-        if (AWAIT.cssLock) {
-            if (scope.cssEditor.getValue())
-            jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });
-            AWAIT.cssLock = 0;
-        }
+        console.log('css...')
     };
-    function updateEditor(fileName, readOnly, isFromLoadContent) {
+    function updateEditor(fileName, readOnly) {
 
         if (fileName === scope.jsFileName) {
-            scope.jsEditor.options.readOnly = readOnly;
+            cope.jsEditor.options.readOnly = readOnly;
             LOCK.jsLock = readOnly;
-            if (!LOCK.jsLock && !isFromLoadContent) { scope.jsLoad(fileName); info('Unlocked '+fileName); }
+            if (!LOCK.jsLock) { scope.jsLoad(fileName); info('Unlocked'); }
         }
         else if (fileName === scope.htmlFileName) {
-            scope.htmlEditor.options.readOnly = readOnly;
+            cope.htmlEditor.options.readOnly = readOnly;
             LOCK.htmlLock = readOnly;
-            if (!LOCK.htmlLock && !isFromLoadContent) { scope.htmlLoad(fileName); info('Unlocked ' + fileName); }
+            if (!LOCK.htmlLock) { scope.htmlLoad(fileName); info('Unlocked'); }
         }
         else if (fileName === scope.cssFileName) {
-            scope.cssEditor.options.readOnly = readOnly;
+            cope.cssEditor.options.readOnly = readOnly;
             LOCK.cssLock = readOnly;
-            if (!LOCK.cssLock && !isFromLoadContent) { scope.cssLoad(fileName); info('Unlocked ' + fileName); }
+            if (!LOCK.cssLock) { scope.cssLoad(fileName); info('Unlocked'); }
         }
     }
     //end signalR
-    
+    info('Welcome to jwt.');
     function success(msg) {
         toastr['success'](msg);
     }

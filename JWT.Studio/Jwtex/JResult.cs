@@ -11,5 +11,6 @@ namespace Jwtex
         public bool isSuccess { get; set; }
         public dynamic data { get; set; }
         public string msg { get; set; }
+        public bool locked { get; set; }
     }
 }
