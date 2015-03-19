@@ -124,3 +124,19 @@ File name: 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Components\widget3
 2015-03-18 22:22:03,041 [11] INFO  Jwtex.JwtExController - files found: 4
 2015-03-18 22:22:11,566 [8] INFO  Jwtex.JwtExController - name:undefined, mode:Base
 2015-03-18 22:22:11,567 [8] INFO  Jwtex.JwtExController - files found: 4
+2015-03-19 21:12:11,995 [7] INFO  Jwtex.JwtExController - name:ims, mode:Widgets
+2015-03-19 21:12:12,037 [7] INFO  Jwtex.JwtExController - files found: 3
+2015-03-19 21:13:32,644 [15] INFO  Jwtex.JwtExController - name:tableCom, mode:Components
+2015-03-19 21:13:32,645 [15] INFO  Jwtex.JwtExController - files found: 3
+2015-03-19 21:13:39,363 [11] INFO  Jwtex.JwtExController - name:complex, mode:Layouts
+2015-03-19 21:13:39,364 [11] INFO  Jwtex.JwtExController - files found: 2
+2015-03-19 21:14:57,108 [15] INFO  Jwtex.JwtExController - name:mac, mode:Components
+2015-03-19 21:14:57,109 [15] INFO  Jwtex.JwtExController - files found: 3
+2015-03-19 21:15:45,924 [10] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-03-19 21:15:45,947 [10] INFO  Jwtex.JwtExController - files found: 1
+2015-03-19 21:16:04,215 [10] INFO  Jwtex.JwtExController - name:tableCom, mode:Components
+2015-03-19 21:16:04,216 [10] INFO  Jwtex.JwtExController - files found: 3
+2015-03-19 21:17:29,872 [8] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-03-19 21:17:29,873 [8] INFO  Jwtex.JwtExController - files found: 1
+2015-03-19 22:19:21,238 [169] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-19 22:19:21,263 [169] INFO  Jwtex.JwtExController - files found: 3
