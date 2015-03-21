@@ -108,26 +108,17 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     function unlocakAll() {
         
         if (scope.dataChange.jsf) {
-            saveFile(scope.dataMode, scope.jsFileName.replace('.js', ''), scope.jsFileName, scope.jsEditor.getValue());           
+            jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.jsFileName.replace('.js',''), Name: scope.jsFileName });
             scope.dataChange.jsf = false;
         }
-        if (scope.dataChange.htmlf) {           
-            saveFile(scope.dataMode, scope.htmlFileName.replace('.html', ''), scope.htmlFileName, scope.htmlEditor.getValue());           
+        if (scope.dataChange.htmlf) {
+            jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });
             scope.dataChange.htmlf = false;
         }
         if (scope.dataChange.cssf) {
-            saveFile(scope.dataMode, scope.cssFileName.replace('.css', ''), scope.cssFileName, scope.cssEditor.getValue());          
+            jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });
             scope.dataChange.cssf = false;
         }
-    }
-    function saveFile(mode, directoryName, fileName, content) {
-        http.post('JwtEx/SaveFile', { mode: mode, directoryName: directoryName, fileName: fileName, content: content })
-       .success(function (data) {
-           if (data.isSuccess) {             
-               success('Saved successfully.');
-               jwtSvc.unlock({ Category: mode, Folder: directoryName, Name: fileName });
-           }
-       });
     }
     //end of new style
 

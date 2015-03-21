@@ -140,3 +140,187 @@ File name: 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Components\widget3
 2015-03-19 21:17:29,873 [8] INFO  Jwtex.JwtExController - files found: 1
 2015-03-19 22:19:21,238 [169] INFO  Jwtex.JwtExController - name:chart, mode:Components
 2015-03-19 22:19:21,263 [169] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 06:17:03,208 [32] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 06:17:03,239 [32] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 06:25:22,180 [22] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 06:25:22,206 [22] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 06:32:20,158 [75] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 06:32:20,183 [75] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 06:36:33,828 [89] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 06:36:33,853 [89] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 06:37:32,166 [88] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 06:37:32,169 [88] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 06:43:07,294 [73] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 06:43:07,321 [73] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 06:47:34,714 [67] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 06:47:34,740 [67] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:10:29,700 [140] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:10:29,701 [140] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:11:11,451 [146] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:11:11,453 [146] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:11:25,395 [144] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:11:25,396 [144] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:21:59,195 [118] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:21:59,197 [118] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:27:24,338 [43] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-03-21 09:27:24,363 [43] INFO  Jwtex.JwtExController - files found: 1
+2015-03-21 09:27:26,014 [40] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:27:26,015 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:27:46,672 [43] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:27:46,673 [43] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:33:08,040 [109] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:33:08,066 [109] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:36:06,157 [104] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:36:06,183 [104] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:36:57,537 [103] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:36:57,539 [103] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:40:05,757 [123] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:40:05,793 [123] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:44:30,824 [125] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:44:30,849 [125] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:47:14,191 [119] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:47:14,217 [119] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:48:14,330 [96] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:48:14,330 [96] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:49:27,854 [123] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:49:27,882 [123] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:49:42,007 [126] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:49:42,008 [126] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:57:10,087 [99] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:57:10,116 [99] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 09:59:06,282 [93] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 09:59:06,283 [93] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:05:30,626 [120] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:05:30,653 [120] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:07:10,385 [40] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:07:10,412 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:08:47,503 [94] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:08:47,530 [94] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:09:11,147 [130] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:09:11,148 [130] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:11:12,246 [108] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:11:12,273 [108] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:13:56,493 [40] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:13:56,517 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:15:16,348 [127] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:15:16,376 [127] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:15:29,998 [129] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:15:29,999 [129] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:22:30,798 [94] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:22:30,824 [94] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:22:42,578 [127] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:22:42,579 [127] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:40:48,258 [108] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:40:48,280 [108] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:43:18,263 [92] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:43:18,297 [92] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:43:33,898 [104] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-03-21 10:43:33,899 [104] INFO  Jwtex.JwtExController - files found: 4
+2015-03-21 10:44:21,659 [41] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:44:21,659 [41] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:44:33,721 [104] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-03-21 10:44:33,722 [104] INFO  Jwtex.JwtExController - files found: 4
+2015-03-21 10:44:47,786 [108] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:44:47,787 [108] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:45:06,240 [41] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-03-21 10:45:06,241 [41] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:47:49,581 [29] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:47:49,606 [29] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:48:02,798 [40] INFO  Jwtex.JwtExController - name:Course, mode:Widgets
+2015-03-21 10:48:02,799 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:48:32,511 [129] INFO  Jwtex.JwtExController - name:ims, mode:Widgets
+2015-03-21 10:48:32,512 [129] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:49:00,287 [29] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-03-21 10:49:00,288 [29] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:49:03,015 [104] INFO  Jwtex.JwtExController - name:ims, mode:Widgets
+2015-03-21 10:49:03,015 [104] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:49:06,277 [40] INFO  Jwtex.JwtExController - name:Course, mode:Widgets
+2015-03-21 10:49:06,278 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:49:09,098 [120] INFO  Jwtex.JwtExController - name:widget3, mode:Widgets
+2015-03-21 10:49:09,099 [120] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:49:12,686 [94] INFO  Jwtex.JwtExController - name:ims, mode:Widgets
+2015-03-21 10:49:12,686 [94] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:49:16,453 [41] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-03-21 10:49:16,454 [41] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:49:23,574 [127] INFO  Jwtex.JwtExController - name:ims, mode:Widgets
+2015-03-21 10:49:23,575 [127] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:50:38,118 [40] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-03-21 10:50:38,119 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:50:52,885 [40] INFO  Jwtex.JwtExController - name:ims, mode:Widgets
+2015-03-21 10:50:52,886 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:52:05,153 [120] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 10:52:05,178 [120] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:52:33,829 [129] INFO  Jwtex.JwtExController - name:mac, mode:Components
+2015-03-21 10:52:33,830 [129] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 10:52:52,796 [94] ERROR Jwtex.JwtExController - System.IO.FileNotFoundException: Could not find file 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Directives\mac\chart.html'.
+File name: 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Directives\mac\chart.html'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   at System.IO.File.InternalReadAllText(String path, Encoding encoding, Boolean checkHost)
+   at System.IO.File.ReadAllText(String path)
+   at jwt.CodeGen.JwtFile.Read(String path)
+   at Jwtex.JwtExController.GetFileContent(String mode, String directoryName, String fileName)
+2015-03-21 11:06:35,440 [29] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:06:35,470 [29] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:06:46,835 [129] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:06:46,836 [129] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:07:13,513 [127] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:07:13,515 [127] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:08:38,522 [94] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:08:38,523 [94] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:09:14,585 [98] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:09:14,586 [98] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:09:21,769 [32] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-03-21 11:09:21,769 [32] INFO  Jwtex.JwtExController - files found: 1
+2015-03-21 11:16:55,809 [29] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:16:55,835 [29] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:20:29,165 [127] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:20:29,192 [127] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:21:00,272 [92] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:21:00,273 [92] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:29:15,471 [120] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:29:15,492 [120] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:29:58,459 [127] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:29:58,460 [127] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:32:27,785 [40] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:32:27,786 [40] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:46:07,718 [129] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:46:07,743 [129] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:46:20,775 [98] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:46:20,776 [98] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:48:12,831 [41] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:48:12,833 [41] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:51:02,132 [98] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:51:02,133 [98] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 11:58:03,067 [7] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 11:58:03,126 [7] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:02:51,939 [7] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 12:02:51,968 [7] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:05:24,999 [7] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 12:05:25,031 [7] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:05:46,362 [8] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 12:05:46,363 [8] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:06:20,584 [13] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 12:06:20,585 [13] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:07:09,864 [7] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-03-21 12:07:09,865 [7] INFO  Jwtex.JwtExController - files found: 1
+2015-03-21 12:07:18,624 [20] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 12:07:18,625 [20] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:07:56,312 [6] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-03-21 12:07:56,313 [6] INFO  Jwtex.JwtExController - files found: 1
+2015-03-21 12:08:08,400 [6] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 12:08:08,402 [6] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:08:18,359 [18] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 12:08:18,360 [18] INFO  Jwtex.JwtExController - files found: 3
+2015-03-21 12:08:18,386 [26] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Directives\'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.File.InternalWriteAllText(String path, String contents, Encoding encoding, Boolean checkHost)
+   at System.IO.File.WriteAllText(String path, String contents)
+   at jwt.CodeGen.JwtFile.Write(String path, String content) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\CodeGen\JwtFile.cs:line 30
+   at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\JwtExController.cs:line 175

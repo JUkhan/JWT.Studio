@@ -1,6 +1,6 @@
 class chart{
-  
- 	constructor(){   
+
+ 	constructor(){  
       this.restrict='ECA';       
       this.link=function(scope, iEle, attr){       
         	

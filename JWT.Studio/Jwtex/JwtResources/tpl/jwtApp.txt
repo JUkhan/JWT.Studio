@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<jwtApp xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>app</Name>
+  <UILayouts>
+    <Layout>
+      <LayoutName>root</LayoutName>
+      <_id>0b4165cf-03de-44dd-9abd-6c5fcf9a0795</_id>
+    </Layout>   
+  </UILayouts> 
+   <UINavigations />
+</jwtApp>

@@ -3,42 +3,40 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jwtComponents</title>
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>jwtApp</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="JwtEx/Resources/?file=jquery.js"></script>
-   
-    
+
 </head>
-<body>
+<body>   
     <div class="container body-content">
         <div ui-view>@RenderBody()</div>
-        <br />
+      
         <hr />
         <footer>
-            <p>&copy; jwt components</p>
+            <p>&copy; jwtApp</p>
         </footer>
     </div>
     <div class="overlay">
-        <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></i></div>
+        <div class="jwt-spinner"><i class="fa fa-refresh fa-spin"></i></div>
     </div>
 
     <script src="JwtEx/Resources/?file=traceur.js"></script>
+    <script src="JwtEx/Resources/?file=jquery.js"></script>   
 
     <script src="JwtEx/Resources/?file=angular.min.js"></script>
     <script src="JwtEx/Resources/?file=angular-animate.min.js"></script>
-    <script src="JwtEx/Resources/?file=angular-resource.min.js"></script>
+    <script src="JwtEx/Resources/?file=angular-resource.min.js"></script>    
     <script src="JwtEx/Resources/?file=angular-ui-router.min.js"></script> 
-    <script src="JwtEx/Resources/?file=angular-sanitize.min.js"></script> 
-    <script src="JwtEx/Resources/?file=angularui.js"></script>
-
-
+   
     <script src="JwtEx/Resources/?file=jwt.js"></script>
     <script type="module" src="~/Scripts/appStarter.js"></script>
-    
-    @Scripts.Render("~/bundles/jqPlot")
-    <script src="JwtEx/Resources/?file=jwt.js"></script>
    
-  
+    @RenderSection("scripts", required: false)
 </body>
 </html>

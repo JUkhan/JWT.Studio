@@ -93,6 +93,17 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\tpl\jwtApp.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\root.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\rootCtrl.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\filters.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\app.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\appStarter.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\BaseCtrl.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\BaseSvc.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\jwtDate.txt" />
+    <EmbeddedResource Include="JwtResources\tpl\layout.txt" />
+    <EmbeddedResource Include="JwtResources\glyphicons-halflings-regular.svg" />
     <EmbeddedResource Include="JwtResources\jquery.signalR-2.2.0.min.js" />
     <EmbeddedResource Include="JwtResources\component.html" />
     <EmbeddedResource Include="JwtResources\traceur.js" />
@@ -168,6 +179,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JwtResources\angular.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JwtResources\glyphicons-halflings-regular.eot" />
+    <EmbeddedResource Include="JwtResources\glyphicons-halflings-regular.ttf" />
+    <EmbeddedResource Include="JwtResources\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

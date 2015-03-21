@@ -61,6 +61,11 @@
                         <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />
                         <input class="btn btn-success" type="button" value="Save" ng-click="saveJsFile()" />
                     </div>
+                    
+                    <div class="pull-right">
+                        <div ng-show="lock.jsLock" class="glyphicon glyphicon-lock"></div>
+                        <div ng-show="dataChange.jsf" class="glyphicon glyphicon-floppy-save"></div>
+                    </div>
                 </div>
                 <textarea id="jsEditor" name="jsEditor" style="display:block; width:100%;height:500px"></textarea>
 
@@ -73,6 +78,10 @@
                         <input class="btn btn-success" type="button" ng-click="htmlLoad(htmlFileName)" value="Load" />
                         <input class="btn btn-success" type="button" value="Save" ng-click="saveHtmlFile()" />
                     </div>
+                    <div class="pull-right">
+                        <div ng-show="lock.htmlLock" class="glyphicon glyphicon-lock"></div>
+                        <div ng-show="dataChange.htmlf" class="glyphicon glyphicon-floppy-save"></div>
+                    </div>
                 </div>
                 <textarea id="htmlEditor" name="htmlEditor" style="display:block; width:100%;height:500px"></textarea>
             </tab>
@@ -83,6 +92,10 @@
                     <div class="btn-group">
                         <input class="btn btn-success" type="button" ng-click="cssLoad(cssFileName)" value="Load" />
                         <input class="btn btn-success" type="button" value="Save" ng-click="saveCssFile()" />
+                    </div>
+                    <div class="pull-right">
+                        <div ng-show="lock.cssLock" class="glyphicon glyphicon-lock"></div>
+                        <div ng-show="dataChange.cssf" class="glyphicon glyphicon-floppy-save"></div>
                     </div>
                 </div>
                 <textarea id="cssEditor" name="cssEditor" style="display:block; width:100%;height:500px"></textarea>
@@ -127,6 +140,7 @@
     <script src="JwtEx/Resources/?file=codemirror.addon.hint.show-hint.js"></script>
     <script src="JwtEx/Resources/?file=codemirror.addon.hint.javascript-hint.js"></script>
     <script src="JwtEx/Resources/?file=codemirror.addon.hint.css-hint.js"></script>
+    
    
 </body>
 </html>

@@ -224,7 +224,7 @@ namespace Jwtex
             }
 
         }
-
+        
         private void SetNavigation(StringBuilder sb)
         {
             JwtFile file = new JwtFile();
@@ -262,7 +262,7 @@ namespace Jwtex
                             PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Ctrl.js", item2.WidgetName);
                             if (!file.FileExists(PathString))
                             {
-                                file.Write(PathString, getEmptyController(item2.WidgetName));
+                               file.Write(PathString, getEmptyController(item2.WidgetName));
                             }
                             PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Svc.js", item2.WidgetName);
                             if (!file.FileExists(PathString))
@@ -403,15 +403,15 @@ namespace Jwtex
         public string getEmptyControllerForLayout(string name)
         {
             StringBuilder sb = new StringBuilder();
-
+            
             sb.AppendFormat("class {0}Ctrl", name);
             sb.AppendLine();
             sb.Append("{");
-            sb.Append(Environment.NewLine + TAB1 + "constructor(){");
+            sb.Append(Environment.NewLine + TAB1 + "constructor(){");           
             sb.AppendFormat(Environment.NewLine + TAB2 + "this.title='{0}';", name);
             sb.Append(Environment.NewLine + TAB1 + "}");
             sb.AppendLine();
-            sb.Append("}");
+            sb.Append("}");            
             sb.AppendFormat(Environment.NewLine + "export default {0}Ctrl;", name);
             return sb.ToString();
         }
@@ -507,24 +507,6 @@ namespace Jwtex
             }
             return res;
         }
-
-        
-        private void InstallTplFile(JwtFile file, string fileName, string path)
-        {
-            try
-            {
-                lock (locker)
-                {
-                    using (Stream stream = GetType().Assembly.GetManifestResourceStream("Jwtex.JwtResources.tpl." + fileName))
-                    {
-                        string data = file.StreamToString(stream);
-                        file.Write(path, data);
-                    }
-                }
-            }catch(Exception ex){
-                log.Error(ex);
-            }
-        }
         public void CreateItem(string mode, string name)
         {
             JwtFile file = new JwtFile();
@@ -537,18 +519,7 @@ namespace Jwtex
                 {
                     file.CreateDirectory(Root + "Scripts\\Base");
                     file.CreateDirectory(Root + "Scripts\\Filters");
-                    InstallTplFile(file, "app.txt", Root + "Scripts\\app.js");
-                    InstallTplFile(file, "appStarter.txt", Root + "Scripts\\appStarter.js");
-                    InstallTplFile(file, "BaseCtrl.txt", Root + "Scripts\\Base\\BaseCtrl.js");
-                    InstallTplFile(file, "BaseSvc.txt", Root + "Scripts\\Base\\BaseSvc.js");
-                    InstallTplFile(file, "jwtDate.txt", Root + "Scripts\\Filters\\jwtDate.js");
-                    InstallTplFile(file, "layout.txt", Root + "Views\\Shared\\_Layout.cshtml");
-                    InstallTplFile(file, "filters.txt", Root + "Scripts\\app.filters.js");
-                    file.CreateDirectory(Root + "Scripts\\Layouts");
-                    file.CreateDirectory(Root + "Scripts\\Layouts\\root");
-                    InstallTplFile(file, "root.txt", Root + "Scripts\\Layouts\\root\\root.html");
-                    InstallTplFile(file, "rootCtrl.txt", Root + "Scripts\\Layouts\\root\\rootCtrl.js");
-                    InstallTplFile(file, "jwtApp.txt", Root + "jwtApp.config");
+
                 }
                 try
                 {

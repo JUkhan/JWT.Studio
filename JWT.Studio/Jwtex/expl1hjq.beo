@@ -543,12 +543,7 @@ namespace Jwtex
                     InstallTplFile(file, "BaseSvc.txt", Root + "Scripts\\Base\\BaseSvc.js");
                     InstallTplFile(file, "jwtDate.txt", Root + "Scripts\\Filters\\jwtDate.js");
                     InstallTplFile(file, "layout.txt", Root + "Views\\Shared\\_Layout.cshtml");
-                    InstallTplFile(file, "filters.txt", Root + "Scripts\\app.filters.js");
-                    file.CreateDirectory(Root + "Scripts\\Layouts");
-                    file.CreateDirectory(Root + "Scripts\\Layouts\\root");
-                    InstallTplFile(file, "root.txt", Root + "Scripts\\Layouts\\root\\root.html");
-                    InstallTplFile(file, "rootCtrl.txt", Root + "Scripts\\Layouts\\root\\rootCtrl.js");
-                    InstallTplFile(file, "jwtApp.txt", Root + "jwtApp.config");
+                    InstallTplFile(file, "filters.txt", Root + "Scripts\\appfilters.js");
                 }
                 try
                 {

@@ -508,18 +508,18 @@ namespace Jwtex
             return res;
         }
 
-        
+        public void GenerateInitFiles(JwtFile file)
+        {
+           
+        }
         private void InstallTplFile(JwtFile file, string fileName, string path)
         {
             try
             {
-                lock (locker)
+                using (Stream stream = GetType().Assembly.GetManifestResourceStream("Jwtex.JwtResources.tpl." + fileName))
                 {
-                    using (Stream stream = GetType().Assembly.GetManifestResourceStream("Jwtex.JwtResources.tpl." + fileName))
-                    {
-                        string data = file.StreamToString(stream);
-                        file.Write(path, data);
-                    }
+                    string data = file.StreamToString(stream);
+
                 }
             }catch(Exception ex){
                 log.Error(ex);
@@ -537,18 +537,7 @@ namespace Jwtex
                 {
                     file.CreateDirectory(Root + "Scripts\\Base");
                     file.CreateDirectory(Root + "Scripts\\Filters");
-                    InstallTplFile(file, "app.txt", Root + "Scripts\\app.js");
-                    InstallTplFile(file, "appStarter.txt", Root + "Scripts\\appStarter.js");
-                    InstallTplFile(file, "BaseCtrl.txt", Root + "Scripts\\Base\\BaseCtrl.js");
-                    InstallTplFile(file, "BaseSvc.txt", Root + "Scripts\\Base\\BaseSvc.js");
-                    InstallTplFile(file, "jwtDate.txt", Root + "Scripts\\Filters\\jwtDate.js");
-                    InstallTplFile(file, "layout.txt", Root + "Views\\Shared\\_Layout.cshtml");
-                    InstallTplFile(file, "filters.txt", Root + "Scripts\\app.filters.js");
-                    file.CreateDirectory(Root + "Scripts\\Layouts");
-                    file.CreateDirectory(Root + "Scripts\\Layouts\\root");
-                    InstallTplFile(file, "root.txt", Root + "Scripts\\Layouts\\root\\root.html");
-                    InstallTplFile(file, "rootCtrl.txt", Root + "Scripts\\Layouts\\root\\rootCtrl.js");
-                    InstallTplFile(file, "jwtApp.txt", Root + "jwtApp.config");
+
                 }
                 try
                 {

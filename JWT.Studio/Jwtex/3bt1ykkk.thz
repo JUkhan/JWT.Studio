@@ -546,9 +546,9 @@ namespace Jwtex
                     InstallTplFile(file, "filters.txt", Root + "Scripts\\app.filters.js");
                     file.CreateDirectory(Root + "Scripts\\Layouts");
                     file.CreateDirectory(Root + "Scripts\\Layouts\\root");
-                    InstallTplFile(file, "root.txt", Root + "Scripts\\Layouts\\root\\root.html");
-                    InstallTplFile(file, "rootCtrl.txt", Root + "Scripts\\Layouts\\root\\rootCtrl.js");
-                    InstallTplFile(file, "jwtApp.txt", Root + "jwtApp.config");
+                    InstallTplFile(file, "root.txt", Root + "Scripts\\Layouts\\root.html");
+                    InstallTplFile(file, "rootCtrl.txt", Root + "Scripts\\Layouts\\rootCtrl.js");
+                    InstallTplFile(file, "jwtApp.txt", Root + "Scripts\\jwtApp.config");
                 }
                 try
                 {
