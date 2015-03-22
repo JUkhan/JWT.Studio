@@ -324,3 +324,5 @@ File name: 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Directives\mac\cha
    at System.IO.File.WriteAllText(String path, String contents)
    at jwt.CodeGen.JwtFile.Write(String path, String content) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\CodeGen\JwtFile.cs:line 30
    at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\JwtExController.cs:line 175
+2015-03-21 22:59:21,124 [6] INFO  Jwtex.JwtExController - name:chart, mode:Components
+2015-03-21 22:59:21,152 [6] INFO  Jwtex.JwtExController - files found: 3

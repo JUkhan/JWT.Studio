@@ -19,7 +19,7 @@ class BaseCtrl{
             }
         }
     }
-    await(g){
+    genRunner(g){
         let it=g(),ret;
         (function iterate(val){
             ret=it.next(val);

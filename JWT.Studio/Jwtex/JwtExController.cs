@@ -13,6 +13,7 @@ using System.Configuration;
 
 namespace Jwtex
 {
+   
     public class JwtExController : HubController<JwtHub>
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);

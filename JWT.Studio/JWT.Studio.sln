@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtApp", "JwtApp\JwtApp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Components\Components.csproj", "{E6400C6B-F87A-4844-83F9-10DCD7664DE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{CFFBFBDE-26A9-40C4-8447-B50BFF8F61E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{E6CFED1F-4DF6-4D0C-A64A-05289C44DD7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +65,10 @@ Global
 		{E6400C6B-F87A-4844-83F9-10DCD7664DE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6400C6B-F87A-4844-83F9-10DCD7664DE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6400C6B-F87A-4844-83F9-10DCD7664DE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFFBFBDE-26A9-40C4-8447-B50BFF8F61E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFFBFBDE-26A9-40C4-8447-B50BFF8F61E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFFBFBDE-26A9-40C4-8447-B50BFF8F61E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFFBFBDE-26A9-40C4-8447-B50BFF8F61E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6CFED1F-4DF6-4D0C-A64A-05289C44DD7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6CFED1F-4DF6-4D0C-A64A-05289C44DD7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6CFED1F-4DF6-4D0C-A64A-05289C44DD7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6CFED1F-4DF6-4D0C-A64A-05289C44DD7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

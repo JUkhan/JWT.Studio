@@ -81,6 +81,7 @@
     <Compile Include="JwtExController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateManager.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JwtResources\app.js" />
@@ -93,6 +94,7 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\tpl\jwtFilter.txt" />
     <EmbeddedResource Include="JwtResources\tpl\jwtApp.txt" />
     <EmbeddedResource Include="JwtResources\tpl\root.txt" />
     <EmbeddedResource Include="JwtResources\tpl\rootCtrl.txt" />
