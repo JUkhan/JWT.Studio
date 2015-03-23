@@ -63,6 +63,7 @@
                     </div>
                     
                     <div class="pull-right">
+                        <span ng-show="lock.jsLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
                         <div ng-show="lock.jsLock" class="glyphicon glyphicon-lock"></div>
                         <div ng-show="dataChange.jsf" class="glyphicon glyphicon-floppy-save"></div>
                     </div>
@@ -79,6 +80,7 @@
                         <input class="btn btn-success" type="button" value="Save" ng-click="saveHtmlFile()" />
                     </div>
                     <div class="pull-right">
+                        <span ng-show="lock.htmlLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
                         <div ng-show="lock.htmlLock" class="glyphicon glyphicon-lock"></div>
                         <div ng-show="dataChange.htmlf" class="glyphicon glyphicon-floppy-save"></div>
                     </div>
@@ -94,6 +96,7 @@
                         <input class="btn btn-success" type="button" value="Save" ng-click="saveCssFile()" />
                     </div>
                     <div class="pull-right">
+                        <span ng-show="lock.cssLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
                         <div ng-show="lock.cssLock" class="glyphicon glyphicon-lock"></div>
                         <div ng-show="dataChange.cssf" class="glyphicon glyphicon-floppy-save"></div>
                     </div>

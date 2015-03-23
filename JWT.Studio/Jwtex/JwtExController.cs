@@ -13,7 +13,7 @@ using System.Configuration;
 
 namespace Jwtex
 {
-   
+    [Authorize]
     public class JwtExController : HubController<JwtHub>
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -28,6 +28,7 @@ namespace Jwtex
             }
 
         }
+       
         public void Resources(string file)
         {
             string ext = file.Substring(file.LastIndexOf(".") + 1);
@@ -46,7 +47,7 @@ namespace Jwtex
                         Response.ContentType = "text/javascript";
                         break;
                 }
-                if (file.ToLower() == "app.js")
+                if (file == "app.js" || file == "workStatusApp.js")
                 {
                     string data = StreamToString(stream).Replace("ROOT_PATH", GetRootPath());
 

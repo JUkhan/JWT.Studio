@@ -13,5 +13,9 @@ namespace Jwtex.Hubs
 
         public string Folder { get; set; }
         public bool Lock { get; set; }
+        public string UserName { get; set; }
+        public string CID { get; set; }
+        public string Start { get; set; }
+        public string End { get; set; }
     }
 }

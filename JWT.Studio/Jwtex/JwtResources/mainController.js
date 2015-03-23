@@ -219,10 +219,11 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.lock = LOCK;
     scope.dataChange = { jsf: 0, htmlf: 0, cssf: 0 };
     scope.$on('newConnection', function (event, message) {
-        info('Joined in Development');
+       
+        info(message+' Joined in Development');
     });
     scope.$on('removeConnection', function (event, message) {
-        info('Disconnected from Development');
+        info(message+' Disconnected from Development');
     });
     scope.$on('lockFile', function (event, file) {
         var folder = scope.items[scope.itemValue];
@@ -233,6 +234,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
             else if (file.Folder === folder) {
                 updateEditor(file.Name, true, false);
             }
+            scope.user = file.UserName;
         }
     });
     scope.$on('unlockFile', function (event, file) {

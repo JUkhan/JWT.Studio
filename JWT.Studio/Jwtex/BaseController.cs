@@ -12,6 +12,7 @@ namespace Jwt.Controller
 {
     public class BaseController : System.Web.Mvc.Controller
     {
+        public static string ROOTPATH = "";
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
@@ -47,6 +48,7 @@ namespace Jwt.Controller
                 {
                     config.Root += "\\";
                 }
+                ROOTPATH = config.Root;
                 //EntityProject
                 if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["EntityProject"]))
                 {

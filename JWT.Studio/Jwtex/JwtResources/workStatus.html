@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Status</title>
+    <link href="JwtEx/Resources/?file=bootstrap.css" rel="stylesheet" />
+    <link href="JwtEx/Resources/?file=Site.css" rel="stylesheet" />
+   
+</head>
+<body ng-app="workStatusApp">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="jwt" class="navbar-brand">Work Status</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content padding-top" ng-controller="workStatusCtrl">
+        <div>
+          Search: &nbsp;  <input type="text" ng-model="search" placeholder="Search text" />
+        <input type="button" value="Load" ng-click="load()" />
+        </div><br />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                 <th>#</th>   <th>User</th><th>File Name</th><th>Start Work</th><th>Save Work</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="u in list | filter:search">
+                    <td ng-bind="$index+1"></td>
+                    <td ng-bind="u.UserName"></td>
+                    <td ng-bind="u.Name"></td>
+                    <td ng-bind="u.Start"></td>
+                    <td ng-bind="u.End"></td>
+                </tr>
+            </tbody>
+        </table>
+
+            <hr />
+            <footer>
+                <p>&copy; jwt Application</p>
+            </footer>
+</div>
+
+
+    <script src="JwtEx/Resources/?file=jquery.js"></script>
+    <script src="JwtEx/Resources/?file=jquery.signalR-2.2.0.min.js"></script>
+    <script src="JwtEx/Resources/?file=angular.min.js"></script>
+    <script src="JwtEx/Resources/?file=angular-resource.min.js"></script>   
+    <script src="JwtEx/Resources/?file=angular-ui-router.min.js"></script>   
+    <script src="JwtEx/Resources/?file=angular-signalr-hub.js"></script>
+    <script src="JwtEx/Resources/?file=workStatusApp.js"></script>   
+    <script src="JwtEx/Resources/?file=workStatusCtrl.js"></script>
+    <script src="JwtEx/Resources/?file=jwt.js"></script>
+</body>
+</html>

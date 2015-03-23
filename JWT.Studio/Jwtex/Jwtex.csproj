@@ -82,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateManager.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="WorkStatusController.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="JwtResources\app.js" />
@@ -94,6 +95,8 @@
     <EmbeddedResource Include="JwtResources\mainController.js" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="JwtResources\workStatusCtrl.js" />
+    <EmbeddedResource Include="JwtResources\workStatus.html" />
     <EmbeddedResource Include="JwtResources\tpl\jwtFilter.txt" />
     <EmbeddedResource Include="JwtResources\tpl\jwtApp.txt" />
     <EmbeddedResource Include="JwtResources\tpl\root.txt" />
@@ -125,6 +128,7 @@
     <EmbeddedResource Include="JwtResources\angular.min.js" />
     <EmbeddedResource Include="JwtResources\angularui.js" />
     <EmbeddedResource Include="JwtResources\angular-signalr-hub.js" />
+    <EmbeddedResource Include="JwtResources\workStatusApp.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />

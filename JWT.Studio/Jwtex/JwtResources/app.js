@@ -5,11 +5,11 @@
     var hub = new Hub('jwt', {
         ROOT_PATH
         listeners: {
-            'newConnection': function (id) {
-                rootScope.$broadcast("newConnection", { id:id });
+            'newConnection': function (name) {
+                rootScope.$broadcast("newConnection", name);
             },
-            'removeConnection': function (id) {
-                rootScope.$broadcast("removeConnection", { id: id });
+            'removeConnection': function (name) {
+                rootScope.$broadcast("removeConnection", name);
             },
             'lockFile': function (file) {
                 rootScope.$broadcast("lockFile", file);
