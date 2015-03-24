@@ -25,6 +25,7 @@
     jwtSvc.getWorkStatus = function () {
         hub.getWorkStatus();
     };
+   
     return jwtSvc;
 }]);
 

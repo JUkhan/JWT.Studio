@@ -123,14 +123,13 @@
     </div>
     <script type="text/ng-template" id="chatModal.html">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" ng-click="close()" aria-hidden="true">×</button>
             <b class="modal-title" ng-bind="sendto"></b>
         </div>
         <div class="modal-body messageArea">
-            <div ng-repeat="u in list"><b ng-bind="u.sender+' : '" ></b>&nbsp;<span ng-bind="u.message"></span></div>
+
         </div>
         <div class="modal-footer">
-            <input class="form-control chat_inbox" ng-enter="send(message)" type="text" ng-model="message" />
+            <input class="form-control chat_inbox" type="text" ng-model="message" />
             <button class="btn btn-primary" ng-click="send(message)">Send</button>
 
         </div>

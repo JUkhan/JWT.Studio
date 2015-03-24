@@ -51,10 +51,10 @@
     <script src="JwtEx/Resources/?file=angular-animate.min.js"></script>
     <script src="JwtEx/Resources/?file=angular-resource.min.js"></script>    
     <script src="JwtEx/Resources/?file=angular-ui-router.min.js"></script> 
-   
+ 
     <script src="JwtEx/Resources/?file=jwt.js"></script>
     <script type="module" src="~/Scripts/appStarter.js"></script>
-   
+    <script src="JwtEx/Resources/?file=jquery.sparkline.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

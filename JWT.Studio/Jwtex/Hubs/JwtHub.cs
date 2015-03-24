@@ -22,14 +22,48 @@ namespace Jwtex.Hubs
 
         public override Task OnConnected()
         {
-            _mapping.TryAdd(Context.ConnectionId, new List<FileInfo>());
+            _mapping.TryAdd(Context.ConnectionId, new List<FileInfo>() { new FileInfo { UserName = UserName, CID = Context.ConnectionId } });
 
-            Clients.All.newConnection(UserName);
+            Clients.Others.newConnection(UserName);
+            Clients.Caller.onlineUsers(GetAllUsers());
+            GetWorkStatus();
             return base.OnConnected();
+        }
+        private List<string> GetAllUsers()
+        {
+            List<string> list = new List<string>();
+            foreach (var item in _mapping.Values)
+            {
+                if (item[0].UserName != UserName)
+                {
+                    list.Add(item[0].UserName);
+                }
+            }
+            return list;
+        }
+        public void SendMessage(string user, string message)
+        {
+            var cid = GetConnectionID(user);
+            if (!string.IsNullOrEmpty(cid))
+            {
+                Clients.Client(cid).receiveMessage(new { sender = UserName, message = message });
+            }
+            else
+            {                
+                Clients.Caller.receiveMessage(new { sender = "Server", message = "Sorry! Person is not available." });
+            }
+        }
+        private string GetConnectionID(string user)
+        {
+            foreach (var item in _mapping.Values)
+            {
+                if (item[0].UserName == user) return item[0].CID;
+            }
+            return null;
         }
         public void GetWorkStatus()
         {           
-            Clients.Client(Context.ConnectionId).workStatus(Deserialize());
+            Clients.Caller.workStatus(Deserialize());
         }
         public void Lock(FileInfo info)
         {

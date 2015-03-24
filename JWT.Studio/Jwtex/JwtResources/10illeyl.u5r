@@ -220,31 +220,28 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.dataChange = { jsf: 0, htmlf: 0, cssf: 0 };
     scope.users = [];
     scope.user = "me";
-    scope.$on('newConnection', function (event, user) {      
-        info(user + ' Joined in Development');
-        scope.users.push(user);
+    scope.$on('newConnection', function (event, message) {      
+        info(message + ' Joined in Development');     
+        scope.users.push(message);
         scope.$apply();
     });
-    scope.$on('removeConnection', function (event, user) {
-        info(user + ' Disconnected from Development');
-        scope.users.remove(function (user2) { return user2 === user; });
-        scope.$apply();
+    scope.$on('removeConnection', function (event, message) {
+        info(message+' Disconnected from Development');
     });
     scope.$on('onlineUsers', function (event, users) {
-        scope.users = users;
-
+        scope.users = users;        
         scope.$apply();
     });
     scope.$on('lockFile', function (event, file) {
         var folder = scope.items[scope.itemValue];
         if (scope.dataMode === file.Category) {
-            scope.user = file.UserName;
             if (file.Category === 'Base') {
                 updateEditor(file.Name, true, false);
             }
             else if (file.Folder === folder) {
                 updateEditor(file.Name, true, false);
-            }           
+            }
+            scope.user = file.UserName;
         }
     });
     scope.$on('unlockFile', function (event, file) {
@@ -309,46 +306,29 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     }
     //end signalR
     //online user
-    var modalInstance = null, chatUser='';
     scope.messageList = [];
     scope.$on('receiveMessage', function (event, data) {
-        scope.messageList[data.sender] = scope.messageList[data.sender] || [];
-        scope.messageList[data.sender].push(data);
+        scope.list[data.sender] = scope.list[data.sender] || [];
+        scope.list[data.sender].push(data);
         scope.$apply();
-        if (chatUser !== data.sender) {
-            if (modalInstance)
-            modalInstance.close();
-            openPopup(scope.user, data.sender, scope.messageList[data.sender]);
-            chatUser = data.sender;
-        } else {           
-                modalInstance.close();
-                openPopup(scope.user, data.sender, scope.messageList[data.sender]);          
-        }
-        
-        scrollTop();
     });
     scope.toggle = false;
     scope.onclick = function () {
         scope.toggle = !scope.toggle;
     };
     scope.showPopup = function (user) {
-        chatUser = user;
-        scope.messageList[user] = scope.messageList[user] || [];
-        openPopup(scope.user, user, scope.messageList[user]);
-    };
-    //lg,sm
-    function openPopup(sender, sendto, list) {
-        modalInstance = modal.open({
+        var modalInstance = modal.open({
             templateUrl: 'chatModal.html',
             controller: 'ModalInstanceCtrl',
-            backdrop: 'static',
             size: 'lg',
             resolve: {
                 data: function () {
-                    return { sender: sender, sendto: sendto, list: list };
+                    return { sender: scope.user, sendto: user, list: scope.messageList[user] || [] };
                 }
             }
         });
+    };
+    function openPopup(sender, sendto, list) {
        
     }
     //end online user
@@ -360,10 +340,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     }
 }]);
 
-function scrollTop() {
-    var messageArea = $('.messageArea');
-    messageArea.scrollTop(messageArea.get(0).scrollHeight);
-}
+
 function setJsEditor(scope) {
     setTimeout(function () {
         scope.jsEditor = CodeMirror.fromTextArea(document.getElementById("jsEditor"), {

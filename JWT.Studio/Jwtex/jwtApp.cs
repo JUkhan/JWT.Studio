@@ -533,7 +533,7 @@ namespace Jwtex
                 file.CreateDirectory(Root + "Scripts");
                 file.CreateDirectory(Root + "Scripts\\Components");
                 file.CreateDirectory(Root + "Scripts\\Directives");
-                if (!file.DirectoryExists("Base"))
+                if (!file.DirectoryExists(Root + "Scripts\\Base"))
                 {
                     file.CreateDirectory(Root + "Scripts\\Base");
                     file.CreateDirectory(Root + "Scripts\\Filters");

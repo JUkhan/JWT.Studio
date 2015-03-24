@@ -16,9 +16,15 @@
             },
             'unlockFile': function (file) {
                 rootScope.$broadcast("unlockFile", file);
-            }
+            },
+            'receiveMessage': function (data) {
+                rootScope.$broadcast("receiveMessage", data);
+            },
+            'onlineUsers': function (data) {
+                rootScope.$broadcast("onlineUsers", data);
+            },
         },
-        methods: ['lock','unlock'],
+        methods: ['lock', 'unlock', 'sendMessage'],
         errorHandler: function (error) {
             console.error(error);
         }
@@ -30,8 +36,39 @@
     jwtSvc.unlock = function (file) {
         hub.unlock(file);
     };
+    jwtSvc.sendMessage = function (user, message) {
+        hub.sendMessage(user, message);
+    };
     return jwtSvc;
+}])
+.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+ 
+                event.preventDefault();
+            }
+        });
+    };
+})
+.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'data', 'jwtSvc', '$rootScope', function (scope, modalInstance, data, jwtSvc) {
+
+    scope.sendto = data.sendto;
+    scope.list = data.list;
+    scope.close = function () {
+        modalInstance.close();
+    };
+    scope.send = function (message) {
+        jwtSvc.sendMessage(data.sendto, message);
+        scope.list.push({ sender: data.sender, message: message });
+        scope.message = '';
+        scrollTop();
+    };
 }]);
+
 
 
 

@@ -220,19 +220,16 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.dataChange = { jsf: 0, htmlf: 0, cssf: 0 };
     scope.users = [];
     scope.user = "me";
-    scope.$on('newConnection', function (event, user) {      
-        info(user + ' Joined in Development');
-        scope.users.push(user);
+    scope.$on('newConnection', function (event, message) {      
+        info(message + ' Joined in Development');     
+        scope.users.push(message);
         scope.$apply();
     });
-    scope.$on('removeConnection', function (event, user) {
-        info(user + ' Disconnected from Development');
-        scope.users.remove(function (user2) { return user2 === user; });
-        scope.$apply();
+    scope.$on('removeConnection', function (event, message) {
+        info(message+' Disconnected from Development');
     });
     scope.$on('onlineUsers', function (event, users) {
-        scope.users = users;
-
+        scope.users = users;        
         scope.$apply();
     });
     scope.$on('lockFile', function (event, file) {

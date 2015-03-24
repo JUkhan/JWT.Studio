@@ -129,6 +129,10 @@
     <EmbeddedResource Include="JwtResources\angularui.js" />
     <EmbeddedResource Include="JwtResources\angular-signalr-hub.js" />
     <EmbeddedResource Include="JwtResources\workStatusApp.js" />
+    <EmbeddedResource Include="JwtResources\chat\chat.css" />
+    <Content Include="JwtResources\chat\charCtrl.js" />
+    <Content Include="JwtResources\chat\chat.html" />
+    <Content Include="JwtResources\chat\chatApp.js" />
     <Content Include="JwtResources\codemirror\addon\edit\continuelist.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchbrackets.js" />
     <EmbeddedResource Include="JwtResources\codemirror\addon\edit\matchtags.js" />

@@ -10,7 +10,7 @@
     <link href="JwtEx/Resources/?file=codemirror.theme.rubyblue.css" rel="stylesheet" />
     <link href="JwtEx/Resources/?file=toastr.toastr.css" rel="stylesheet" />
     <link href="JwtEx/Resources/?file=codemirror.addon.hint.show-hint.css" rel="stylesheet" />
-
+  
 
 </head>
 <body ng-app="jwt2">
@@ -52,12 +52,7 @@
                 <input type="button" class="btn btn-success" value="New Widget" ng-click="newWidget(itemName)" />
                 <input type="button" class="btn btn-success" value="New Component" ng-click="newComponent(itemName)" />
             </div>
-            <div class="chat">
-                <input class="btn btn-default" ng-click="onclick()" type="button" value="Online Developers" />
-                <div class="content" ng-show="toggle">
-                    <div class="user" ng-repeat="u in users" ng-click="showPopup(u)">{{u}}</div>
-                </div>
-            </div>
+            <onlineuser user="user" users="users"></onlineuser>
         </div>
         <tabset>
             <tab heading="Javascript">
@@ -110,7 +105,7 @@
                 </div>
                 <textarea id="cssEditor" name="cssEditor" style="display:block; width:100%;height:500px"></textarea>
             </tab>
-
+            
         </tabset>
 
         <hr />
@@ -123,15 +118,24 @@
     </div>
     <script type="text/ng-template" id="chatModal.html">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" ng-click="close()" aria-hidden="true">×</button>
-            <b class="modal-title" ng-bind="sendto"></b>
+            <b class="modal-title" ng-bind="user"></b>
         </div>
-        <div class="modal-body messageArea">
-            <div ng-repeat="u in list"><b ng-bind="u.sender+' : '" ></b>&nbsp;<span ng-bind="u.message"></span></div>
+        <div class="modal-body">
+            <table class="table table-condensed table-hover table-striped">
+                <thead>
+                    <tr><th>View Name</th><th>Widget Name</th></tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="u in items">
+                        <td ng-bind="u.ViewName"></td>
+                        <td><input type="text" typeahead="tpl for tpl in tplList" ng-model="u.WidgetName" /></td>
+
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="modal-footer">
-            <input class="form-control chat_inbox" ng-enter="send(message)" type="text" ng-model="message" />
-            <button class="btn btn-primary" ng-click="send(message)">Send</button>
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
 
         </div>
     </script>
