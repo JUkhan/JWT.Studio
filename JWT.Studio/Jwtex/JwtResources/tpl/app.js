@@ -10,7 +10,7 @@ import {default as filters} from 'Scripts/app.filters.js';
 
 var moduleName='app'; 
 
-angular.module(moduleName,['ui.router', 'ngResource', 'LocalStorageModule', 'angular-loading-bar', controllers, services, directives, filters])
+angular.module(moduleName,['ui.router', "ngSanitize", 'ngResource', 'ui.bootstrap', 'LocalStorageModule', 'angular-loading-bar', controllers, services, directives, filters])
     .factory('authInterceptorService', authInterceptorService)
     .factory('authService', authService)
     .config(config)

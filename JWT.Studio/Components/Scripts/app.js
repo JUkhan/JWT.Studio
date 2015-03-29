@@ -7,6 +7,9 @@ import {default as filters} from 'Scripts/app.filters.js';
 
 var moduleName='app'; 
 
-angular.module(moduleName,["ui.router", "ngResource", "ngSanitize", "ui.bootstrap",  controllers, services, directives, filters]).config(config);
+angular.module(moduleName,["ui.router", "ngResource",
+    "ngSanitize", "ui.bootstrap", 
+    controllers, services, directives, filters])
+    .config(config);
 
 export default moduleName;
