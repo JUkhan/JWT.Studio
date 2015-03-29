@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Jwtex
 {
-     [Authorize]
+    
     public class WorkStatusController : Jwt.Controller.BaseController
     {
         public void Index()

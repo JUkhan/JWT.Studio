@@ -31,13 +31,13 @@
     });
 
     jwtSvc.lock = function (file) {
-        hub.lock(file);
+        try{ hub.lock(file);}catch(error){}
     };
     jwtSvc.unlock = function (file) {
-        hub.unlock(file);
+        try{hub.unlock(file);}catch(error){}
     };
     jwtSvc.sendMessage = function (user, message) {
-        hub.sendMessage(user, message);
+        try{hub.sendMessage(user, message);}catch(error){}
     };
     return jwtSvc;
 }])

@@ -21,12 +21,12 @@ namespace ConApp
         static  void GetData()
         {
             DDObject obj = new DDObject();
-            obj.limit = 25;
+            obj.limit = 3;
             obj.columns = new List<DDColumn>
             {
                 new DDColumn{ name="id", type="int", min=1, max=20},
-                 new DDColumn{ name="name", type="bool"},
-                  new DDColumn{ name="product", type="date"}
+                 new DDColumn{ name="name", type="animal" , array=true, limit=5, min=1, max=100},
+                 
             };
             DDManager dd = new DDManager();
             string data=  dd.GetData(obj);

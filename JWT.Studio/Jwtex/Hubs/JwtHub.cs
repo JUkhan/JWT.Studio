@@ -13,12 +13,20 @@ using System.Xml.Serialization;
 namespace Jwtex.Hubs
 {
     [HubName("jwt")]
-    [Authorize]
+
     public class JwtHub : Hub
     {
         private static ConcurrentDictionary<string, List<FileInfo>> _mapping = new ConcurrentDictionary<string, List<FileInfo>>();
         private static object locker = new Object();
-        public string UserName { get { return Context.User.Identity.Name; } }
+        public string UserName
+        {
+            get
+            {
+                var str= Context.User.Identity.Name;
+                return str;
+            }
+
+        }
 
         public override Task OnConnected()
         {
@@ -49,7 +57,7 @@ namespace Jwtex.Hubs
                 Clients.Client(cid).receiveMessage(new { sender = UserName, message = message });
             }
             else
-            {                
+            {
                 Clients.Caller.receiveMessage(new { sender = "Server", message = "Sorry! Person is not available." });
             }
         }
@@ -62,7 +70,7 @@ namespace Jwtex.Hubs
             return null;
         }
         public void GetWorkStatus()
-        {           
+        {
             Clients.Caller.workStatus(Deserialize());
         }
         public void Lock(FileInfo info)
@@ -164,7 +172,7 @@ namespace Jwtex.Hubs
         }
 
         public List<FileInfo> Deserialize()
-        {            
+        {
             lock (locker)
             {
                 List<FileInfo> temp = new List<FileInfo>();
@@ -178,14 +186,15 @@ namespace Jwtex.Hubs
                         temp = (List<FileInfo>)deserializer.Deserialize(reader);
 
                     }
-                }catch{}
+                }
+                catch { }
 
                 return temp;
             }
 
         }
         private string GetFileName()
-        {           
+        {
             return DateTime.Now.ToString("ddMMyyyy");
         }
         private void CreateDirectory(string path)

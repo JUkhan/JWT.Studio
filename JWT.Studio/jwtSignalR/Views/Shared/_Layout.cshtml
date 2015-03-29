@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -9,8 +9,12 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
     <title>jwtApp</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <link href="Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/css/site.css" rel="stylesheet" />
+    <link href="Content/css/loading-bar.css" rel="stylesheet" />
+    <link href="Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="Content/css/social-buttons.css" rel="stylesheet" />
+    
 
 </head>
 <body>   
@@ -51,10 +55,12 @@
     <script src="JwtEx/Resources/?file=angular-animate.min.js"></script>
     <script src="JwtEx/Resources/?file=angular-resource.min.js"></script>    
     <script src="JwtEx/Resources/?file=angular-ui-router.min.js"></script> 
-   
-    <script src="JwtEx/Resources/?file=jwt.js"></script>
+        
     <script type="module" src="~/Scripts/appStarter.js"></script>
-   
-    @RenderSection("scripts", required: false)
+
+    <script src="~/Scripts/angular-local-storage.min.js"></script>
+    <script src="~/Scripts/loading-bar.min.js"></script>
+    <script src="JwtEx/Resources/?file=jwt.js"></script>   
+    
 </body>
 </html>

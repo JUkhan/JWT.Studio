@@ -261,7 +261,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.jsChange = function () {
         if (AWAIT.jsLock) {
             if (scope.jsEditor.getValue()) {
-                jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName });
+                try{  jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName });}catch(error){}
                 AWAIT.jsLock = 0;
                 scope.$apply(function () { scope.dataChange.jsf = true; });
 
@@ -270,19 +270,20 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     };
     scope.htmlChange = function () {
         if (AWAIT.htmlLock) {
-            if (scope.htmlEditor.getValue())
-                jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });
-            AWAIT.htmlLock = 0;
-            scope.$apply(function () { scope.dataChange.htmlf = true; });
-
+            if (scope.htmlEditor.getValue()) {
+                try{ jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });}catch(error){}
+                AWAIT.htmlLock = 0;
+                scope.$apply(function () { scope.dataChange.htmlf = true; });
+            }
         }
     };
     scope.cssChange = function () {
         if (AWAIT.cssLock) {
-            if (scope.cssEditor.getValue())
-                jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });
-            AWAIT.cssLock = 0;
-            scope.$apply(function () { scope.dataChange.cssf = true; });
+            if (scope.cssEditor.getValue()) {
+                try{jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });}catch(error){}
+                AWAIT.cssLock = 0;
+                scope.$apply(function () { scope.dataChange.cssf = true; });
+            }
         }
     };
     function updateEditor(fileName, readOnly, isFromLoadContent) {

@@ -21,10 +21,27 @@ namespace Jwtex.DummyData
         {
             return await Task.FromResult<string>(GetData(obj));
         }
-        public  string GetData(DDObject obj)
+        private string GetArrayData(DDColumn col)
         {
             StringBuilder stringBuilder = new StringBuilder();
-           
+            stringBuilder.Append("[");
+            for (int i = 0; i < col.limit; i++)
+            {
+                if (i > 0)
+                {
+                    stringBuilder.Append(',');
+                }
+                AppendData2(col, stringBuilder, i);
+            }
+
+            stringBuilder.Append("]");
+
+            return  String.Format("\"{0}\":{1}", col.name, stringBuilder);
+        }
+        public string GetData(DDObject obj)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
             stringBuilder.Append("[");
             for (int i = 0; i < obj.limit; i++)
             {
@@ -40,60 +57,107 @@ namespace Jwtex.DummyData
                     {
                         stringBuilder.Append(',');
                     }
-                    switch (item.type.ToLower())
-                    {
-                        case "bool":
-                            stringBuilder.AppendFormat("\"{0}\":{1}", item.name, GetBool());
-                            break;
-                        case "guid":
-                            stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetGuid());
-                            break;
-                        case "country":
-                            stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, i));
-                            break;
-                        case "human":
-                            stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, i));
-                            break;
-                        case "animal":
-                            stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, i));
-                            break;
-                        case "int":
-                            stringBuilder.AppendFormat("\"{0}\":{1}", item.name, GetRandomNumber(item.min, item.max));
-                            break;
-                        case "decimal":
-                        case "float":
-                        case "double":
-                            stringBuilder.AppendFormat("\"{0}\":{1}.{2}", item.name, GetRandomNumber(item.min, item.max), Get4Digit());
-                            break;
-                        case "date":
-                            stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDate(item));
-                            break;
-                        case "datetime":
-                            stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDateTime(item));
-                            break;
-                        default:
-                            stringBuilder.AppendFormat("\"{0}\":\"{1}-{2}\"", item.name, item.type ?? item.name, i + 1);
-                            break;
-                    }
+                    if (item.array)
+                        stringBuilder.Append(GetArrayData(item));
+                    else
+                        AppendData(item, stringBuilder, i);
                     isFirst = false;
                 }
                 stringBuilder.Append("}");
-               
+
             }
             stringBuilder.Append("]");
 
-            return   stringBuilder.ToString();
+            return stringBuilder.ToString();
         }
 
+        private void AppendData(DDColumn item, StringBuilder stringBuilder, int index)
+        {
+            switch (item.type.ToLower())
+            {
+                case "bool":
+                    stringBuilder.AppendFormat("\"{0}\":{1}", item.name, GetBool());
+                    break;
+                case "guid":
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetGuid());
+                    break;
+                case "country":
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, index));
+                    break;
+                case "human":
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, index));
+                    break;
+                case "animal":
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, index));
+                    break;
+                case "int":
+                    stringBuilder.AppendFormat("\"{0}\":{1}", item.name, GetRandomNumber(item.min, item.max));
+                    break;
+                case "decimal":
+                case "float":
+                case "double":
+                    stringBuilder.AppendFormat("\"{0}\":{1}.{2}", item.name, GetRandomNumber(item.min, item.max), Get4Digit());
+                    break;
+                case "date":
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDate(item));
+                    break;
+                case "datetime":
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDateTime(item));
+                    break;
+                default:
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}-{2}\"", item.name, item.type ?? item.name, index + 1);
+                    break;
+            }
+        }
+        private void AppendData2(DDColumn item, StringBuilder stringBuilder, int index)
+        {
+            switch (item.type.ToLower())
+            {
+                case "bool":
+                    stringBuilder.AppendFormat("{0}",  GetBool());
+                    break;
+                case "guid":
+                    stringBuilder.AppendFormat("\"{0}\"",  GetGuid());
+                    break;
+                case "country":
+                    stringBuilder.AppendFormat("\"{0}\"",  GetDataFromDic(item.type, index));
+                    break;
+                case "human":
+                    stringBuilder.AppendFormat("\"{0}\"",  GetDataFromDic(item.type, index));
+                    break;
+                case "animal":
+                    stringBuilder.AppendFormat("\"{0}\"",  GetDataFromDic(item.type, index));
+                    break;
+                case "int":
+                    stringBuilder.AppendFormat("{0}",  GetRandomNumber(item.min, item.max));
+                    break;
+                case "decimal":
+                case "float":
+                case "double":
+                    stringBuilder.AppendFormat("{0}.{1}", GetRandomNumber(item.min, item.max), Get4Digit());
+                    break;
+                case "date":
+                    stringBuilder.AppendFormat("\"{0}\"",  GetDate(item));
+                    break;
+                case "datetime":
+                    stringBuilder.AppendFormat("\"{0}\"",  GetDateTime(item));
+                    break;
+                default:
+                    stringBuilder.AppendFormat("\"{0}-{1}\"",  item.type ?? item.name, index + 1);
+                    break;
+            }
+        }
         private string GetBool()
         {
             var list = new List<string> { "true", "false" };
             return list[GetRandomNumber(0, 2)];
         }
 
-        private string GetDataFromDic(string key, int index){
-            if(index>=dataDic[key].Count){
-                return key+"-"+index;
+        private string GetDataFromDic(string key, int index)
+        {
+            if (index >= dataDic[key].Count)
+            {
+                return key + "-" + index;
             }
             return dataDic[key][index];
         }
@@ -129,7 +193,7 @@ namespace Jwtex.DummyData
             DateTime date = DateTime.Now;
             if (col.min < 1970)
             {
-                col.min = date.Year-5;
+                col.min = date.Year - 5;
             }
             if (col.max < 1970)
             {
@@ -141,12 +205,12 @@ namespace Jwtex.DummyData
 
         private string GetDateTime(DDColumn col)
         {
-            List<string> am=new List<string>(){"AM", "PM"};
-            return string.Format("{0} {1:0#}:{2:0#}:{3:0#} {4}", GetDate(col), GetRandomNumber(1,12), GetRandomNumber(1,59), GetRandomNumber(1,59), am[GetRandomNumber(0,2)]);
+            List<string> am = new List<string>() { "AM", "PM" };
+            return string.Format("{0} {1:0#}:{2:0#}:{3:0#} {4}", GetDate(col), GetRandomNumber(1, 12), GetRandomNumber(1, 59), GetRandomNumber(1, 59), am[GetRandomNumber(0, 2)]);
         }
         private string Get4Digit()
         {
-            return string.Format("{0}{1}{2}{3}", GetRandomNumber(0,9),
+            return string.Format("{0}{1}{2}{3}", GetRandomNumber(0, 9),
                 GetRandomNumber(0, 9), GetRandomNumber(0, 9), GetRandomNumber(0, 9)
                 );
         }

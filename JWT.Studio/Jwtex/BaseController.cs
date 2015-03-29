@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Jwtex;
+using Jwtex.Hubs;
+using log4net;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -12,16 +16,33 @@ namespace Jwt.Controller
 {
     public class BaseController : System.Web.Mvc.Controller
     {
+        protected static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public static string ROOTPATH = "";
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
             SetConfig();
         }
+        public void Startup()
+        {
+            try
+            {
+                CodeGen cg = new CodeGen();
+                cg.Root = Config.Root;
+                cg.Startup();
+                Response.ContentType = "text/html";
+                Response.Write("<div><b>Alhumdulilla</b></div><b>Successfully done.</b>");
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
 
+            }
+
+        }
         public string GetDefaultNavigation()
         {
-            return ConfigurationManager.AppSettings["DefaultNavigation"] ?? "";
+            return ConfigurationManager.AppSettings["DefaultNavigation"] ?? "root/login";
         }
         public string StreamToString(Stream stream)
         {
@@ -89,7 +110,11 @@ namespace Jwt.Controller
             Config = config;
         }
         public JwtConfig Config { get; set; }
+        public bool IsLock(Jwtex.Hubs.FileInfo file)
+        {
+            return JwtHub.IsLock(file);
 
+        }
     }
 
     public class JwtConfig

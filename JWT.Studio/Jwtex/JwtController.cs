@@ -27,6 +27,7 @@ namespace Jwt.Controller
             }
 
         }
+       
         public void Resources(string file)
         {
             string ext = file.Substring(file.LastIndexOf(".") + 1);

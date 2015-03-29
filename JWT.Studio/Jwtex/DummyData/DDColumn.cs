@@ -13,10 +13,13 @@ namespace Jwtex.DummyData
             type ="human";
             min = 100;
             max = 1000;
+            limit = 20;
         }
         public string name { get; set; }
         public string type { get; set; }
         public int min { get; set; }
         public int max { get; set; }
+        public bool array { get; set; }
+        public int limit { get; set; }
     }
 }

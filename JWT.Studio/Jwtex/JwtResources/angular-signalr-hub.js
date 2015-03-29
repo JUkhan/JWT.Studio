@@ -1,10 +1,13 @@
-angular.module('SignalR', [])
+angular.module('SignalR', ['LocalStorageModule'])
 .constant('$', $)
-.factory('Hub', ['$', function ($) {
+.factory('Hub', ['$', 'localStorageService', function ($, localStorageService) {
 	//This will allow same connection to be used for all Hubs
 	//It also keeps connection as singleton.
-	var globalConnections = [];
-
+	var globalConnections = [];	
+	var authData = localStorageService.get('authorizationData');
+	if (authData) {	    
+	    $.signalR.ajaxDefaults.headers = { Authorization: "Bearer " + authData.token };
+	}
 	function initNewConnection(options) {
 		var connection = null;
 		if (options && options.rootPath) {
