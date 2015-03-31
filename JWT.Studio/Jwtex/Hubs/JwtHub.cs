@@ -20,11 +20,7 @@ namespace Jwtex.Hubs
         private static object locker = new Object();
         public string UserName
         {
-            get
-            {
-                var str= Context.User.Identity.Name;
-                return str;
-            }
+            get{return Context.User.Identity.Name;}
 
         }
 

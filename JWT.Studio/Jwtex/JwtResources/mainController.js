@@ -264,6 +264,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.user = "me";
     scope.$on('newConnection', function (event, user) {
         info(user + ' Joined in Development');
+        scope.users.remove(function (user2) { return user2 === user; });
         scope.users.push(user);
         scope.$apply();
     });
