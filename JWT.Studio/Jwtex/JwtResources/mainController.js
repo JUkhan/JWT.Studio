@@ -261,7 +261,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.lock = LOCK;
     scope.dataChange = { jsf: 0, htmlf: 0, cssf: 0 };
     scope.users = [];
-    scope.user = "me";
+    scope.user = "";
     scope.$on('newConnection', function (event, user) {
         info(user + ' Joined in Development');
         scope.users.remove(function (user2) { return user2 === user; });
@@ -351,6 +351,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         }
 
     }
+    
     //end signalR
     //online user
     var modalInstance = null, chatUser = '';
@@ -362,11 +363,11 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         if (chatUser !== data.sender) {
             if (modalInstance)
                 modalInstance.close();
-            openPopup(scope.user, data.sender, scope.messageList[data.sender]);
+            openPopup('me', data.sender, scope.messageList[data.sender]);
             chatUser = data.sender;
         } else {
             modalInstance.close();
-            openPopup(scope.user, data.sender, scope.messageList[data.sender]);
+            openPopup('me', data.sender, scope.messageList[data.sender]);
         }
 
         scrollTop();
@@ -378,7 +379,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.showPopup = function (user) {
         chatUser = user;
         scope.messageList[user] = scope.messageList[user] || [];
-        openPopup(scope.user, user, scope.messageList[user]);
+        openPopup('me', user, scope.messageList[user]);
     };
     //lg,sm
     function openPopup(sender, sendto, list) {

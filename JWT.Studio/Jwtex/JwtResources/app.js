@@ -23,13 +23,19 @@
             'onlineUsers': function (data) {
                 rootScope.$broadcast("onlineUsers", data);
             },
+            'disconnected':function(){
+                console.log('disconnected...');
+            }
         },
         methods: ['lock', 'unlock', 'sendMessage'],
         errorHandler: function (error) {
-            console.error(error);
+            console.log(error);
         }
     });
-
+        hub.on('disconnected', function(){
+            console.log('disconnected...qwe', hub);
+            setTimeout(function(){hub.connect();}, 5000);
+        });
     jwtSvc.lock = function (file) {
         try{ hub.lock(file);}catch(error){}
     };
