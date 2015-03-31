@@ -32,12 +32,16 @@ namespace Jwtex
 
         }
 
-        public JsonResult IsInstalled(string name)
+        public JsonResult IsInstalled(string name, string comtype)
         {
             try
             {
 
-                string path = Config.Root + "Scripts\\Directives";
+                string path = Config.Root;
+                if (comtype.ToLower().Contains("directive"))
+                    path += "Scripts\\Directives";
+                else
+                    path += "Scripts\\Modules";
                 DirectoryInfo dir = new DirectoryInfo(path);
                 bool res = false;
                 foreach (var item in dir.GetDirectories())
@@ -58,22 +62,28 @@ namespace Jwtex
             var url = ConfigurationManager.AppSettings["ComponentsUrl"] ?? "";
             return url.EndsWith("/") ? url : url + "/";
         }
-        public JsonResult Download(string name)
+        public JsonResult Download(string name, string comtype)
         {
             try
             {
-                using (MemoryStream mem = GetURLContents(GetComponentUrl() + "JwtComponent/GetComponent?componentName=" + name))
+                using (MemoryStream mem = GetURLContents(GetComponentUrl() + "JwtComponent/GetComponent?componentName=" + name+"&comtype="+comtype))
                 {
                     using (ZipArchive arc = new ZipArchive(mem))
                     {
-                        var path = Config.Root + "Scripts\\Directives\\" + name;
+                        string path = Config.Root;
+                        if (comtype.ToLower().Contains("directive"))
+                            path += "Scripts\\Directives\\" + name;
+                        else
+                            path += "Scripts\\Modules\\" + name;
+
                         if (Directory.Exists(path))
                         {
                             RemoveDirectoryFiles(path);
                         }
                         arc.ExtractToDirectory(path);
                     }
-                    UpdateAppDirectives();
+                    if (comtype.ToLower().Contains("directive"))
+                        UpdateAppDirectives();
                 }
                 return Json(new { msg = "installed successfully" }, JsonRequestBehavior.AllowGet);
             }
@@ -83,11 +93,16 @@ namespace Jwtex
                 return Json(new { msg = ex.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
-        public void GetComponent(string componentName)
+        public void GetComponent(string componentName, string comtype)
         {
             try
             {
-                string SOURCE = Config.Root + "Scripts\\Directives\\" + componentName;
+                string SOURCE = Config.Root;
+                if (comtype.ToLower().Contains("directive"))
+                    SOURCE += "Scripts\\Directives\\" + componentName;
+                else
+                    SOURCE += "Scripts\\Modules\\"+componentName;
+               
                 CreateDirectory(Config.Root + "zippedComs");
                 string DESTINATION = Config.Root + "zippedComs\\" + componentName + ".zip";
                 if (System.IO.File.Exists(DESTINATION))
@@ -185,7 +200,7 @@ namespace Jwtex
             // Return the result as a byte array. 
             return content;
         }
-       
+
         public JsonResult GetDemoInfo(string name, string mode)
         {
             try

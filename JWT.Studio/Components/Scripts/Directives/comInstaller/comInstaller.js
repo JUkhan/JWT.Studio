@@ -6,11 +6,12 @@ class comInstaller{
         
         this.scope={
             name:"@",
-            description:'@'
+            description:'@', type:'@'
         };
         this.controller=function($scope, $http, $modal){
+
            $scope.installComponent=function(name){
-               sendMessage($scope.name);
+               sendMessage($scope.name, $scope.type||'directive');
            };
            $scope.getDemoInfo=function(name, mode){
                $http.get('JwtComponent/GetDemoInfo?name={0}&mode={1}'.format(name, mode))

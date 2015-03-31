@@ -53,18 +53,18 @@
             if (!load) return;           
             if (event.data.id === 'jwt') {
                 load = false;
-                $.get("JwtComponent/IsInstalled?name=" + event.data.comName, function (res) {                    
+                $.get("JwtComponent/IsInstalled?name=" + event.data.comName + '&comtype=' + event.data.comType, function (res) {
                     if (res.msg) {
                         if (confirm('This component is already installed in your site. Do you want to reinstall it?')) {
                             overlay(1);
-                            $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { overlay(0); alert(res.msg); load = true; });
+                            $.get("JwtComponent/Download?name=" + event.data.comName + '&comtype=' + event.data.comType, function (res) { overlay(0); alert(res.msg); load = true; });
                         } else {
                             load = true; 
                         }
                     }
                     else {
                         overlay(1);
-                        $.get("JwtComponent/Download?name=" + event.data.comName, function (res) { overlay(0); alert(res.msg); load = true; });
+                        $.get("JwtComponent/Download?name=" + event.data.comName + '&comtype=' + event.data.comType, function (res) { overlay(0); alert(res.msg); load = true; });
                     }
                 });
 

@@ -1,4 +1,4 @@
 ﻿
- import app from 'Scripts/app.js';
+ import app from 'Scripts/Base/app.js';
       
  angular.bootstrap(document, [app]);

@@ -120,7 +120,7 @@
     <EmbeddedResource Include="JwtResources\tpl\root.txt" />
     <EmbeddedResource Include="JwtResources\tpl\rootCtrl.txt" />
     <EmbeddedResource Include="JwtResources\tpl\filters.js" />
-    <EmbeddedResource Include="JwtResources\tpl\app.js" />
+    <EmbeddedResource Include="JwtResources\tpl\Base\app.js" />
     <EmbeddedResource Include="JwtResources\tpl\appStarter.js" />
     <EmbeddedResource Include="JwtResources\tpl\Base\BaseCtrl.js" />
     <EmbeddedResource Include="JwtResources\tpl\Base\BaseSvc.js" />

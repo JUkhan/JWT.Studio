@@ -423,7 +423,7 @@ namespace Jwtex
         public string getEmptyController(string name)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("import BaseCtrl from 'Scripts/base/BaseCtrl.js';");
+            sb.Append("import BaseCtrl from 'Scripts/Base/BaseCtrl.js';");
             sb.AppendLine();
             sb.Append("const SVC=new WeakMap();");
             sb.AppendLine();
@@ -482,7 +482,7 @@ namespace Jwtex
         public string getEmptyService(string name)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("import BaseSvc from 'Scripts/base/BaseSvc.js';");
+            sb.Append("import BaseSvc from 'Scripts/Base/BaseSvc.js';");
             sb.AppendLine();
             sb.Append("const HTTP=new WeakMap();");
             sb.AppendLine();
@@ -574,6 +574,7 @@ namespace Jwtex
             lock (locker)
             {
                 file.CreateDirectory(Root + "Scripts");
+                file.CreateDirectory(Root + "Modules");
                 file.CreateDirectory(Root + "Scripts\\Components");
                 file.CreateDirectory(Root + "Scripts\\Directives");
                 if (!file.DirectoryExists(Root + "Scripts\\Base"))
@@ -584,14 +585,15 @@ namespace Jwtex
                     InstallTplFile(file, "jwtApp.txt", Root + "jwtApp.config");
                     InstallTplFile(file, "authComplete.html", Root + "authComplete.html");
                     //Scripts
-                    InstallTplFile(file, "app.js", Root + "Scripts\\app.js");
+                   
                     InstallTplFile(file, "appStarter.js", Root + "Scripts\\appStarter.js");
                     InstallTplFile(file, "app.controllers.js", Root + "Scripts\\app.controllers.js");
                     InstallTplFile(file, "app.directives.js", Root + "Scripts\\app.directives.js");
                     InstallTplFile(file, "app.services.js", Root + "Scripts\\app.services.js");
                     InstallTplFile(file, "filters.js", Root + "Scripts\\app.filters.js");
                     InstallTplFile(file, "config.js", Root + "Scripts\\config.js");
-                    //Scripts/Base
+                    //Scripts/Base 
+                    InstallTplFile(file, "app.js", Root + "Scripts\\Base\\app.js");
                     InstallTplFile(file, "Base.BaseCtrl.js", Root + "Scripts\\Base\\BaseCtrl.js");
                     InstallTplFile(file, "Base.BaseSvc.js", Root + "Scripts\\Base\\BaseSvc.js");
                     InstallTplFile(file, "Base.authService.js", Root + "Scripts\\Base\\authService.js");
@@ -645,6 +647,7 @@ namespace Jwtex
                 file.CreateDirectory(Root + "Scripts");
                 file.CreateDirectory(Root + "Scripts\\Components");
                 file.CreateDirectory(Root + "Scripts\\Directives");
+                file.CreateDirectory(Root + "Scripts\\Modules");
                 try
                 {
                     string path = Root;
@@ -671,6 +674,13 @@ namespace Jwtex
                             path = Root + string.Format("Scripts\\Directives\\{0}\\{0}.css", name);
                             file.Write(path, "/*css goes here*/");
                             break;
+                        case "Modules":
+                            if (name == "app") return;
+                            path += "Scripts\\Modules\\" + name;
+                            file.CreateDirectory(path);
+                             path = Root + string.Format("Scripts\\Modules\\{0}\\{0}.js", name);
+                            file.Write(path, getEmptyModule(name));
+                            break;
                     }
 
                 }
@@ -681,6 +691,22 @@ namespace Jwtex
                 }
             }
 
+        }
+
+        private string getEmptyModule(string name)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendFormat("//import sample from 'Scripts/Modules/{0}/sample.js';", name);
+            sb.AppendLine();
+            sb.AppendLine();
+            sb.AppendFormat("var moduleName='{0}'; ", name);
+            sb.AppendLine();
+            sb.Append("angular.module(moduleName, []);");
+            sb.AppendLine();
+            sb.Append("export default moduleName;");
+            sb.AppendLine();
+            return sb.ToString();
         }
     }
 

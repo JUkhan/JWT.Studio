@@ -113,9 +113,9 @@ if (window.addEventListener) {
     attachEvent('onMessage', listener);
 }
 
-function sendMessage(name) {
+function sendMessage(name, ctype) {
     if (name) {
-        var data = { id: 'jwt', comName: name };
+        var data = { id: 'jwt', comName: name, comType: ctype };
         window.parent.postMessage(data, '*');
     }
 }

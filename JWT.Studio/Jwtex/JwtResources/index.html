@@ -14,7 +14,7 @@
 
 </head>
 <body ng-app="jwt2">
-    <div class="navbar navbar-default navbar-fixed-top"  role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -34,85 +34,108 @@
             </div>
         </div>
     </div>
-    <div class="container body-content padding-top" ng-controller="mainController">
+    <div class="xcontainer body-content" ng-controller="mainController">
 
-        <div class="padding-bottom">
-            <div class="btn-group">
-                <label ng-click="changeDataMode('Base')" class="btn btn-success" ng-model="dataMode" btn-radio="'Base'">Base</label>
-                <label ng-click="changeDataMode('Layouts')" class="btn btn-success" ng-model="dataMode" btn-radio="'Layouts'">Layouts</label>
-                <label ng-click="changeDataMode('Widgets')" class="btn btn-success" ng-model="dataMode" btn-radio="'Widgets'">Widgets</label>
-                <label ng-click="changeDataMode('Components')" class="btn btn-success" ng-model="dataMode" btn-radio="'Components'">Components</label>
-            </div>
-            <b>&nbsp;&nbsp;</b>
-            <select class="form-control" ng-show="items.length>0" ng-change="changeItemValue()" ng-model="itemValue">
-                <option ng-repeat="u in items" value="{{$index}}" ng-bind="u"></option>
-            </select>
-            <input class="form-control" type="text" ng-model="itemName" placeholder="widget or component name" />
-            <div class="btn-group">
-                <input type="button" class="btn btn-success" value="New Widget" ng-click="newWidget(itemName)" />
-                <input type="button" class="btn btn-success" value="New Component" ng-click="newComponent(itemName)" />
-            </div>
-            <div class="chat">
-                <input class="btn btn-default" ng-click="onclick()" type="button" value="Online Developers" />
-                <div class="content" ng-show="toggle">
-                    <div class="user" ng-repeat="u in users" ng-click="showPopup(u)">{{u}}</div>
+        <div class="panel panel-default margin-top">
+            <div class="panel-heading">
+                <div class="btn-group">
+                    <label ng-click="changeDataMode('Base')" class="btn btn-success" ng-model="dataMode" btn-radio="'Base'">Base</label>
+                    <label ng-click="changeDataMode('Layouts')" class="btn btn-success" ng-model="dataMode" btn-radio="'Layouts'">Layouts</label>
+                    <label ng-click="changeDataMode('Widgets')" class="btn btn-success" ng-model="dataMode" btn-radio="'Widgets'">Widgets</label>
+                    <label ng-click="changeDataMode('Components')" class="btn btn-success" ng-model="dataMode" btn-radio="'Components'">Components</label>
+                    <label ng-click="changeDataMode('Modules')" class="btn btn-success" ng-model="dataMode" btn-radio="'Modules'">Modules</label>
                 </div>
+               
+                <select class="form-control" ng-show="items.length>0" ng-change="changeItemValue()" ng-model="itemValue">
+                    <option ng-repeat="u in items" value="{{$index}}" ng-bind="u"></option>
+                </select>
+                <input class="form-control" type="text" ng-model="itemName" placeholder="widget/component/module" />
+                <div class="btn-group">
+                    <input type="button" class="btn btn-success" value="Add Widget" ng-click="addItem(itemName,'Widgets')" />
+                    <input type="button" class="btn btn-success" value="Add Component" ng-click="addItem(itemName,'Components')" />
+                    <input type="button" class="btn btn-success" value="Add Module" ng-click="addItem(itemName,'Modules')" />
+                </div>
+                <div class="chat">
+                    <input class="btn btn-default" ng-click="onclick()" type="button" value="Online Developers" />
+                    <div class="content" ng-show="toggle">
+                        <div class="user" ng-repeat="u in users" ng-click="showPopup(u)">{{u}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <tabset>
+                    <tab heading="Javascript">
+                        <div class="panel panel-default margin-top">
+                            <div class="panel-heading">
+
+                                <input type="text" ng-model="jsFileName" typeahead="name for name in jsList" class="form-control" />
+                                <div class="btn-group">
+                                    <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />
+                                    <input class="btn btn-success" type="button" value="Save" ng-click="saveJsFile()" />
+                                    <input class="btn btn-success" type="button" value="Add File" ng-click="addFile(jsFileName,'.js')" />
+                                    <input class="btn btn-success" type="button" value="Remove File" ng-click="removeFile(jsFileName, '.js')" />
+                                </div>
+
+                                <div class="pull-right">
+                                    <span ng-show="lock.jsLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
+                                    <div ng-show="lock.jsLock" class="glyphicon glyphicon-lock"></div>
+                                    <div ng-show="dataChange.jsf" class="glyphicon glyphicon-floppy-save"></div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <textarea id="jsEditor" name="jsEditor" style="display:block; width:100%;height:500px"></textarea>
+                            </div>
+
+                        </div>
+                    </tab>
+                    <tab heading="Html">
+                        <div class="panel panel-default margin-top">
+                            <div class="panel-heading">
+
+                                <input type="text" ng-model="htmlFileName" typeahead="name for name in htmlList" class="form-control" />
+                                <div class="btn-group">
+                                    <input class="btn btn-success" type="button" ng-click="htmlLoad(htmlFileName)" value="Load" />
+                                    <input class="btn btn-success" type="button" value="Save" ng-click="saveHtmlFile()" />
+                                    <input class="btn btn-success" type="button" value="Add File" ng-click="addFile(htmlFileName,'.html')" />
+                                    <input class="btn btn-success" type="button" value="Remove File" ng-click="removeFile(htmlFileName, '.html')" />
+                                </div>
+                                <div class="pull-right">
+                                    <span ng-show="lock.htmlLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
+                                    <div ng-show="lock.htmlLock" class="glyphicon glyphicon-lock"></div>
+                                    <div ng-show="dataChange.htmlf" class="glyphicon glyphicon-floppy-save"></div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <textarea id="htmlEditor" name="htmlEditor" style="display:block; width:100%;height:500px"></textarea>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Css">
+                        <div class="panel panel-default margin-top">
+                            <div class="panel-heading">
+
+                                <input type="text" ng-model="cssFileName" typeahead="name for name in cssList" class="form-control" />
+                                <div class="btn-group">
+                                    <input class="btn btn-success" type="button" ng-click="cssLoad(cssFileName)" value="Load" />
+                                    <input class="btn btn-success" type="button" value="Save" ng-click="saveCssFile()" />
+                                    <input class="btn btn-success" type="button" value="Add File" ng-click="addFile(cssFileName,'.css')" />
+                                    <input class="btn btn-success" type="button" value="Remove File" ng-click="removeFile(cssFileName, '.css')" />
+                                </div>
+                                <div class="pull-right">
+                                    <span ng-show="lock.cssLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
+                                    <div ng-show="lock.cssLock" class="glyphicon glyphicon-lock"></div>
+                                    <div ng-show="dataChange.cssf" class="glyphicon glyphicon-floppy-save"></div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <textarea id="cssEditor" name="cssEditor" style="display:block; width:100%;height:500px"></textarea>
+                            </div>
+                        </div>
+                    </tab>
+
+                </tabset>
             </div>
         </div>
-        <tabset>
-            <tab heading="Javascript">
-                <div class="padding-top">
-
-                    <input type="text" ng-model="jsFileName" typeahead="name for name in jsList" class="form-control" />
-                    <div class="btn-group">
-                        <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />
-                        <input class="btn btn-success" type="button" value="Save" ng-click="saveJsFile()" />
-                    </div>
-
-                    <div class="pull-right">
-                        <span ng-show="lock.jsLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
-                        <div ng-show="lock.jsLock" class="glyphicon glyphicon-lock"></div>
-                        <div ng-show="dataChange.jsf" class="glyphicon glyphicon-floppy-save"></div>
-                    </div>
-                </div>
-                <textarea id="jsEditor" name="jsEditor" style="display:block; width:100%;height:500px"></textarea>
-
-            </tab>
-            <tab heading="Html">
-                <div class="padding-top">
-
-                    <input type="text" ng-model="htmlFileName" typeahead="name for name in htmlList" class="form-control" />
-                    <div class="btn-group">
-                        <input class="btn btn-success" type="button" ng-click="htmlLoad(htmlFileName)" value="Load" />
-                        <input class="btn btn-success" type="button" value="Save" ng-click="saveHtmlFile()" />
-                    </div>
-                    <div class="pull-right">
-                        <span ng-show="lock.htmlLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
-                        <div ng-show="lock.htmlLock" class="glyphicon glyphicon-lock"></div>
-                        <div ng-show="dataChange.htmlf" class="glyphicon glyphicon-floppy-save"></div>
-                    </div>
-                </div>
-                <textarea id="htmlEditor" name="htmlEditor" style="display:block; width:100%;height:500px"></textarea>
-            </tab>
-            <tab heading="Css">
-                <div class="padding-top">
-
-                    <input type="text" ng-model="cssFileName" typeahead="name for name in cssList" class="form-control" />
-                    <div class="btn-group">
-                        <input class="btn btn-success" type="button" ng-click="cssLoad(cssFileName)" value="Load" />
-                        <input class="btn btn-success" type="button" value="Save" ng-click="saveCssFile()" />
-                    </div>
-                    <div class="pull-right">
-                        <span ng-show="lock.cssLock">Locked by:&nbsp;<b ng-bind="user"></b>&nbsp;</span>
-                        <div ng-show="lock.cssLock" class="glyphicon glyphicon-lock"></div>
-                        <div ng-show="dataChange.cssf" class="glyphicon glyphicon-floppy-save"></div>
-                    </div>
-                </div>
-                <textarea id="cssEditor" name="cssEditor" style="display:block; width:100%;height:500px"></textarea>
-            </tab>
-
-        </tabset>
-
         <hr />
         <footer>
             <p>&copy; jwtEx Application</p>
@@ -127,7 +150,7 @@
             <b class="modal-title" ng-bind="sendto"></b>
         </div>
         <div class="modal-body messageArea">
-            <div ng-repeat="u in list"><b ng-bind="u.sender+' : '" ></b>&nbsp;<span ng-bind="u.message"></span></div>
+            <div ng-repeat="u in list"><b ng-bind="u.sender+' : '"></b>&nbsp;<span ng-bind="u.message"></span></div>
         </div>
         <div class="modal-footer">
             <input class="form-control chat_inbox" ng-enter="send(message)" type="text" ng-model="message" />
@@ -167,6 +190,6 @@
     <script src="JwtEx/Resources/?file=codemirror.addon.hint.javascript-hint.js"></script>
     <script src="JwtEx/Resources/?file=codemirror.addon.hint.css-hint.js"></script>
     <script src="JwtEx/Resources/?file=bootstrap.min.js"></script>
-   
+
 </body>
 </html>

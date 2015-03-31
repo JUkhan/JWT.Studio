@@ -116,6 +116,120 @@ namespace Jwtex
                 res.isSuccess = true;
             }
         }
+        public JsonResult IsFileExist(string mode, string directoryName, string fileName, string ext)
+        {
+            if (!fileName.EndsWith(ext)) fileName += ext;
+            JwtFile file = new JwtFile();
+            string path = Config.Root;
+            switch (mode)
+            {
+                case "Base":
+                    path += "Scripts\\Base\\" + fileName;
+                    break;
+                case "Widgets":
+                    path += "Scripts\\Components\\" + directoryName+"\\" + fileName;
+                    break;
+                case "Layouts":
+                    path += "Scripts\\Layouts\\" + directoryName + "\\" + fileName;
+                    break;
+                case "Components":
+                    path += "Scripts\\Directives\\" + directoryName + "\\" + fileName;
+                    break;
+                case "Modules":
+                    path += "Scripts\\Modules\\" + directoryName + "\\" + fileName;
+                    break;
+            }
+            return Json(new { exist = file.FileExists(path) }, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult AddFile(string mode, string directoryName, string fileName, string ext)
+        {
+            if (!fileName.EndsWith(ext)) fileName += ext;
+            string path = Config.Root;
+            JwtFile file = new JwtFile();
+            JResult res = new JResult();
+            try
+            {
+                switch (mode)
+                {
+                    case "Base":                       
+                        path += string.Format("Scripts\\Base\\{0}", fileName);
+                       
+                        break;
+
+                    case "Layouts":
+                        path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
+                       
+                        break;
+                    case "Components":
+                        path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
+                      
+                        break;
+                    case "Widgets":
+                        path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
+                       
+                        break;
+                    case "Modules":
+                        path += string.Format("Scripts\\Modules\\{0}\\{1}", directoryName, fileName);
+                      
+                        break;
+                }
+                file.Write(path, "new file");
+                res.isSuccess = true;
+                res.msg = "Alhumdulilla Successfully Created.";
+            }
+            catch (Exception ex)
+            {
+                
+                log.Error(ex);
+                res.msg = ex.Message;
+            }
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult RemoveFile(string mode, string directoryName, string fileName, string ext)
+        {
+            if (!fileName.EndsWith(ext)) fileName += ext;
+            string path = Config.Root;
+            JwtFile file = new JwtFile();
+            JResult res = new JResult();
+            try
+            {
+                switch (mode)
+                {
+                    case "Base":
+                        path += string.Format("Scripts\\Base\\{0}", fileName);
+
+                        break;
+
+                    case "Layouts":
+                        path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
+
+                        break;
+                    case "Components":
+                        path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
+
+                        break;
+                    case "Widgets":
+                        path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
+
+                        break;
+                    case "Modules":
+                        path += string.Format("Scripts\\Modules\\{0}\\{1}", directoryName, fileName);
+
+                        break;
+                }
+                file.RemoveFile(path);
+                res.isSuccess = true;
+                res.msg = "Alhumdulilla Successfully Removed.";
+            }
+            catch (Exception ex)
+            {
+
+                log.Error(ex);
+                res.msg = ex.Message;
+            }
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetFileContent(string mode, string directoryName, string fileName)
         {
             string path = Config.Root;
@@ -141,6 +255,10 @@ namespace Jwtex
                         break;
                     case "Widgets":
                         path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
+                        res.data = file.Read(path);
+                        break;
+                    case "Modules":
+                        path += string.Format("Scripts\\Modules\\{0}\\{1}", directoryName, fileName);
                         res.data = file.Read(path);
                         break;
                 }
@@ -181,6 +299,10 @@ namespace Jwtex
                         path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
                         file.Write(path, content);
                         break;
+                    case "Modules":
+                        path += string.Format("Scripts\\Modules\\{0}\\{1}", directoryName, fileName);
+                        file.Write(path, content);
+                        break;
                 }
                 res.isSuccess = true;
                 res.msg = "Successfully saved.";
@@ -215,6 +337,11 @@ namespace Jwtex
                     list.AddRange(file.GetSubdirectories(Config.Root + "Scripts\\Directives"));
 
                     break;
+                case "Modules":
+                    list.Add("Select a Module");
+                    list.AddRange(file.GetSubdirectories(Config.Root + "Scripts\\Modules"));
+
+                    break;
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }
@@ -229,7 +356,6 @@ namespace Jwtex
                 case "Base":
                     list = file.GetFiles(Config.Root + "Scripts\\Base");
                     break;
-
                 case "Layouts":
                     list = file.GetFiles(Config.Root + "Scripts\\Layouts\\" + name);
                     break;
@@ -237,9 +363,10 @@ namespace Jwtex
                     list = file.GetFiles(Config.Root + "Scripts\\Components\\" + name);
                     break;
                 case "Components":
-
                     list = file.GetFiles(Config.Root + "Scripts\\Directives\\" + name);
-
+                    break;
+                case "Modules":
+                    list = file.GetFiles(Config.Root + "Scripts\\Modules\\" + name);
                     break;
             }
             log.Info("files found: "+list.Count);
@@ -257,6 +384,9 @@ namespace Jwtex
                     break;
                 case "Components":
                     path += "Scripts\\Derictives\\" + name;
+                    break;
+                case "Modules":
+                    path += "Scripts\\Modules\\" + name;
                     break;
             }
             return Json(new { exist = file.DirectoryExists(path) }, JsonRequestBehavior.AllowGet);

@@ -66,15 +66,11 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
 
         });
     };
-    scope.newWidget = function (name) {
-        if (!name) return;
-        createItem(name, 'Widgets');
 
-    };
-    scope.newComponent = function (name) {
+    scope.addItem = function (name, mode) {
         if (!name) return
-        createItem(name, 'Components');
-    };
+        createItem(name, mode);
+    }
     function createItem(name, mode) {
         overlay(1);
         http.get('JwtEx/IsExist/?name={0}&mode={1}'.format(name, mode))
@@ -106,24 +102,24 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         scope.cssFileName = '';
     }
     function unlocakAll() {
-        
+
         if (scope.dataChange.jsf) {
-            saveFile(scope.dataMode, scope.jsFileName.replace('.js', ''), scope.jsFileName, scope.jsEditor.getValue());           
+            saveFile(scope.dataMode, scope.jsFileName.replace('.js', ''), scope.jsFileName, scope.jsEditor.getValue());
             scope.dataChange.jsf = false;
         }
-        if (scope.dataChange.htmlf) {           
-            saveFile(scope.dataMode, scope.htmlFileName.replace('.html', ''), scope.htmlFileName, scope.htmlEditor.getValue());           
+        if (scope.dataChange.htmlf) {
+            saveFile(scope.dataMode, scope.htmlFileName.replace('.html', ''), scope.htmlFileName, scope.htmlEditor.getValue());
             scope.dataChange.htmlf = false;
         }
         if (scope.dataChange.cssf) {
-            saveFile(scope.dataMode, scope.cssFileName.replace('.css', ''), scope.cssFileName, scope.cssEditor.getValue());          
+            saveFile(scope.dataMode, scope.cssFileName.replace('.css', ''), scope.cssFileName, scope.cssEditor.getValue());
             scope.dataChange.cssf = false;
         }
     }
     function saveFile(mode, directoryName, fileName, content) {
         http.post('JwtEx/SaveFile', { mode: mode, directoryName: directoryName, fileName: fileName, content: content })
        .success(function (data) {
-           if (data.isSuccess) {             
+           if (data.isSuccess) {
                success('Saved successfully.');
                jwtSvc.unlock({ Category: mode, Folder: directoryName, Name: fileName });
            }
@@ -155,6 +151,52 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                 success('Saved successfully.');
                 AWAIT.jsLock = 1;
                 scope.dataChange.jsf = false;
+            }
+        });
+    }
+    scope.addFile = function (fileName, ext) {
+        scope.jsFileName = fileName;
+        if (!fileName) { info('File name is required.'); return; }
+        http.get('JwtEx/IsFileExist/?mode={0}&directoryName={1}&fileName={2}&ext={3}'.format(scope.dataMode, scope.items[scope.itemValue], fileName, ext))
+        .success(function (res) {
+            if (res.exist) {
+                info('Already exist.'); return;
+            }
+
+            http.get('JwtEx/AddFile/?mode={0}&directoryName={1}&fileName={2}&ext={3}'.format(scope.dataMode, scope.items[scope.itemValue], fileName, ext))
+               .success(function (data) {
+                   if (data.isSuccess) {
+                       success(data.msg);
+                       if (ext === '.js') { scope.jsLoad(fileName); }
+                       if (ext === '.html') { scope.htmlLoad(fileName); }
+                       if (ext === '.css') { scope.cssLoad(fileName); }
+                   }
+                   else {
+                       info(data.msg);
+                   }
+               });
+        });
+    }
+    scope.removeFile = function (fileName, ext) {
+        scope.jsFileName = fileName;
+        if (!fileName) { info('File name is required.'); return; }
+
+        http.get('JwtEx/IsFileExist/?mode={0}&directoryName={1}&fileName={2}&ext={3}'.format(scope.dataMode, scope.items[scope.itemValue], fileName, ext))
+        .success(function (res) {
+            if (!res.exist) {
+                info('File is not exist.'); return;
+            }
+            if (confirm('Are you sure you want to remove this file?')) {
+                http.get('JwtEx/RemoveFile/?mode={0}&directoryName={1}&fileName={2}&ext={3}'.format(scope.dataMode, scope.items[scope.itemValue], fileName, ext))
+                   .success(function (data) {
+                       if (data.isSuccess) {
+                           success(data.msg);
+                           setEditorDefault();
+                       }
+                       else {
+                           info(data.msg);
+                       }
+                   });
             }
         });
     }
@@ -220,7 +262,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.dataChange = { jsf: 0, htmlf: 0, cssf: 0 };
     scope.users = [];
     scope.user = "me";
-    scope.$on('newConnection', function (event, user) {      
+    scope.$on('newConnection', function (event, user) {
         info(user + ' Joined in Development');
         scope.users.push(user);
         scope.$apply();
@@ -244,7 +286,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
             }
             else if (file.Folder === folder) {
                 updateEditor(file.Name, true, false);
-            }           
+            }
         }
     });
     scope.$on('unlockFile', function (event, file) {
@@ -261,7 +303,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.jsChange = function () {
         if (AWAIT.jsLock) {
             if (scope.jsEditor.getValue()) {
-                try{  jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName });}catch(error){}
+                try { jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName }); } catch (error) { }
                 AWAIT.jsLock = 0;
                 scope.$apply(function () { scope.dataChange.jsf = true; });
 
@@ -271,7 +313,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.htmlChange = function () {
         if (AWAIT.htmlLock) {
             if (scope.htmlEditor.getValue()) {
-                try{ jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });}catch(error){}
+                try { jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName }); } catch (error) { }
                 AWAIT.htmlLock = 0;
                 scope.$apply(function () { scope.dataChange.htmlf = true; });
             }
@@ -280,7 +322,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.cssChange = function () {
         if (AWAIT.cssLock) {
             if (scope.cssEditor.getValue()) {
-                try{jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });}catch(error){}
+                try { jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName }); } catch (error) { }
                 AWAIT.cssLock = 0;
                 scope.$apply(function () { scope.dataChange.cssf = true; });
             }
@@ -310,7 +352,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     }
     //end signalR
     //online user
-    var modalInstance = null, chatUser='';
+    var modalInstance = null, chatUser = '';
     scope.messageList = [];
     scope.$on('receiveMessage', function (event, data) {
         scope.messageList[data.sender] = scope.messageList[data.sender] || [];
@@ -318,14 +360,14 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         scope.$apply();
         if (chatUser !== data.sender) {
             if (modalInstance)
-            modalInstance.close();
+                modalInstance.close();
             openPopup(scope.user, data.sender, scope.messageList[data.sender]);
             chatUser = data.sender;
-        } else {           
-                modalInstance.close();
-                openPopup(scope.user, data.sender, scope.messageList[data.sender]);          
+        } else {
+            modalInstance.close();
+            openPopup(scope.user, data.sender, scope.messageList[data.sender]);
         }
-        
+
         scrollTop();
     });
     scope.toggle = false;
@@ -350,7 +392,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                 }
             }
         });
-       
+
     }
     //end online user
     function success(msg) {
