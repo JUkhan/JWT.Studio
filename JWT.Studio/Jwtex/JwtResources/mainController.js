@@ -1,5 +1,5 @@
 ﻿
-angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal', '$q', 'jwtSvc', '$timeout', function (scope, http, modal, qService, jwtSvc, $timeout) {
+angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal', '$q', 'jwtSvc', '$timeout','localStorageService', function (scope, http, modal, qService, jwtSvc, $timeout) {
 
     toastr.options.extendedTimeOut = 1000;
     toastr.options.timeOut = 1000;
@@ -121,7 +121,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
        .success(function (data) {
            if (data.isSuccess) {
                success('Saved successfully.');
-               jwtSvc.unlock({ Category: mode, Folder: directoryName, Name: fileName });
+               jwtSvc.unlock({ UserName: jwtSvc.userName, Category: mode, Folder: directoryName, Name: fileName });
            }
        });
     }
@@ -147,7 +147,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         http.post('JwtEx/SaveFile', { mode: scope.dataMode, directoryName: scope.items[scope.itemValue], fileName: scope.jsFileName, content: scope.jsEditor.getValue() })
         .success(function (data) {
             if (data.isSuccess) {
-                jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.jsFileName });
+                jwtSvc.unlock({ UserName: jwtSvc.userName, Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.jsFileName });
                 success('Saved successfully.');
                 AWAIT.jsLock = 1;
                 scope.dataChange.jsf = false;
@@ -220,7 +220,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         http.post('JwtEx/SaveFile', { mode: scope.dataMode, directoryName: scope.items[scope.itemValue], fileName: scope.htmlFileName, content: scope.htmlEditor.getValue() })
         .success(function (data) {
             if (data.isSuccess) {
-                jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });
+                jwtSvc.unlock({ UserName: jwtSvc.userName, Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName });
                 success('Saved successfully.');
                 AWAIT.htmlLock = 1;
                 scope.dataChange.htmlf = false;
@@ -248,7 +248,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         http.post('JwtEx/SaveFile', { mode: scope.dataMode, directoryName: scope.items[scope.itemValue], fileName: scope.cssFileName, content: scope.cssEditor.getValue() })
         .success(function (data) {
             if (data.isSuccess) {
-                jwtSvc.unlock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });
+                jwtSvc.unlock({ UserName: jwtSvc.userName, Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName });
                 success('Saved successfully.');
                 AWAIT.cssLock = 1;
                 scope.dataChange.cssf = false;
@@ -256,14 +256,17 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         });
     }
     //signalR
+   
     var LOCK = { jsLock: 0, htmlLock: 0, cssLock: 0 };
     var AWAIT = { jsLock: 0, htmlLock: 0, cssLock: 0 };
     scope.lock = LOCK;
     scope.dataChange = { jsf: 0, htmlf: 0, cssf: 0 };
     scope.users = [];
-    scope.user = "me";
+    scope.user = "";
     scope.$on('newConnection', function (event, user) {
+
         info(user + ' Joined in Development');
+        scope.users.remove(function (user2) { return user2 === user; });
         scope.users.push(user);
         scope.$apply();
     });
@@ -303,7 +306,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.jsChange = function () {
         if (AWAIT.jsLock) {
             if (scope.jsEditor.getValue()) {
-                try { jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName }); } catch (error) { }
+                try { jwtSvc.lock({ UserName:jwtSvc.userName, Category: scope.dataMode, Folder: scope.items[scope.itemValue] || 'base', Name: scope.jsFileName }); } catch (error) { }
                 AWAIT.jsLock = 0;
                 scope.$apply(function () { scope.dataChange.jsf = true; });
 
@@ -313,7 +316,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.htmlChange = function () {
         if (AWAIT.htmlLock) {
             if (scope.htmlEditor.getValue()) {
-                try { jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName }); } catch (error) { }
+                try { jwtSvc.lock({ UserName: jwtSvc.userName, Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.htmlFileName }); } catch (error) { }
                 AWAIT.htmlLock = 0;
                 scope.$apply(function () { scope.dataChange.htmlf = true; });
             }
@@ -322,7 +325,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.cssChange = function () {
         if (AWAIT.cssLock) {
             if (scope.cssEditor.getValue()) {
-                try { jwtSvc.lock({ Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName }); } catch (error) { }
+                try { jwtSvc.lock({ UserName: jwtSvc.userName, Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.cssFileName }); } catch (error) { }
                 AWAIT.cssLock = 0;
                 scope.$apply(function () { scope.dataChange.cssf = true; });
             }
@@ -353,7 +356,10 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     //end signalR
     //online user
     var modalInstance = null, chatUser = '';
-    scope.messageList = [];
+    scope.messageList = [];   
+    jwtSvc.connectionDone.then(function () {       
+        jwtSvc.initHub(jwtSvc.userName);
+    });
     scope.$on('receiveMessage', function (event, data) {
         scope.messageList[data.sender] = scope.messageList[data.sender] || [];
         scope.messageList[data.sender].push(data);
@@ -361,11 +367,11 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         if (chatUser !== data.sender) {
             if (modalInstance)
                 modalInstance.close();
-            openPopup(scope.user, data.sender, scope.messageList[data.sender]);
+            openPopup(jwtSvc.userName, data.sender, scope.messageList[data.sender]);
             chatUser = data.sender;
         } else {
             modalInstance.close();
-            openPopup(scope.user, data.sender, scope.messageList[data.sender]);
+            openPopup(jwtSvc.userName, data.sender, scope.messageList[data.sender]);
         }
 
         scrollTop();
@@ -377,7 +383,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.showPopup = function (user) {
         chatUser = user;
         scope.messageList[user] = scope.messageList[user] || [];
-        openPopup(scope.user, user, scope.messageList[user]);
+        openPopup(jwtSvc.userName, user, scope.messageList[user]);
     };
     //lg,sm
     function openPopup(sender, sendto, list) {
@@ -405,7 +411,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
 
 function scrollTop() {
     var messageArea = $('.messageArea');
-    messageArea.scrollTop(messageArea.get(0).scrollHeight);
+    messageArea.scrollTop(messageArea.get(0).scrollHeight+20);
 }
 function setJsEditor(scope) {
     setTimeout(function () {

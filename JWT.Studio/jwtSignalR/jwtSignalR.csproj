@@ -187,10 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="authComplete.html" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\loading-bar.css" />
@@ -201,7 +197,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\angular-local-storage.min.js" />
     <Content Include="Scripts\authComplete.js" />
     <Content Include="Scripts\Base\authComplete.html" />

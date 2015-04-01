@@ -18,31 +18,26 @@ namespace Jwtex.Hubs
     {
         private static ConcurrentDictionary<string, List<FileInfo>> _mapping = new ConcurrentDictionary<string, List<FileInfo>>();
         private static object locker = new Object();
-        public string UserName
-        {
-            get
-            {
-                var str= Context.User.Identity.Name;
-                return str;
-            }
-
-        }
+       
 
         public override Task OnConnected()
-        {
-            _mapping.TryAdd(Context.ConnectionId, new List<FileInfo>() { new FileInfo { UserName = UserName, CID = Context.ConnectionId } });
-
-            Clients.Others.newConnection(UserName);
-            Clients.Caller.onlineUsers(GetAllUsers());
-            GetWorkStatus();
+        {           
             return base.OnConnected();
         }
-        private List<string> GetAllUsers()
+        public void InitHub(string user)
+        {
+            _mapping.TryAdd(Context.ConnectionId, new List<FileInfo>() { new FileInfo { UserName = user, CID = Context.ConnectionId } });
+
+            Clients.Others.newConnection(user);
+            Clients.Caller.onlineUsers(GetAllUsers(user));
+            GetWorkStatus();
+        }
+        private List<string> GetAllUsers(string user)
         {
             List<string> list = new List<string>();
             foreach (var item in _mapping.Values)
             {
-                if (item[0].UserName != UserName)
+                if (item[0].UserName != user)
                 {
                     list.Add(item[0].UserName);
                 }
@@ -54,7 +49,7 @@ namespace Jwtex.Hubs
             var cid = GetConnectionID(user);
             if (!string.IsNullOrEmpty(cid))
             {
-                Clients.Client(cid).receiveMessage(new { sender = UserName, message = message });
+                Clients.Client(cid).receiveMessage(new { sender = user, message = message });
             }
             else
             {
@@ -76,7 +71,7 @@ namespace Jwtex.Hubs
         public void Lock(FileInfo info)
         {
             info.CID = Context.ConnectionId;
-            info.UserName = UserName;
+            info.UserName = info.UserName;
             info.Lock = true;
             info.Start = DateTime.Now.ToLongTimeString();
             info.End = "";
@@ -135,8 +130,9 @@ namespace Jwtex.Hubs
                 }
 
                 var list = new List<FileInfo>();
+                string user = _mapping[Context.ConnectionId][0].UserName;
                 _mapping.TryRemove(Context.ConnectionId, out list);
-                Clients.All.removeConnection(UserName);
+                Clients.All.removeConnection(user);
             }
             return base.OnDisconnected(stopCalled);
         }

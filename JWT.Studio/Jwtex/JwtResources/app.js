@@ -1,5 +1,5 @@
-﻿angular.module("jwt2", ["ui.router", "ngResource", 'ui.bootstrap', 'ui.codemirror', 'SignalR'])
-.factory('jwtSvc', ['$rootScope', 'Hub', function (rootScope, Hub) {
+﻿angular.module("jwt2", ["ui.router", "ngResource", 'ui.bootstrap', 'ui.codemirror', 'SignalR','LocalStorageModule'])
+.factory('jwtSvc', ['$rootScope', 'Hub', '$timeout', 'localStorageService',  function (rootScope, Hub, $timeout, localStorageService) {
     var jwtSvc = this;
     //Hub setup
     var hub = new Hub('jwt', {
@@ -24,31 +24,49 @@
                 rootScope.$broadcast("onlineUsers", data);
             },
         },
-        methods: ['lock', 'unlock', 'sendMessage'],
+        methods: ['lock', 'unlock', 'sendMessage','initHub'],
         errorHandler: function (error) {
             console.error(error);
-        }
-    });
+        },
+        hubDisconnected: function () {
+            if (hub.connection.lastError) {
+                $timeout(function () { hub.connect(); }, 5000);
+            }
+        },
+        transport: 'webSockets',
+        logging: true
 
+    });
+    var authData = localStorageService.get('authorizationData');
+    if (authData) {	    
+        //$.signalR.ajaxDefaults.headers = { Authorization: "Bearer " + authData.token };
+        jwtSvc.userName = authData.userName||'unknowen';
+    } else {
+        jwtSvc.userName = 'unknowen';
+    }
+    jwtSvc.connectionDone=hub.promise;
     jwtSvc.lock = function (file) {
-        try{ hub.lock(file);}catch(error){}
+        try { hub.lock(file); } catch (error) { }
     };
     jwtSvc.unlock = function (file) {
-        try{hub.unlock(file);}catch(error){}
+        try { hub.unlock(file); } catch (error) { }
     };
     jwtSvc.sendMessage = function (user, message) {
-        try{hub.sendMessage(user, message);}catch(error){}
+        try { hub.sendMessage(user, message); } catch (error) { }
     };
+    jwtSvc.initHub = function (user) {
+        try { hub.initHub(user); } catch (error) { }
+    }
     return jwtSvc;
 }])
 .directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
-            if(event.which === 13) {
-                scope.$apply(function (){
+            if (event.which === 13) {
+                scope.$apply(function () {
                     scope.$eval(attrs.ngEnter);
                 });
- 
+
                 event.preventDefault();
             }
         });

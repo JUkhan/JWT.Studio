@@ -574,7 +574,7 @@ namespace Jwtex
             lock (locker)
             {
                 file.CreateDirectory(Root + "Scripts");
-                file.CreateDirectory(Root + "Modules");
+                file.CreateDirectory(Root + "Scripts\\Modules");
                 file.CreateDirectory(Root + "Scripts\\Components");
                 file.CreateDirectory(Root + "Scripts\\Directives");
                 if (!file.DirectoryExists(Root + "Scripts\\Base"))
@@ -593,7 +593,7 @@ namespace Jwtex
                     InstallTplFile(file, "filters.js", Root + "Scripts\\app.filters.js");
                     InstallTplFile(file, "config.js", Root + "Scripts\\config.js");
                     //Scripts/Base 
-                    InstallTplFile(file, "app.js", Root + "Scripts\\Base\\app.js");
+                    InstallTplFile(file, "Base.app.js", Root + "Scripts\\Base\\app.js");
                     InstallTplFile(file, "Base.BaseCtrl.js", Root + "Scripts\\Base\\BaseCtrl.js");
                     InstallTplFile(file, "Base.BaseSvc.js", Root + "Scripts\\Base\\BaseSvc.js");
                     InstallTplFile(file, "Base.authService.js", Root + "Scripts\\Base\\authService.js");

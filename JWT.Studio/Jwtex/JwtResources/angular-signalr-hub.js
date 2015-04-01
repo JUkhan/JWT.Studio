@@ -3,11 +3,7 @@ angular.module('SignalR', ['LocalStorageModule'])
 .factory('Hub', ['$', 'localStorageService', function ($, localStorageService) {
 	//This will allow same connection to be used for all Hubs
 	//It also keeps connection as singleton.
-	var globalConnections = [];	
-	var authData = localStorageService.get('authorizationData');
-	if (authData) {	    
-	    $.signalR.ajaxDefaults.headers = { Authorization: "Bearer " + authData.token };
-	}
+	var globalConnections = [];		
 	function initNewConnection(options) {
 		var connection = null;
 		if (options && options.rootPath) {
@@ -33,8 +29,7 @@ angular.module('SignalR', ['LocalStorageModule'])
 	}
 
 	return function (hubName, options) {
-		var Hub = this;
-
+		var Hub = this;	   
 		Hub.connection = getConnection(options);
 		Hub.proxy = Hub.connection.createHubProxy(hubName);
 
