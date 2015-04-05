@@ -367,11 +367,11 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         if (chatUser !== data.sender) {
             if (modalInstance)
                 modalInstance.close();
-            openPopup(jwtSvc.userName, data.sender, scope.messageList[data.sender]);
+            openPopup(data.sender, jwtSvc.userName, scope.messageList[data.sender]);
             chatUser = data.sender;
         } else {
             modalInstance.close();
-            openPopup(jwtSvc.userName, data.sender, scope.messageList[data.sender]);
+            openPopup(data.sender, jwtSvc.userName, scope.messageList[data.sender]);
         }
         
     });

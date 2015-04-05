@@ -373,14 +373,14 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
             modalInstance.close();
             openPopup(jwtSvc.userName, data.sender, scope.messageList[data.sender]);
         }
-        
+
+        $timeout(function(){ scrollTop()},500);
     });
     scope.toggle = false;
     scope.onclick = function () {
         scope.toggle = !scope.toggle;
     };
     scope.showPopup = function (user) {
-       
         chatUser = user;
         scope.messageList[user] = scope.messageList[user] || [];
         openPopup(jwtSvc.userName, user, scope.messageList[user]);
@@ -398,7 +398,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                 }
             }
         });
-        $timeout(function () { scrollTop() }, 500);
+
     }
     //end online user
     function success(msg) {

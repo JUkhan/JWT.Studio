@@ -51,8 +51,8 @@
     jwtSvc.unlock = function (file) {
         try { hub.unlock(file); } catch (error) { }
     };
-    jwtSvc.sendMessage = function (user, message) {
-        try { hub.sendMessage(user, message); } catch (error) { }
+    jwtSvc.sendMessage = function (sender, sendto, message) {
+        try { hub.sendMessage(sender, sendto, message); } catch (error) { }
     };
     jwtSvc.initHub = function (user) {
         try { hub.initHub(user); } catch (error) { }
@@ -80,7 +80,8 @@
         modalInstance.close();
     };
     scope.send = function (message) {
-        jwtSvc.sendMessage(data.sendto, message);
+        if(!message){return;}
+        jwtSvc.sendMessage(data.sender, data.sendto, message);
         scope.list.push({ sender: data.sender, message: message });
         scope.message = '';
         scrollTop();

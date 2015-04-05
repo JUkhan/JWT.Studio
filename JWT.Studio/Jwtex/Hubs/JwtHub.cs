@@ -44,12 +44,12 @@ namespace Jwtex.Hubs
             }
             return list;
         }
-        public void SendMessage(string user, string message)
+        public void SendMessage(string sender, string sendto, string message)
         {
-            var cid = GetConnectionID(user);
+            var cid = GetConnectionID(sendto);
             if (!string.IsNullOrEmpty(cid))
             {
-                Clients.Client(cid).receiveMessage(new { sender = user, message = message });
+                Clients.Client(cid).receiveMessage(new { sender = sender, message = message });
             }
             else
             {
