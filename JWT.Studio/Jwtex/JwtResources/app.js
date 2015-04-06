@@ -32,9 +32,9 @@
             if (hub.connection.lastError) {
                 $timeout(function () { hub.connect(); }, 5000);
             }
-        },
-        transport: 'webSockets',
-        logging: true
+        }
+        //,transport: 'webSockets'
+        //,logging: true
 
     });
     var authData = localStorageService.get('authorizationData');
