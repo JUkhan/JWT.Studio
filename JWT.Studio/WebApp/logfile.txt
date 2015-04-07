@@ -1,2 +1,120 @@
 2015-04-05 07:14:51,750 [22] INFO  Jwtex.JwtExController - name:undefined, mode:Base
 2015-04-05 07:14:51,862 [22] INFO  Jwtex.JwtExController - files found: 5
+2015-04-06 22:10:06,493 [9] INFO  Jwtex.JwtExController - name:root, mode:Layouts
+2015-04-06 22:10:06,525 [9] INFO  Jwtex.JwtExController - files found: 2
+2015-04-06 22:10:13,881 [9] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-06 22:10:13,897 [9] INFO  Jwtex.JwtExController - files found: 5
+2015-04-06 22:27:39,840 [41] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-06 22:27:39,861 [41] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 06:54:20,746 [18] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 06:54:20,760 [18] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:01:22,608 [12] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:01:22,630 [12] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:08:36,947 [33] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:08:36,973 [33] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:12:21,225 [10] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:12:21,275 [10] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:32:50,210 [48] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:32:50,266 [48] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:42:35,830 [6] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:42:35,831 [6] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:46:42,463 [14] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:46:42,503 [14] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:47:35,241 [25] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:47:35,242 [25] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:49:16,743 [31] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:49:16,774 [31] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 07:53:59,580 [31] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 07:53:59,615 [31] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 17:58:58,633 [27] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 17:58:58,671 [27] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:01:45,159 [31] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:01:45,183 [31] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:08:43,850 [71] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:08:43,879 [71] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:11:52,345 [55] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:11:52,367 [55] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:18:37,475 [49] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:18:37,501 [49] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:19:47,979 [53] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:19:48,006 [53] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:20:21,945 [53] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:20:21,970 [53] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:46:53,201 [96] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:46:53,225 [96] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:51:49,822 [76] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:51:49,844 [76] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:55:34,914 [87] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:55:34,937 [87] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:56:29,553 [20] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:56:29,577 [20] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 18:57:51,495 [23] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 18:57:51,524 [23] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:03:30,493 [76] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:03:30,520 [76] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:12:05,424 [22] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:12:05,448 [22] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:13:58,255 [23] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-07 19:13:58,281 [23] INFO  Jwtex.JwtExController - files found: 3
+2015-04-07 19:15:46,470 [16] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-07 19:15:46,490 [16] INFO  Jwtex.JwtExController - files found: 3
+2015-04-07 19:17:15,406 [26] INFO  Jwtex.JwtExController - name:login, mode:Widgets
+2015-04-07 19:17:15,407 [26] INFO  Jwtex.JwtExController - files found: 2
+2015-04-07 19:17:18,030 [27] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-07 19:17:18,031 [27] INFO  Jwtex.JwtExController - files found: 4
+2015-04-07 19:17:18,068 [90] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\WebApp\Scripts\Components\'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.File.InternalWriteAllText(String path, String contents, Encoding encoding, Boolean checkHost)
+   at System.IO.File.WriteAllText(String path, String contents)
+   at jwt.CodeGen.JwtFile.Write(String path, String content)
+   at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content)
+2015-04-07 19:22:38,795 [14] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:22:38,796 [14] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:28:33,788 [24] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:28:33,810 [24] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:34:14,711 [26] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:34:14,748 [26] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:35:35,100 [13] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:35:35,101 [13] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:35:49,923 [25] INFO  Jwtex.JwtExController - name:associate, mode:Widgets
+2015-04-07 19:35:49,923 [25] INFO  Jwtex.JwtExController - files found: 2
+2015-04-07 19:35:56,553 [90] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:35:56,554 [90] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:38:40,632 [76] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-04-07 19:38:40,633 [76] INFO  Jwtex.JwtExController - files found: 1
+2015-04-07 19:38:45,631 [13] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:38:45,632 [13] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:53:01,677 [90] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:53:01,704 [90] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 19:54:15,590 [26] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-04-07 19:54:15,591 [26] INFO  Jwtex.JwtExController - files found: 1
+2015-04-07 19:55:08,923 [14] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 19:55:08,948 [14] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 20:01:04,078 [13] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 20:01:04,104 [13] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 20:53:46,003 [25] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 20:53:46,030 [25] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 20:55:10,683 [27] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 20:55:10,712 [27] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 20:58:58,690 [26] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 20:58:58,719 [26] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 21:03:28,944 [26] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-04-07 21:03:28,945 [26] INFO  Jwtex.JwtExController - files found: 1
+2015-04-07 21:03:29,828 [14] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 21:03:29,829 [14] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 21:05:59,978 [76] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 21:06:00,000 [76] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 21:10:56,634 [26] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 21:10:56,662 [26] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 21:30:30,156 [27] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 21:30:30,185 [27] INFO  Jwtex.JwtExController - files found: 5
+2015-04-07 21:31:15,399 [14] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-07 21:31:15,400 [14] INFO  Jwtex.JwtExController - files found: 4
+2015-04-07 21:36:41,079 [29] INFO  Jwtex.JwtExController - name:jwtFilter, mode:Components
+2015-04-07 21:36:41,103 [29] INFO  Jwtex.JwtExController - files found: 1
+2015-04-07 21:37:32,392 [14] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-04-07 21:37:32,422 [14] INFO  Jwtex.JwtExController - files found: 5

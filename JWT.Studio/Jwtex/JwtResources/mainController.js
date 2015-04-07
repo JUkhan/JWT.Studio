@@ -1,5 +1,5 @@
 ﻿
-angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal', '$q', 'jwtSvc', '$timeout', 'localStorageService', function (scope, http, modal, qService, jwtSvc, $timeout) {
+angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal', '$q', 'jwtSvc', '$timeout', 'localStorageService', function (scope, http, modal, qService, jwtSvc, $timeout, localStorageService) {
 
     toastr.options.extendedTimeOut = 1000;
     toastr.options.timeOut = 1000;
@@ -16,14 +16,32 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.cssList = [];
     scope.jsEditor = null;
     scope.htmlEditor = null;
-    setJsEditor(scope);
-    setHtmlEditor(scope);
-    setCssEditor(scope);
-
+    scope.theme = localStorageService.get('theme') || 'ace/theme/twilight';
+    $timeout(function () { autoSize(); }, 1000);
+    $timeout(function () {
+        setJsEditor(scope);
+        setHtmlEditor(scope);
+        setCssEditor(scope);
+    }, 1000);   
+    $(window).resize(function () { autoSize(); });
     //new style
     scope.dataMode = '';
     scope.itemValue = '';
     scope.items = [];
+    
+    scope.setFont = function (fontSize) {
+        document.getElementById('jsEditor').style.fontSize = fontSize;
+        document.getElementById('htmlEditor').style.fontSize = fontSize;
+        document.getElementById('cssEditor').style.fontSize = fontSize;
+       
+    };   
+   
+    scope.setTheme = function (theme) {
+        scope.jsEditor.setTheme(theme);
+        scope.htmlEditor.setTheme(theme);
+        scope.cssEditor.setTheme(theme);
+        localStorageService.set('theme', theme);
+    };
     scope.changeDataMode = function (val) {
         if (val !== scope.dataMode) {
             unlocakAll();
@@ -334,19 +352,19 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     function updateEditor(fileName, readOnly, isFromLoadContent) {
 
         if (fileName === scope.jsFileName) {
-            scope.jsEditor.options.readOnly = readOnly;
+            scope.jsEditor.setReadOnly(readOnly);
             if (!isFromLoadContent)
                 scope.$apply(function () { LOCK.jsLock = readOnly; });
             if (!LOCK.jsLock && !isFromLoadContent) { scope.jsLoad(fileName); info('Unlocked ' + fileName); }
         }
         else if (fileName === scope.htmlFileName) {
-            scope.htmlEditor.options.readOnly = readOnly;
+            scope.htmlEditor.setReadOnly(readOnly);
             if (!isFromLoadContent)
                 scope.$apply(function () { LOCK.htmlLock = readOnly; });
             if (!LOCK.htmlLock && !isFromLoadContent) { scope.htmlLoad(fileName); info('Unlocked ' + fileName); }
         }
         else if (fileName === scope.cssFileName) {
-            scope.cssEditor.options.readOnly = readOnly;
+            scope.cssEditor.setReadOnly(readOnly);
             if (!isFromLoadContent)
                 scope.$apply(function () { LOCK.cssLock = readOnly; });
             if (!LOCK.cssLock && !isFromLoadContent) { scope.cssLoad(fileName); info('Unlocked ' + fileName); }
@@ -373,14 +391,14 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
             modalInstance.close();
             openPopup(jwtSvc.userName, data.sender, scope.messageList[data.sender]);
         }
-        
+
     });
     scope.toggle = false;
     scope.onclick = function () {
         scope.toggle = !scope.toggle;
     };
     scope.showPopup = function (user) {
-       
+
         chatUser = user;
         scope.messageList[user] = scope.messageList[user] || [];
         openPopup(jwtSvc.userName, user, scope.messageList[user]);
@@ -416,59 +434,94 @@ function scrollTop() {
         messageArea.scrollTop(top);
     }
 }
-function setJsEditor(scope) {
-    setTimeout(function () {
-        scope.jsEditor = CodeMirror.fromTextArea(document.getElementById("jsEditor"), {
-            lineNumbers: true,
-            theme: 'rubyblue',
-            lineWrapping: true,
-            mode: { name: 'javascript', globalVars: true },
-            matchBrackets: true,
-            autoCloseBrackets: true,
-            extraKeys: { "Ctrl-Space": "autocomplete", "Ctrl-S": function (ins) { scope.saveJsFile(); } },
-            enableSearchTools: true,
-            styleActiveLine: true
+function setJsEditor(scope) {   
+    scope.jsEditor = ace.edit("jsEditor");    
+    scope.jsEditor.setOptions({
+        theme: scope.theme,
+        mode: "ace/mode/javascript",
+        autoScrollEditorIntoView: true
+    });
+    scope.jsEditor.$blockScrolling = Infinity;
+    scope.jsEditor.getSession().on('change', function (e) {
+        scope.jsChange();
+    });   
+    scope.jsEditor.commands.addCommand({
+        name: 'save',
+        bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+        exec: function (env, args, request) {
+            scope.saveJsFile();
+        }
+    });
+}
+function setHtmlEditor(scope) {   
+    scope.htmlEditor = ace.edit("htmlEditor");
+    scope.htmlEditor.setOptions({
+        theme: scope.theme,
+        mode: "ace/mode/html",
+        autoScrollEditorIntoView: true
+    });
+    scope.htmlEditor.$blockScrolling = Infinity;
+    scope.htmlEditor.getSession().on('change', function (e) {
+        scope.htmlChange();
+    });
+    scope.htmlEditor.commands.addCommand({
+        name: 'save',
+        bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+        exec: function (env, args, request) {
+            scope.saveHtmlFile();
+        }
+    });
+}
+function setCssEditor(scope) { 
+    scope.cssEditor = ace.edit("cssEditor");
+    scope.cssEditor.setOptions({
+        theme: scope.theme,
+        mode: "ace/mode/css",
+        autoScrollEditorIntoView: true
+    });
+    scope.cssEditor.$blockScrolling = Infinity;
+    scope.cssEditor.getSession().on('change', function (e) {
+        scope.cssChange();
+    });
+    scope.cssEditor.commands.addCommand({
+        name: 'save',
+        bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+        exec: function (env, args, request) {
+            scope.saveCssFile();
+        }
+    });
+    ////For All
+    ace.config.loadModule("ace/ext/emmet", function () {
+        ace.require("ace/lib/net").loadScript("http://cloud9ide.github.io/emmet-core/emmet.js", function () {
+            scope.jsEditor.setOption("enableEmmet", true);
+            scope.htmlEditor.setOption("enableEmmet", true);
+            scope.cssEditor.setOption("enableEmmet", true);
+        });
+    });
 
+    ace.config.loadModule("ace/ext/language_tools", function () {
+        scope.jsEditor.setOptions({
+            enableSnippets: true,
+            enableBasicAutocompletion: true
         });
-        scope.jsEditor.on("change", scope.jsChange);
-    }, 100);
-}
-function setHtmlEditor(scope) {
-    setTimeout(function () {
-        scope.htmlEditor = CodeMirror.fromTextArea(document.getElementById("htmlEditor"), {
-            lineNumbers: true,
-            theme: 'rubyblue',
-            lineWrapping: true,
-            mode: 'htmlmixed',
-            matchBrackets: true,
-            matchTags: { bothTags: true },
-            autoCloseBrackets: true,
-            autoCloseTags: true,
-            enableSearchTools: true,
-            styleActiveLine: true,
-            extraKeys: { "Ctrl-Space": "autocomplete", "Ctrl-S": function (ins) { scope.saveHtmlFile(); } },
+        scope.htmlEditor.setOptions({
+            enableSnippets: true,
+            enableBasicAutocompletion: true
         });
-        scope.htmlEditor.on("change", scope.htmlChange);
-    }, 200);
-}
-function setCssEditor(scope) {
-    setTimeout(function () {
-        scope.cssEditor = CodeMirror.fromTextArea(document.getElementById("cssEditor"), {
-            lineNumbers: true,
-            theme: 'rubyblue',
-            lineWrapping: true,
-            mode: 'text/css',
-            matchBrackets: true,
-            matchTags: { bothTags: true },
-            autoCloseBrackets: true,
-            autoCloseTags: true,
-            enableSearchTools: true,
-            styleActiveLine: true,
-            extraKeys: { "Ctrl-Space": "autocomplete", "Ctrl-S": function (ins) { scope.saveCssFile(); } },
+        scope.cssEditor.setOptions({
+            enableSnippets: true,
+            enableBasicAutocompletion: true
         });
-        scope.cssEditor.on("change", scope.cssChange);
-    }, 300);
+    });
 }
 function overlay(val) {
     val ? $('.overlay').show() : $('.overlay').hide();
+}
+
+function autoSize() {
+    var dim = $('.dim-height');
+    var height = $(window).height() - dim.position().top - 50;
+    dim.css('height', height);
+    $('#jsEditor, #htmlEditor, #cssEditor').css('height', height - 6);
+
 }

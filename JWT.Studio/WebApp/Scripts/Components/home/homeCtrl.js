@@ -6,6 +6,7 @@ class homeCtrl extends BaseCtrl
 		super(scope);
 		SVC.set(this, svc);
 		this.title='home';
+		
 	}
 }
 homeCtrl.$inject=['$scope', 'homeSvc'];

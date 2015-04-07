@@ -3,6 +3,7 @@ angular.module('workStatusApp').controller('workStatusCtrl', ['$scope', 'jwtSvc'
 
     scope.list = [];
     //
+    setTimeout(function () { jwtSvc.getWorkStatus(); }, 1000);
     scope.load = function () {
         jwtSvc.getWorkStatus();
     };

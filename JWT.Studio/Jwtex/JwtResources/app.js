@@ -1,4 +1,4 @@
-﻿angular.module("jwt2", ["ui.router", "ngResource", 'ui.bootstrap', 'ui.codemirror', 'SignalR','LocalStorageModule'])
+﻿angular.module("jwt2", ["ui.router", "ngResource", 'ui.bootstrap', 'SignalR','LocalStorageModule'])
 .factory('jwtSvc', ['$rootScope', 'Hub', '$timeout', 'localStorageService',  function (rootScope, Hub, $timeout, localStorageService) {
     var jwtSvc = this;
     //Hub setup

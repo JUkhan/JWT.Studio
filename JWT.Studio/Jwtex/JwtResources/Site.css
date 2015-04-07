@@ -1,6 +1,6 @@
 ﻿body {
     padding-top: 45px;
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -40,9 +40,8 @@ input[type="checkbox"].input-validation-error {
 }
 
 .CodeMirror {
-    height: 550px !important;
+  
 }
-
 .editor {
     height: 550px;
 }
@@ -152,3 +151,12 @@ xinput[type=text] {
     padding:2px 10px;
     background-color:#ddd;
 }
+
+#jsEditor,#htmlEditor,#cssEditor {
+        margin: 0;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;       
+    }
