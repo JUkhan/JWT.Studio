@@ -33,6 +33,7 @@
                 $timeout(function () { hub.connect(); }, 5000);
             }
         }
+        
         //,transport: 'webSockets'
         //,logging: true
 
@@ -54,8 +55,8 @@
     jwtSvc.sendMessage = function (sender, sendto, message) {
         try { hub.sendMessage(sender, sendto, message); } catch (error) { }
     };
-    jwtSvc.initHub = function (user) {
-        try { hub.initHub(user); } catch (error) { }
+    jwtSvc.initHub = function (user, rootPath) {
+        try { hub.initHub(user, rootPath); } catch (error) { }
     }
     return jwtSvc;
 }])

@@ -118,3 +118,13 @@
 2015-04-07 21:36:41,103 [29] INFO  Jwtex.JwtExController - files found: 1
 2015-04-07 21:37:32,392 [14] INFO  Jwtex.JwtExController - name:undefined, mode:Base
 2015-04-07 21:37:32,422 [14] INFO  Jwtex.JwtExController - files found: 5
+2015-04-24 05:30:53,024 [9] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-24 05:30:53,070 [9] INFO  Jwtex.JwtExController - files found: 4
+2015-04-24 06:52:22,089 [7] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-24 06:52:22,119 [7] INFO  Jwtex.JwtExController - files found: 4
+2015-04-24 06:55:40,647 [6] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-24 06:55:40,675 [6] INFO  Jwtex.JwtExController - files found: 4
+2015-04-24 06:59:14,086 [9] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-24 06:59:14,088 [9] INFO  Jwtex.JwtExController - files found: 4
+2015-04-24 07:09:32,025 [7] INFO  Jwtex.JwtExController - name:home, mode:Widgets
+2015-04-24 07:09:32,056 [7] INFO  Jwtex.JwtExController - files found: 4

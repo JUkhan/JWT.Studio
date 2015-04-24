@@ -376,7 +376,10 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     var modalInstance = null, chatUser = '';
     scope.messageList = [];
     jwtSvc.connectionDone.then(function () {
-        jwtSvc.initHub(jwtSvc.userName);
+        http.get('jwtEx/GetHostPath').success(function (res) {
+            jwtSvc.initHub(jwtSvc.userName, res.path);
+        });
+        
     });
     scope.$on('receiveMessage', function (event, data) {
         scope.messageList[data.sender] = scope.messageList[data.sender] || [];

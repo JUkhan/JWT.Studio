@@ -58,9 +58,10 @@ namespace Jwt.Controller
             byte[] byteArray = Encoding.UTF8.GetBytes(src);
             return new MemoryStream(byteArray);
         }
+       
         private void SetConfig()
-        {
-            JwtConfig config = Session["Config"] as JwtConfig;
+        {            
+            JwtConfig config = null; //Session["Config"] as JwtConfig;
             if (config == null)
             {
                 config = new JwtConfig();
@@ -105,7 +106,7 @@ namespace Jwt.Controller
                     config.ScriptProject = temp.Substring(0, temp.LastIndexOf("\\") + 1) + str;
                 }
 
-                Session["Config"] = config;
+                //Session["Config"] = config;
             }
             Config = config;
         }

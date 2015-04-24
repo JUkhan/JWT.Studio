@@ -68,6 +68,10 @@ namespace Jwtex
             url= url.EndsWith("/") ? url : url + "/";
             return string.Format("rootPath:'{0}signalr',", url);
         }
+        public JsonResult GetHostPath()
+        {
+            return Json(new { path = Config.Root }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetFileList(string directory)
         {
             JResult res = new JResult();

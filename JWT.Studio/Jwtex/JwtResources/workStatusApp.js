@@ -21,7 +21,7 @@
             console.error(error);
         }
     });
-
+    jwtSvc.connectionDone=hub.promise;
     jwtSvc.getWorkStatus = function () {
         hub.getWorkStatus();
     };

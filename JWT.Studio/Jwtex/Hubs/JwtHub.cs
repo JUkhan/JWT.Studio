@@ -18,19 +18,20 @@ namespace Jwtex.Hubs
     {
         private static ConcurrentDictionary<string, List<FileInfo>> _mapping = new ConcurrentDictionary<string, List<FileInfo>>();
         private static object locker = new Object();
-       
+        private static string ROOTPATH;
 
         public override Task OnConnected()
         {           
             return base.OnConnected();
         }
-        public void InitHub(string user)
+        public void InitHub(string user, string rootPath)
         {
+            ROOTPATH = rootPath;
             _mapping.TryAdd(Context.ConnectionId, new List<FileInfo>() { new FileInfo { UserName = user, CID = Context.ConnectionId } });
 
             Clients.Others.newConnection(user);
             Clients.Caller.onlineUsers(GetAllUsers(user));
-            GetWorkStatus();
+            //GetWorkStatus();
         }
         private List<string> GetAllUsers(string user)
         {
@@ -65,7 +66,7 @@ namespace Jwtex.Hubs
             return null;
         }
         public void GetWorkStatus()
-        {
+        {            
             Clients.Caller.workStatus(Deserialize());
         }
         public void Lock(FileInfo info)
@@ -153,10 +154,11 @@ namespace Jwtex.Hubs
         // file serialize
         public void Serialize(List<FileInfo> list)
         {
-
+           
             lock (locker)
             {
-                string path = BaseController.ROOTPATH + "jwtws";
+                string path = ROOTPATH + "jwtws";
+                //string path = new Jwt.Controller.BaseController().Config.Root + /*BaseController.ROOTPATH +*/ "jwtws";
                 CreateDirectory(path);
                 XmlSerializer serializer = new XmlSerializer(typeof(List<FileInfo>));
                 using (TextWriter writer = new StreamWriter(path + "\\" + GetFileName() + ".config"))
@@ -174,7 +176,8 @@ namespace Jwtex.Hubs
                 List<FileInfo> temp = new List<FileInfo>();
                 try
                 {
-                    string path = BaseController.ROOTPATH + "jwtws" + "\\" + GetFileName() + ".config";
+                    string path = ROOTPATH + "jwtws" + "\\" + GetFileName() + ".config";
+                    //string path = new Jwt.Controller.BaseController().Config.Root + "jwtws";
                     if (!File.Exists(path)) { return temp; }
                     XmlSerializer deserializer = new XmlSerializer(typeof(List<FileInfo>));
                     using (TextReader reader = new StreamReader(path))
