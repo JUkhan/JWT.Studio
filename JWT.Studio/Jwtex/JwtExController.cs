@@ -181,6 +181,7 @@ namespace Jwtex
                 file.Write(path, "new file");
                 res.isSuccess = true;
                 res.msg = "Alhumdulilla Successfully Created.";
+                UpdateAppDirectivesAndCSS();
             }
             catch (Exception ex)
             {
@@ -225,6 +226,7 @@ namespace Jwtex
                 file.RemoveFile(path);
                 res.isSuccess = true;
                 res.msg = "Alhumdulilla Successfully Removed.";
+                UpdateAppDirectivesAndCSS();
             }
             catch (Exception ex)
             {
@@ -411,6 +413,61 @@ namespace Jwtex
                 return Json(new { success = false, msg = ex.ToString() }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        private void UpdateAppDirectivesAndCSS()
+        {
+            DirectoryInfo dir = new DirectoryInfo(Config.Root + "Scripts\\Directives");
+            StringBuilder import = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
+            StringBuilder componentsCSS = new StringBuilder();
+            foreach (var item in dir.GetDirectories())
+            {
+                import.AppendFormat("import {0} from 'Scripts/Directives/{0}/{0}.js';", item.Name);
+                import.AppendLine();
+
+                builder.AppendFormat(".directive('{0}', {0}.builder)", item.Name);
+                builder.AppendLine();
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Directives/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Directives/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
+            dir = new DirectoryInfo(Config.Root + "Scripts\\Modules");
+            foreach (var item in dir.GetDirectories())
+            {
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Modules/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Modules/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
+            dir = new DirectoryInfo(Config.Root + "Scripts\\Components");
+            foreach (var item in dir.GetDirectories())
+            {
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Components/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Components/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
+            StringBuilder res = new StringBuilder();
+            res.Append(import);
+            res.AppendLine();
+            res.AppendLine();
+            res.Append("var moduleName='app.Directives';");
+            res.AppendLine();
+            res.AppendLine();
+            res.Append("angular.module(moduleName, [])");
+            res.AppendLine();
+            res.Append(builder);
+            res.Append(";");
+            res.AppendLine();
+            res.AppendLine();
+            res.Append("export default moduleName;");
+            System.IO.File.WriteAllText(Config.Root + "Scripts\\app.directives.js", res.ToString());
+            System.IO.File.WriteAllText(Config.Root + "Content\\components.css", componentsCSS.ToString());
         }
         #endregion
        

@@ -260,6 +260,10 @@
     <EmbeddedResource Include="worker-javascript.js" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EntityModule\EntityModule.csproj">
+      <Project>{99eaa6d3-cd46-4a7a-a24d-35d68fcc0eff}</Project>
+      <Name>EntityModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jwtex\Jwtex.csproj">
       <Project>{e71bf010-c61b-42a3-bdb9-a7e0554271a3}</Project>
       <Name>Jwtex</Name>

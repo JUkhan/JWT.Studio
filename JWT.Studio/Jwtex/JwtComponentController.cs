@@ -82,8 +82,9 @@ namespace Jwtex
                         }
                         arc.ExtractToDirectory(path);
                     }
-                    if (comtype.ToLower().Contains("directive"))
-                        UpdateAppDirectives();
+                   
+                    UpdateAppDirectives();
+                   
                 }
                 return Json(new { msg = "installed successfully" }, JsonRequestBehavior.AllowGet);
             }
@@ -93,6 +94,8 @@ namespace Jwtex
                 return Json(new { msg = ex.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+
+       
         public void GetComponent(string componentName, string comtype)
         {
             try
@@ -144,7 +147,15 @@ namespace Jwtex
                     componentsCSS.AppendLine();
                 }
             }
-
+            dir = new DirectoryInfo(Config.Root + "Scripts\\Modules");
+            foreach (var item in dir.GetDirectories())
+            {
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Modules/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Modules/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
             StringBuilder res = new StringBuilder();
             res.Append(import);
             res.AppendLine();
