@@ -23,6 +23,11 @@ namespace Jwtex
             string nameSpace = GetType().Assembly.GetName().Name;
             string index = "Jwtex.JwtResources.index.html";
             Response.ContentType = "text/html";
+            if (Config.EnableAppBuilder == "false")
+            {
+                Response.Write( "<b>You are not authorized.</b>");
+                return;
+            }
             using (Stream stream = GetType().Assembly.GetManifestResourceStream(index))
             {
                 stream.CopyTo(Response.OutputStream);

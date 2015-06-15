@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using log4net;
 using jwt.CodeGen;
+using System.Configuration;
 namespace Jwtex
 {
     public class jwtApp
@@ -104,6 +105,21 @@ namespace Jwtex
             this.App = app;
             this.Root = AppDomain.CurrentDomain.BaseDirectory;
         }
+        public string GetTemplatePath(string tentativePath, string wigenName)
+        {
+
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["HasTemplateAuthorization"]))
+            {
+                return tentativePath;
+            }
+            string path = ConfigurationManager.AppSettings["HasTemplateAuthorization"];
+            if (!path.EndsWith("/"))
+            {
+                path += '/';
+            }
+            return string.Format("'{0}'", path + wigenName);
+
+        }
         public CodeGen()
         {
 
@@ -143,14 +159,25 @@ namespace Jwtex
                 GenAllControllers();
                 GenAllServices();
                 GenAppDirectives();
+                var dir = new DirectoryInfo(Root + "Scripts\\Modules");
+                foreach (var item in dir.GetDirectories())
+                {
+                    if (System.IO.File.Exists(string.Format(Root + "Scripts\\Modules\\{0}\\{0}.css", item.Name)))
+                    {
+                        componentsCSS.AppendFormat("@import '../Scripts/Modules/{0}/{0}.css';", item.Name);
+                        componentsCSS.AppendLine();
+                    }
+                }
+                System.IO.File.WriteAllText(Root + "Content\\components.css", componentsCSS.ToString());
             }
         }
+        private StringBuilder componentsCSS = new StringBuilder();
         private void GenAppDirectives()
         {
             DirectoryInfo dir = new DirectoryInfo(Root + "Scripts\\Directives");
             StringBuilder import = new StringBuilder();
             StringBuilder builder = new StringBuilder();
-            StringBuilder componentsCSS = new StringBuilder();
+
             foreach (var item in dir.GetDirectories())
             {
                 import.AppendFormat("import {0} from 'Scripts/Directives/{0}/{0}.js';", item.Name);
@@ -180,7 +207,7 @@ namespace Jwtex
             res.AppendLine();
             res.Append("export default moduleName;");
             System.IO.File.WriteAllText(Root + "Scripts\\app.directives.js", res.ToString());
-            System.IO.File.WriteAllText(Root + "Content\\components.css", componentsCSS.ToString());
+            // System.IO.File.WriteAllText(Root + "Content\\components.css", componentsCSS.ToString());
         }
         private void GetNamArr(StringBuilder sb)
         {
@@ -209,7 +236,7 @@ namespace Jwtex
                 {
                     file.Write(PathString, string.Format("<h3>Layout Name : {0}</h3><div ui-view></div>", item.LayoutName));
                 }
-                sb.AppendFormat(",templateUrl:'Scripts/Layouts/{0}/{0}.html'", item.LayoutName);
+                sb.Append(",templateUrl:" + GetTemplatePath(string.Format("'Scripts/Layouts/{0}/{0}.html'", item.LayoutName), item.LayoutName + "__LAYOUT__"));
 
 
                 PathString = Root + string.Format("Scripts\\Layouts\\{0}\\{0}Ctrl.js", item.LayoutName);
@@ -261,15 +288,15 @@ namespace Jwtex
                             {
                                 file.Write(PathString, "<h3>widget Name : {{vm.title}}</h3>");
                             }
-                            sb.AppendFormat("templateUrl:'Scripts/Components/{0}/{0}.html'", item2.WidgetName);
+                            sb.Append("templateUrl:" + GetTemplatePath(string.Format("'Scripts/Components/{0}/{0}.html'", item2.WidgetName), item2.WidgetName));
                             mControllers.Add(item2.WidgetName);
 
                             PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Ctrl.js", item2.WidgetName);
                             if (file.FileExists(PathString))
                             {
                                 sb.AppendFormat(",controller:'{0}Ctrl as vm'", item2.WidgetName);
-                            }                          
-                           
+                            }
+
                         }
                         sb.Append("}");
                         isFirst = false;
@@ -290,13 +317,13 @@ namespace Jwtex
                     PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}.html", item.WidgetName);
                     if (file.FileExists(PathString))
                     {
-                        sb.AppendFormat(",templateUrl:'Scripts/Components/{0}/{0}.html'", item.WidgetName);
-                    }                    
+                        sb.Append(",templateUrl:" + GetTemplatePath(string.Format("'Scripts/Components/{0}/{0}.html'", item.WidgetName), item.WidgetName));
+                    }
                     PathString = Root + string.Format("Scripts\\Components\\{0}\\{0}Ctrl.js", item.WidgetName);
                     if (file.FileExists(PathString))
                     {
                         sb.AppendFormat(",controller:'{0}Ctrl as vm'", item.WidgetName);
-                    }                  
+                    }
                     mControllers.Add(item.WidgetName);
                 }
 
@@ -349,6 +376,11 @@ namespace Jwtex
                     sb.AppendLine();
                     sb.AppendFormat(".controller('{0}Ctrl', {0})", item);
                 }
+                if (System.IO.File.Exists(string.Format(Root + "Scripts\\Components/{0}/{0}.css", item)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Components/{0}/{0}.css';", item);
+                    componentsCSS.AppendLine();
+                }
             }
             list = layoutControllers.Distinct();
             foreach (var item in list)
@@ -357,6 +389,11 @@ namespace Jwtex
                 {
                     sb.AppendLine();
                     sb.AppendFormat(".controller('{0}Ctrl', {0})", item);
+                }
+                if (System.IO.File.Exists(string.Format(Root + "Scripts\\Layouts/{0}/{0}.css", item)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Layouts/{0}/{0}.css';", item);
+                    componentsCSS.AppendLine();
                 }
             }
             sb.Append(";");
@@ -585,7 +622,7 @@ namespace Jwtex
                     InstallTplFile(file, "jwtApp.txt", Root + "jwtApp.config");
                     InstallTplFile(file, "authComplete.html", Root + "authComplete.html");
                     //Scripts
-                   
+
                     InstallTplFile(file, "appStarter.js", Root + "Scripts\\appStarter.js");
                     InstallTplFile(file, "app.controllers.js", Root + "Scripts\\app.controllers.js");
                     InstallTplFile(file, "app.directives.js", Root + "Scripts\\app.directives.js");
@@ -598,7 +635,7 @@ namespace Jwtex
                     InstallTplFile(file, "Base.BaseSvc.js", Root + "Scripts\\Base\\BaseSvc.js");
                     InstallTplFile(file, "Base.authService.js", Root + "Scripts\\Base\\authService.js");
                     InstallTplFile(file, "Base.authInterceptorService.js", Root + "Scripts\\Base\\authInterceptorService.js");
-                    
+
                     //Scripts/Components
                     //home
                     file.CreateDirectory(Root + "Scripts\\Components\\home");
@@ -609,17 +646,17 @@ namespace Jwtex
                     file.CreateDirectory(Root + "Scripts\\Components\\login");
                     InstallTplFile(file, "login.login.html", Root + "Scripts\\Components\\login\\login.html");
                     InstallTplFile(file, "login.loginCtrl.js", Root + "Scripts\\Components\\login\\loginCtrl.js");
-                    
+
                     //signup
                     file.CreateDirectory(Root + "Scripts\\Components\\signup");
                     InstallTplFile(file, "signup.signup.html", Root + "Scripts\\Components\\signup\\signup.html");
                     InstallTplFile(file, "signup.signupCtrl.js", Root + "Scripts\\Components\\signup\\signupCtrl.js");
-                    
+
                     //associate
                     file.CreateDirectory(Root + "Scripts\\Components\\associate");
                     InstallTplFile(file, "associate.associate.html", Root + "Scripts\\Components\\associate\\associate.html");
                     InstallTplFile(file, "associate.associateCtrl.js", Root + "Scripts\\Components\\associate\\associateCtrl.js");
-                    
+
 
                     InstallTplFile(file, "jwtDate.txt", Root + "Scripts\\Filters\\jwtDate.js");
                     if (file.FileExists(Root + "Views\\Shared\\_Layout.cshtml"))
@@ -678,7 +715,7 @@ namespace Jwtex
                             if (name == "app") return;
                             path += "Scripts\\Modules\\" + name;
                             file.CreateDirectory(path);
-                             path = Root + string.Format("Scripts\\Modules\\{0}\\{0}.js", name);
+                            path = Root + string.Format("Scripts\\Modules\\{0}\\{0}.js", name);
                             file.Write(path, getEmptyModule(name));
                             break;
                     }

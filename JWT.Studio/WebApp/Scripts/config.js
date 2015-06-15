@@ -1,7 +1,7 @@
 
-export default function config(stateprovider, routeProvider, $locationProvider){
+export default function config(stateprovider, routeProvider){
 	routeProvider.otherwise('root/login');
-	//$locationProvider.html5Mode(true);
+
 	stateprovider.state('root',{abstract:true,url:'/root',templateUrl:'Scripts/Layouts/root/root.html',controller:'rootCtrl as vm'});
 
 	stateprovider.state('root.home',{url:'/home',templateUrl:'Scripts/Components/home/home.html',controller:'homeCtrl as vm'});
@@ -9,4 +9,4 @@ export default function config(stateprovider, routeProvider, $locationProvider){
 	stateprovider.state('root.signup',{url:'/signup',templateUrl:'Scripts/Components/signup/signup.html',controller:'signupCtrl as vm'});
 	stateprovider.state('associate',{url:'/associate',templateUrl:'Scripts/Components/associate/associate.html',controller:'associateCtrl as vm'});
 }
-config.$inject=['$stateProvider', '$urlRouterProvider','$locationProvider'];
+config.$inject=['$stateProvider', '$urlRouterProvider'];

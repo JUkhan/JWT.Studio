@@ -214,3 +214,7 @@ File name: 'E:\potential\JWT.Studio\JWT.Studio\WebApp\Scripts\Components\home\Ba
    at System.IO.File.ReadAllText(String path)
    at jwt.CodeGen.JwtFile.Read(String path) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\CodeGen\JwtFile.cs:line 22
    at Jwtex.JwtExController.GetFileContent(String mode, String directoryName, String fileName) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\JwtExController.cs:line 264
+2015-06-15 05:46:57,761 [19] INFO  jwt.internals.jwtAppManager - home
+2015-06-15 05:48:52,173 [10] INFO  jwt.internals.jwtAppManager - home
+2015-06-15 05:50:46,602 [23] INFO  jwt.internals.jwtAppManager - home
+2015-06-15 05:52:12,994 [28] INFO  jwt.internals.jwtAppManager - home

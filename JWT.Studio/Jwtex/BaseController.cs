@@ -107,6 +107,17 @@ namespace Jwt.Controller
                 }
 
                 //Session["Config"] = config;
+                config.EnableAppBuilder = ConfigurationManager.AppSettings["EnableAppBuilder"];
+                if (string.IsNullOrEmpty(config.EnableAppBuilder))
+                {
+                    config.EnableAppBuilder = "true";
+                }
+                else
+                {
+                    config.EnableAppBuilder = config.EnableAppBuilder.ToLower();                    
+                }
+                
+                                
             }
             Config = config;
         }
@@ -125,5 +136,7 @@ namespace Jwt.Controller
         public string ServiceProject { get; set; }
         public string ScriptProject { get; set; }
         public string EntityModule { get; set; }
+        public string EnableAppBuilder { get; set; }
+       
     }
 }
