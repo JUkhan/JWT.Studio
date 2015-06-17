@@ -160,3 +160,44 @@ xinput[type=text] {
         left: 0;
         right: 0;       
     }
+/* splitter*/
+#main{
+   background-color: wheat;
+   float: right;
+   position: absolute;
+   height:200px;
+   right: 0;
+   left:200px;
+   margin-left:10px;
+    
+}
+#sidebar{
+   background-color: white;
+    
+   xmargin-top:10px;
+   width:200px;
+   float: left;
+   position: absolute;
+   height:100%;
+   overflow-y: hidden;
+}
+
+#dragbar{
+   background-color:#5cb85c;
+   height:100%;
+   float: right;
+   width: 4px;
+   cursor: col-resize;
+}
+#ghostbar{
+    width:4px;
+    background-color:#000;
+    opacity:0.5;
+    position:absolute;
+    cursor: col-resize;
+    z-index:999;
+    height:100%;
+}
+.list-group-item{
+    position:inherit;
+}

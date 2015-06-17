@@ -122,15 +122,15 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     function unlocakAll() {
 
         if (scope.dataChange.jsf) {
-            saveFile(scope.dataMode, scope.jsFileName.replace('.js', ''), scope.jsFileName, scope.jsEditor.getValue());
+            saveFile(scope.dataMode, scope.items[scope.itemValue], scope.jsFileName, scope.jsEditor.getValue());
             scope.dataChange.jsf = false;
         }
         if (scope.dataChange.htmlf) {
-            saveFile(scope.dataMode, scope.htmlFileName.replace('.html', ''), scope.htmlFileName, scope.htmlEditor.getValue());
+            saveFile(scope.dataMode, scope.items[scope.itemValue], scope.htmlFileName, scope.htmlEditor.getValue());
             scope.dataChange.htmlf = false;
         }
         if (scope.dataChange.cssf) {
-            saveFile(scope.dataMode, scope.cssFileName.replace('.css', ''), scope.cssFileName, scope.cssEditor.getValue());
+            saveFile(scope.dataMode, scope.items[scope.itemValue], scope.cssFileName, scope.cssEditor.getValue());
             scope.dataChange.cssf = false;
         }
     }
@@ -146,9 +146,15 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     //end of new style
 
     //tab_javascript
-
+    var previousFile=null;
     scope.jsLoad = function (fileName) {
+        if (scope.dataChange.jsf) {            
+            saveFile(scope.dataMode, scope.items[scope.itemValue], previousFile, scope.jsEditor.getValue());
+            scope.dataChange.jsf = false;
+            AWAIT.jsLock = 1; LOCK.jsLock = 0;
+        }
         scope.jsFileName = fileName;
+        previousFile=fileName;
         if (!fileName) { info('File name is required.'); return; }
         http.get('JwtEx/GetFileContent/?mode={0}&directoryName={1}&fileName={2}'.format(scope.dataMode, scope.items[scope.itemValue], fileName))
            .success(function (data) {
@@ -156,9 +162,11 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                scope.jsEditor.setValue(data.data);
                $timeout(function () { AWAIT.jsLock = 1; LOCK.jsLock = data.locked; }, 100);
                updateEditor(scope.jsFileName, data.locked, true);
+               
            });
 
     }
+   
     scope.saveJsFile = function () {
         if (!scope.jsFileName) { info('There is no file to be saved.'); return; }
         if (LOCK.jsLock) return;
@@ -168,12 +176,12 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                 jwtSvc.unlock({ UserName: jwtSvc.userName, Category: scope.dataMode, Folder: scope.items[scope.itemValue], Name: scope.jsFileName });
                 success('Saved successfully.');
                 AWAIT.jsLock = 1;
-                scope.dataChange.jsf = false;
+                scope.dataChange.jsf = false; 
             }
         });
     }
     scope.addFile = function (fileName, ext) {
-        scope.jsFileName = fileName;
+        //scope.jsFileName = fileName;
         if (!fileName) { info('File name is required.'); return; }
         http.get('JwtEx/IsFileExist/?mode={0}&directoryName={1}&fileName={2}&ext={3}'.format(scope.dataMode, scope.items[scope.itemValue], fileName, ext))
         .success(function (res) {
@@ -185,9 +193,12 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                .success(function (data) {
                    if (data.isSuccess) {
                        success(data.msg);
-                       if (ext === '.js') { scope.jsLoad(fileName); }
-                       if (ext === '.html') { scope.htmlLoad(fileName); }
-                       if (ext === '.css') { scope.cssLoad(fileName); }
+                       if (ext === '.js') {
+                           scope.jsList.push(fileName);
+                           scope.jsLoad(fileName);
+                       }
+                       if (ext === '.html') { scope.htmlList.push(fileName); scope.htmlLoad(fileName); }
+                       if (ext === '.css') { scope.cssList.push(fileName); scope.cssLoad(fileName); }
                    }
                    else {
                        info(data.msg);
@@ -196,7 +207,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         });
     }
     scope.removeFile = function (fileName, ext) {
-        scope.jsFileName = fileName;
+        //scope.jsFileName = fileName;
         if (!fileName) { info('File name is required.'); return; }
 
         http.get('JwtEx/IsFileExist/?mode={0}&directoryName={1}&fileName={2}&ext={3}'.format(scope.dataMode, scope.items[scope.itemValue], fileName, ext))
@@ -210,6 +221,9 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                        if (data.isSuccess) {
                            success(data.msg);
                            setEditorDefault();
+                           if (ext === '.js') { scope.jsList.remove(function (fn) { return fn === fileName; }); }
+                           if (ext === '.html') { scope.htmlList.remove(function (fn) { return fn === fileName; }); }
+                           if (ext === '.js') { scope.cssList.remove(function (fn) { return fn === fileName; }); }
                        }
                        else {
                            info(data.msg);
@@ -354,19 +368,19 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
         if (fileName === scope.jsFileName) {
             scope.jsEditor.setReadOnly(readOnly);
             if (!isFromLoadContent)
-                scope.$apply(function () { LOCK.jsLock = readOnly; });
+               LOCK.jsLock = readOnly;                
             if (!LOCK.jsLock && !isFromLoadContent) { scope.jsLoad(fileName); info('Unlocked ' + fileName); }
         }
         else if (fileName === scope.htmlFileName) {
             scope.htmlEditor.setReadOnly(readOnly);
             if (!isFromLoadContent)
-                scope.$apply(function () { LOCK.htmlLock = readOnly; });
+                LOCK.htmlLock = readOnly; 
             if (!LOCK.htmlLock && !isFromLoadContent) { scope.htmlLoad(fileName); info('Unlocked ' + fileName); }
         }
         else if (fileName === scope.cssFileName) {
             scope.cssEditor.setReadOnly(readOnly);
             if (!isFromLoadContent)
-                scope.$apply(function () { LOCK.cssLock = readOnly; });
+                LOCK.cssLock = readOnly; 
             if (!LOCK.cssLock && !isFromLoadContent) { scope.cssLoad(fileName); info('Unlocked ' + fileName); }
         }
 
@@ -428,6 +442,8 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     function info(msg) {
         toastr['info'](msg);
     }
+    $timeout(function () { splitter(); }, 1000);
+   
 }]);
 
 function scrollTop() {
@@ -526,5 +542,40 @@ function autoSize() {
     var height = $(window).height() - dim.position().top - 50;
     dim.css('height', height);
     $('#jsEditor, #htmlEditor, #cssEditor').css('height', height - 6);
+    $('#dragbar,#ghostbar').css('height', height);
+}
+
+function splitter() {
+    var i = 0;
+    var dragging = false;
+    $('#dragbar').mousedown(function (e) {
+        e.preventDefault();
+
+        dragging = true;
+        var main = $('#main');
+        var ghostbar = $('<div>',
+                         {
+                             id: 'ghostbar',
+                             css: {
+                                 height: main.outerHeight(),
+                                 top: main.offset().top,
+                                 left: main.offset().left
+                             }
+                         }).appendTo('body');
+
+        $(document).mousemove(function (e) {
+            ghostbar.css("left", e.pageX + 2);
+        });
+    });
+
+    $(document).mouseup(function (e) {
+        if (dragging) {
+            $('#sidebar').css("width", e.pageX + 2);
+            $('#main').css("left", e.pageX + 2);
+            $('#ghostbar').remove();
+            $(document).unbind('mousemove');
+            dragging = false;
+        }
+    });
 
 }
