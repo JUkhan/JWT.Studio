@@ -162,7 +162,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                scope.jsEditor.setValue(data.data);
                $timeout(function () { AWAIT.jsLock = 1; LOCK.jsLock = data.locked; }, 100);
                updateEditor(scope.jsFileName, data.locked, true);
-               
+               scope.jsEditor.moveCursorTo(0, 0);
            });
 
     }
@@ -243,6 +243,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                scope.htmlEditor.setValue(data.data);
                $timeout(function () { AWAIT.htmlLock = 1; LOCK.htmlLock = data.locked; }, 100);
                updateEditor(scope.htmlFileName, data.locked, true);
+               scope.htmlEditor.moveCursorTo(0, 0);
            });
 
     }
@@ -271,6 +272,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
                scope.cssEditor.setValue(data.data);
                $timeout(function () { AWAIT.cssLock = 1; LOCK.cssLock = data.locked; }, 100);
                updateEditor(scope.cssFileName, data.locked, true);
+               scope.cssEditor.moveCursorTo(0, 0);
            });
 
     }
