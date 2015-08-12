@@ -16,7 +16,7 @@ angular.module('jwt2').controller('mainController', ['$scope', '$http', '$modal'
     scope.cssList = [];
     scope.jsEditor = null;
     scope.htmlEditor = null;
-    scope.theme = localStorageService.get('theme') || 'ace/theme/twilight';
+    scope.theme = localStorageService.get('theme') || 'ace/theme/monokai';
     $timeout(function () { autoSize(); }, 1000);
     $timeout(function () {
         setJsEditor(scope);

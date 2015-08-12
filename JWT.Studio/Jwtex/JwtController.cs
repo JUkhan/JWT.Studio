@@ -312,7 +312,7 @@ namespace Jwt.Controller
             try
             {
                 string input = System.IO.File.ReadAllText(Config.Root + "Scripts\\Layouts\\" + layoutName + "\\" + layoutName + ".html");
-                var matches = Regex.Matches(input, "ui-view=\"([a-zA-Z0-9]+)\"", RegexOptions.IgnoreCase);
+                var matches = Regex.Matches(input, "ui-view=\"([a-zA-Z0-9_]+)\"", RegexOptions.IgnoreCase);
                 List<Jwtex.View> views = new List<Jwtex.View>();
                 foreach (Match item in matches)
                 {

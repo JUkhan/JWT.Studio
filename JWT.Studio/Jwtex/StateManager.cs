@@ -135,7 +135,7 @@ namespace jwt.internals
                     var temp = app.UILayouts.Find(u => u.LayoutName == layout.LayoutName);
                     if (temp != null)
                     {
-                        return string.Format("'{0}' already exist.");
+                        return string.Format("'{0}' already exist.", layout.LayoutName);
                     }
                     layout._id = Guid.NewGuid().ToString();
                     app.UILayouts.Add(layout);
