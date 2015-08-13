@@ -15,7 +15,7 @@ namespace Jwtex.DummyData
             max = 1000;
             limit = 20;
         }
-        public string name { get; set; }
+        public string field { get; set; }
         public string type { get; set; }
         public int min { get; set; }
         public int max { get; set; }

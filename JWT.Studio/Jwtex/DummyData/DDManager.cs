@@ -36,7 +36,7 @@ namespace Jwtex.DummyData
 
             stringBuilder.Append("]");
 
-            return  String.Format("\"{0}\":{1}", col.name, stringBuilder);
+            return  String.Format("\"{0}\":{1}", col.field, stringBuilder);
         }
         public string GetData(DDObject obj)
         {
@@ -76,36 +76,36 @@ namespace Jwtex.DummyData
             switch (item.type.ToLower())
             {
                 case "bool":
-                    stringBuilder.AppendFormat("\"{0}\":{1}", item.name, GetBool());
+                    stringBuilder.AppendFormat("\"{0}\":{1}", item.field, GetBool());
                     break;
                 case "guid":
-                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetGuid());
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.field, GetGuid());
                     break;
                 case "country":
-                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, index));
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.field, GetDataFromDic(item.type, index));
                     break;
                 case "human":
-                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, index));
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.field, GetDataFromDic(item.type, index));
                     break;
                 case "animal":
-                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDataFromDic(item.type, index));
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.field, GetDataFromDic(item.type, index));
                     break;
                 case "int":
-                    stringBuilder.AppendFormat("\"{0}\":{1}", item.name, GetRandomNumber(item.min, item.max));
+                    stringBuilder.AppendFormat("\"{0}\":{1}", item.field, GetRandomNumber(item.min, item.max));
                     break;
                 case "decimal":
                 case "float":
                 case "double":
-                    stringBuilder.AppendFormat("\"{0}\":{1}.{2}", item.name, GetRandomNumber(item.min, item.max), Get4Digit());
+                    stringBuilder.AppendFormat("\"{0}\":{1}.{2}", item.field, GetRandomNumber(item.min, item.max), Get4Digit());
                     break;
                 case "date":
-                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDate(item));
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.field, GetDate(item));
                     break;
                 case "datetime":
-                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.name, GetDateTime(item));
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}\"", item.field, GetDateTime(item));
                     break;
                 default:
-                    stringBuilder.AppendFormat("\"{0}\":\"{1}-{2}\"", item.name, item.type ?? item.name, index + 1);
+                    stringBuilder.AppendFormat("\"{0}\":\"{1}-{2}\"", item.field, item.type ?? item.field, index + 1);
                     break;
             }
         }
@@ -143,7 +143,7 @@ namespace Jwtex.DummyData
                     stringBuilder.AppendFormat("\"{0}\"",  GetDateTime(item));
                     break;
                 default:
-                    stringBuilder.AppendFormat("\"{0}-{1}\"",  item.type ?? item.name, index + 1);
+                    stringBuilder.AppendFormat("\"{0}-{1}\"", item.type ?? item.field, index + 1);
                     break;
             }
         }
