@@ -544,7 +544,7 @@ function autoSize() {
     var height = $(window).height() - dim.position().top - 50;
     dim.css('height', height);
     $('#jsEditor, #htmlEditor, #cssEditor').css('height', height - 6);
-    $('#dragbar,#ghostbar').css('height', height);
+    $('#dragbar,#ghostbar,#sidebar').css('height', height);
 }
 
 function splitter() {

@@ -162,7 +162,7 @@ xinput[type=text] {
     }
 /* splitter*/
 #main{
-   background-color: wheat;
+   background-color: transparent;
    float: right;
    position: absolute;
    height:200px;
@@ -172,14 +172,11 @@ xinput[type=text] {
     
 }
 #sidebar{
-   background-color: white;
-    
-   xmargin-top:10px;
+   background-color: white;    
    width:200px;
    float: left;
-   position: absolute;
-   height:100%;
-   overflow-y: hidden;
+   position: absolute;   
+   overflow-y: auto;
 }
 
 #dragbar{

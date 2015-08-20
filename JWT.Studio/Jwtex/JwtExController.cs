@@ -410,6 +410,7 @@ namespace Jwtex
                 CodeGen cg = new CodeGen();
                 cg.Root = Config.Root;
                 cg.CreateItem(mode, name);
+                UpdateAppDirectivesAndCSS();
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -454,6 +455,15 @@ namespace Jwtex
                 if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Components/{0}/{0}.css", item.Name)))
                 {
                     componentsCSS.AppendFormat("@import '../Scripts/Components/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
+            dir = new DirectoryInfo(Config.Root + "Scripts\\Layouts");
+            foreach (var item in dir.GetDirectories())
+            {
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Layouts/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Layouts/{0}/{0}.css';", item.Name);
                     componentsCSS.AppendLine();
                 }
             }
