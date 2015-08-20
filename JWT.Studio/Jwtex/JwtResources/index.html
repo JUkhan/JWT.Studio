@@ -66,10 +66,10 @@
 
                                 <input type="text" ng-model="jsFileName"  class="form-control" />
                                 <div class="btn-group">
-                                    <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />
-                                    <input class="btn btn-success" type="button" value="Save" ng-click="saveJsFile()" />
+                                    <input class="btn btn-success" type="button" ng-click="jsLoad(jsFileName)" value="Load" />                                   
                                     <input class="btn btn-success" type="button" value="Add File" ng-click="addFile(jsFileName,'.js')" />
                                     <input class="btn btn-success" type="button" value="Remove File" ng-click="removeFile(jsFileName, '.js')" />
+                                    <input class="btn btn-success" type="button" value="Save" ng-click="saveJsFile()" />
                                 </div>
                                 <select class="form-control" size="1" ng-model="theme" ng-change="setTheme(theme)">
 
