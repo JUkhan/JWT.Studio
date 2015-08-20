@@ -156,6 +156,24 @@ namespace Jwtex
                     componentsCSS.AppendLine();
                 }
             }
+            dir = new DirectoryInfo(Config.Root + "Scripts\\Layouts");
+            foreach (var item in dir.GetDirectories())
+            {
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Layouts/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Layouts/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
+            dir = new DirectoryInfo(Config.Root + "Scripts\\Components");
+            foreach (var item in dir.GetDirectories())
+            {
+                if (System.IO.File.Exists(string.Format(Config.Root + "Scripts/Components/{0}/{0}.css", item.Name)))
+                {
+                    componentsCSS.AppendFormat("@import '../Scripts/Components/{0}/{0}.css';", item.Name);
+                    componentsCSS.AppendLine();
+                }
+            }
             StringBuilder res = new StringBuilder();
             res.Append(import);
             res.AppendLine();
