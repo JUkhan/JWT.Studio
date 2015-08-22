@@ -246,12 +246,25 @@ namespace Jwtex
                 }
                 sb.AppendFormat(",controller:'{0}Ctrl as vm'", item.LayoutName);
                 layoutControllers.Add(item.LayoutName);
-
+                sb.Append(HasResolver(file, Root + "Scripts\\Layouts\\"+item.LayoutName));
                 sb.Append("});");
             }
 
         }
+        private string HasResolver(JwtFile file, string basePath)
+        {
+            if (file.FileExists(basePath +  "\\resolve.js"))
+            {
+                string fileContent = file.Read(basePath + "\\resolve.js");
+                fileContent = fileContent.Trim();
+                fileContent = fileContent.Substring(fileContent.IndexOf("{"));
+                if (fileContent.EndsWith(";"))                
+                    fileContent= fileContent.Substring(0, fileContent.Length - 1);                
+                return ",resolve:"+ fileContent;
+            }
+            return "";
 
+        }
         private void SetNavigation(StringBuilder sb)
         {
             JwtFile file = new JwtFile();
@@ -298,6 +311,7 @@ namespace Jwtex
                             }
 
                         }
+                        sb.Append(HasResolver(file, Root + "Scripts\\Components\\" + item2.WidgetName));
                         sb.Append("}");
                         isFirst = false;
                     }
@@ -326,7 +340,7 @@ namespace Jwtex
                     }
                     mControllers.Add(item.WidgetName);
                 }
-
+                sb.Append(HasResolver(file, Root + "Scripts\\Components\\" + item.WidgetName));
                 sb.Append("});");
             }
 

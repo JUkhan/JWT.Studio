@@ -235,6 +235,7 @@ namespace Jwtex
             try
             {
                 string path = Config.Root + "Scripts\\ComDemoApi\\" + name + "\\" + mode + ".html";
+                log.Info(path);
                 string res = "<b>Not Available</b>";
                 if (System.IO.File.Exists(path))
                 {

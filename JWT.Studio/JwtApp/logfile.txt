@@ -326,3 +326,147 @@ File name: 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Directives\mac\cha
    at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\JwtExController.cs:line 175
 2015-03-21 22:59:21,124 [6] INFO  Jwtex.JwtExController - name:chart, mode:Components
 2015-03-21 22:59:21,152 [6] INFO  Jwtex.JwtExController - files found: 3
+2015-08-22 18:21:38,849 [9] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 18:21:39,053 [9] INFO  Jwtex.JwtExController - files found: 3
+2015-08-22 18:23:41,757 [9] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 18:23:41,787 [9] INFO  Jwtex.JwtExController - files found: 3
+2015-08-22 18:39:36,008 [17] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.JwtExController.UpdateAppDirectivesAndCSS()
+   at Jwtex.JwtExController.AddFile(String mode, String directoryName, String fileName, String ext)
+2015-08-22 19:01:06,165 [21] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 19:01:06,168 [21] INFO  Jwtex.JwtExController - files found: 4
+2015-08-22 19:58:45,029 [119] INFO  jwt.internals.jwtAppManager - nav1
+2015-08-22 19:58:45,251 [119] ERROR jwt.internals.jwtAppManager - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute()
+   at jwt.internals.jwtAppManager.GenerateConfig()
+2015-08-22 20:00:47,125 [134] INFO  jwt.internals.jwtAppManager - nav1
+2015-08-22 20:00:47,234 [119] ERROR jwt.internals.jwtAppManager - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute()
+   at jwt.internals.jwtAppManager.GenerateConfig()
+2015-08-22 20:08:51,143 [135] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 20:08:51,175 [135] INFO  Jwtex.JwtExController - files found: 4
+2015-08-22 20:09:44,646 [134] ERROR jwt.internals.jwtAppManager - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute()
+   at jwt.internals.jwtAppManager.GenerateConfig()
+2015-08-22 20:09:44,649 [134] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute()
+   at jwt.internals.jwtAppManager.GenerateConfig()
+   at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content)
+2015-08-22 20:10:12,400 [119] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.JwtExController.UpdateAppDirectivesAndCSS()
+   at Jwtex.JwtExController.RemoveFile(String mode, String directoryName, String fileName, String ext)
+2015-08-22 20:10:59,505 [134] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 20:10:59,506 [134] INFO  Jwtex.JwtExController - files found: 3
+2015-08-22 20:12:16,386 [136] INFO  jwt.internals.jwtAppManager - nav1
+2015-08-22 20:12:16,442 [133] ERROR jwt.internals.jwtAppManager - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute()
+   at jwt.internals.jwtAppManager.GenerateConfig()
+2015-08-22 21:01:16,469 [21] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 21:01:16,470 [21] INFO  Jwtex.JwtExController - files found: 3
+2015-08-22 21:01:28,913 [130] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.JwtExController.UpdateAppDirectivesAndCSS()
+   at Jwtex.JwtExController.AddFile(String mode, String directoryName, String fileName, String ext)
+2015-08-22 21:03:16,046 [22] ERROR jwt.internals.jwtAppManager - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute()
+   at jwt.internals.jwtAppManager.GenerateConfig()
+2015-08-22 21:03:16,047 [22] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute()
+   at jwt.internals.jwtAppManager.GenerateConfig()
+   at Jwtex.JwtExController.SaveFile(String mode, String directoryName, String fileName, String content)
+2015-08-22 21:03:31,760 [129] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.JwtExController.UpdateAppDirectivesAndCSS()
+   at Jwtex.JwtExController.RemoveFile(String mode, String directoryName, String fileName, String ext)
+2015-08-22 21:06:39,710 [6] INFO  Jwtex.JwtExController - name:widget2, mode:Widgets
+2015-08-22 21:06:39,774 [6] INFO  Jwtex.JwtExController - files found: 3
+2015-08-22 21:06:51,129 [7] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.JwtExController.UpdateAppDirectivesAndCSS() in e:\potential\JWT.Studio\JWT.Studio\Jwtex\JwtExController.cs:line 472
+   at Jwtex.JwtExController.AddFile(String mode, String directoryName, String fileName, String ext) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\JwtExController.cs:line 195
+2015-08-22 21:07:52,378 [9] ERROR jwt.internals.jwtAppManager - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute() in e:\potential\JWT.Studio\JWT.Studio\Jwtex\jwtApp.cs:line 163
+   at jwt.internals.jwtAppManager.GenerateConfig() in e:\potential\JWT.Studio\JWT.Studio\Jwtex\StateManager.cs:line 392
+2015-08-22 21:08:36,667 [9] ERROR Jwtex.JwtExController - System.IO.DirectoryNotFoundException: Could not find a part of the path 'E:\potential\JWT.Studio\JWT.Studio\JwtApp\Scripts\Modules'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetDirectories(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetDirectories()
+   at Jwtex.CodeGen.Execute() in e:\potential\JWT.Studio\JWT.Studio\Jwtex\jwtApp.cs:line 163
+   at jwt.internals.jwtAppManager.GenerateConfig() in e:\potential\JWT.Studio\JWT.Studio\Jwtex\StateManager.cs:line 398
+   at Jwtex.JwtExController.RemoveFile(String mode, String directoryName, String fileName, String ext) in e:\potential\JWT.Studio\JWT.Studio\Jwtex\JwtExController.cs:line 253
+2015-08-22 21:10:19,189 [10] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 21:10:19,222 [10] INFO  Jwtex.JwtExController - files found: 3
+2015-08-22 21:11:10,149 [17] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 21:11:10,150 [17] INFO  Jwtex.JwtExController - files found: 4
+2015-08-22 21:18:56,111 [50] INFO  Jwtex.JwtExController - name:complex, mode:Layouts
+2015-08-22 21:18:56,115 [50] INFO  Jwtex.JwtExController - files found: 2
+2015-08-22 21:19:07,832 [52] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 21:19:07,833 [52] INFO  Jwtex.JwtExController - files found: 4
+2015-08-22 21:20:26,990 [43] INFO  Jwtex.JwtExController - name:undefined, mode:Base
+2015-08-22 21:20:26,991 [43] INFO  Jwtex.JwtExController - files found: 4
+2015-08-22 21:22:07,630 [68] INFO  Jwtex.JwtExController - name:widget1, mode:Widgets
+2015-08-22 21:22:07,631 [68] INFO  Jwtex.JwtExController - files found: 4

@@ -11,6 +11,7 @@ using jwt.CodeGen;
 using Jwtex.Hubs;
 using System.Configuration;
 using Jwt.Controller;
+using jwt.internals;
 
 namespace Jwtex
 {   
@@ -157,6 +158,7 @@ namespace Jwtex
             string path = Config.Root;
             JwtFile file = new JwtFile();
             JResult res = new JResult();
+            string fileContent = "new file";
             try
             {
                 switch (mode)
@@ -183,7 +185,11 @@ namespace Jwtex
                       
                         break;
                 }
-                file.Write(path, "new file");
+                if (fileName.ToLower().Contains("resolve"))
+                {
+                    fileContent = getResolveContent(directoryName);
+                }
+                file.Write(path, fileContent);
                 res.isSuccess = true;
                 res.msg = "Alhumdulilla Successfully Created.";
                 UpdateAppDirectivesAndCSS();
@@ -195,6 +201,16 @@ namespace Jwtex
                 res.msg = ex.Message;
             }
             return Json(res, JsonRequestBehavior.AllowGet);
+        }
+        private string getResolveContent(string directoryName)
+        {
+            string res = "var resolve={";
+            res += Environment.NewLine + '\t';
+            res += string.Format("testData:function($stateParams, {0}Svc)", directoryName) + "{";
+            res += Environment.NewLine + string.Format("\t\treturn {0}Svc.getTestData();", directoryName);
+            res += Environment.NewLine + "\t}";
+            res += Environment.NewLine + "}";
+            return res;
         }
         public JsonResult RemoveFile(string mode, string directoryName, string fileName, string ext)
         {
@@ -231,7 +247,15 @@ namespace Jwtex
                 file.RemoveFile(path);
                 res.isSuccess = true;
                 res.msg = "Alhumdulilla Successfully Removed.";
-                UpdateAppDirectivesAndCSS();
+                
+                if (fileName.ToLower().Contains("resolve"))
+                {
+                    new jwtAppManager(Config.Root, GetDefaultNavigation()).GenerateConfig();
+                }
+                else
+                {
+                    UpdateAppDirectivesAndCSS();
+                }
             }
             catch (Exception ex)
             {
@@ -317,6 +341,10 @@ namespace Jwtex
                 }
                 res.isSuccess = true;
                 res.msg = "Successfully saved.";
+                if (fileName.ToLower().Contains("resolve"))
+                {
+                    new jwtAppManager(Config.Root, GetDefaultNavigation()).GenerateConfig();
+                }
             }
             catch (Exception ex)
             {
