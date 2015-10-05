@@ -169,6 +169,7 @@ namespace jwt.internals
 
                     temp.LayoutName = layout.LayoutName;
                     temp.Extend = layout.Extend;
+                    temp.Abstract = layout.Abstract;
                     Serialize();
                     return "Successfully Updted.";
                 }
@@ -187,13 +188,17 @@ namespace jwt.internals
                 foreach (var item in app.UILayouts)
                 {
                     if (item.Extend == oldName)
-                        item.Extend = oldName;
+                    {
+                        item.Extend = oldName;                        
+                    }
                 }
                 if (app.UINavigations != null)
                     foreach (var item in app.UINavigations)
                     {
                         if (item.HasLayout == oldName)
+                        {
                             item.HasLayout = newName;
+                        }
                     }
             }
         }

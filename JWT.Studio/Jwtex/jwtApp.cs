@@ -57,7 +57,7 @@ namespace Jwtex
     {
         public string LayoutName { get; set; }
         public string Extend { get; set; }
-
+        public bool Abstract { get; set; }
         public string _id { get; set; }
     }
     public class Navigation
@@ -228,7 +228,9 @@ namespace Jwtex
                 sb.AppendLine();
                 sb.Append(TAB1);
                 sb.AppendFormat("stateprovider.state('{0}'", GetStateName(item));
-                sb.Append(",{abstract:true,");
+                sb.Append(",{");
+                if (item.Abstract)
+                    sb.Append("abstract:true,");
                 sb.AppendFormat(@"url:'/{0}'", item.LayoutName);
 
                 PathString = Root + string.Format("Scripts\\Layouts\\{0}\\{0}.html", item.LayoutName);
@@ -244,23 +246,24 @@ namespace Jwtex
                 {
                     file.Write(PathString, getEmptyControllerForLayout(item.LayoutName));
                 }
+
                 sb.AppendFormat(",controller:'{0}Ctrl as vm'", item.LayoutName);
                 layoutControllers.Add(item.LayoutName);
-                sb.Append(HasResolver(file, Root + "Scripts\\Layouts\\"+item.LayoutName));
+                sb.Append(HasResolver(file, Root + "Scripts\\Layouts\\" + item.LayoutName));
                 sb.Append("});");
             }
 
         }
         private string HasResolver(JwtFile file, string basePath)
         {
-            if (file.FileExists(basePath +  "\\resolve.js"))
+            if (file.FileExists(basePath + "\\resolve.js"))
             {
                 string fileContent = file.Read(basePath + "\\resolve.js");
                 fileContent = fileContent.Trim();
                 fileContent = fileContent.Substring(fileContent.IndexOf("{"));
-                if (fileContent.EndsWith(";"))                
-                    fileContent= fileContent.Substring(0, fileContent.Length - 1);                
-                return ",resolve:"+ fileContent;
+                if (fileContent.EndsWith(";"))
+                    fileContent = fileContent.Substring(0, fileContent.Length - 1);
+                return ",resolve:" + fileContent;
             }
             return "";
 

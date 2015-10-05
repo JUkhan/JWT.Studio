@@ -48,7 +48,10 @@
                                     <label>Layout Name</label><br />
                                     <input class="form-control" type="text" ng-model="lvm.LayoutName" />
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Abstract <input class="form-control" type="checkbox" ng-model="lvm.Abstract" ng-checked="lvm.Abstract" /></label>
+                                    
+                                </div>
                                 <div class="form-group">
                                     <label>Parent Layout</label><br />
                                     <select class="form-control" ng-model="lvm.Extend" ng-options="item.LayoutName as item.LayoutName for item in layoutList">
@@ -61,6 +64,7 @@
                                 <thead>
                                     <tr>
                                         <th> Layout Name</th>
+                                        <th>Abstract</th>
                                         <th>Parent</th>
                                         <th>Actions</th>
                                     </tr>
@@ -68,6 +72,7 @@
                                 <tbody>
                                     <tr ng-repeat="u in layoutList">
                                         <td ng-bind="u.LayoutName"></td>
+                                        <td><input disabled type="checkbox" ng-checked="u.Abstract" /> </td>
                                         <td ng-bind="u.Extend"></td>
 
                                         <td>

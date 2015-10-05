@@ -3,7 +3,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
     
     //layouts
     scope.layoutList = [];
-    scope.lvm = {};
+    scope.lvm = {Abstract:false};
     scope.addLayout = function (vm) {
         if (!vm.LayoutName) {
             return;
@@ -13,7 +13,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
         overlay(1);
         http.post(url, vm).success(function (res) {
             getLayouts();
-            scope.lvm = {};
+            scope.lvm = { Abstract: false };
             scope.generateConfig();
             overlay(0);
         });
@@ -25,7 +25,7 @@ app.controller('mainController', ['$scope', '$http', '$modal', function (scope, 
         if (!confirm('Sure to remove?')) { return; }
         overlay(1);
         http.post('Jwt/RemoveLayout', vm).success(function (res) {
-            getLayouts(); scope.lvm = {};
+            getLayouts(); scope.lvm = { Abstract: false };
             scope.generateConfig();
             overlay(0);
         });
