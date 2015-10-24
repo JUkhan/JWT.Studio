@@ -315,29 +315,32 @@ namespace Jwtex
             JResult res = new JResult();
             try
             {
-                switch (mode)
+                if (!string.IsNullOrEmpty(content))
                 {
+                    switch (mode)
+                    {
 
-                    case "Base":
-                        path += string.Format("Scripts\\Base\\{0}", fileName);
-                        file.Write(path, content);
-                        break;
-                    case "Layouts":
-                        path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
-                        file.Write(path, content);
-                        break;
-                    case "Components":
-                        path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
-                        file.Write(path, content);
-                        break;
-                    case "Widgets":
-                        path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
-                        file.Write(path, content);
-                        break;
-                    case "Modules":
-                        path += string.Format("Scripts\\Modules\\{0}\\{1}", directoryName, fileName);
-                        file.Write(path, content);
-                        break;
+                        case "Base":
+                            path += string.Format("Scripts\\Base\\{0}", fileName);
+                            file.Write(path, content);
+                            break;
+                        case "Layouts":
+                            path += string.Format("Scripts\\Layouts\\{0}\\{1}", directoryName, fileName);
+                            file.Write(path, content);
+                            break;
+                        case "Components":
+                            path += string.Format("Scripts\\Directives\\{0}\\{1}", directoryName, fileName);
+                            file.Write(path, content);
+                            break;
+                        case "Widgets":
+                            path += string.Format("Scripts\\Components\\{0}\\{1}", directoryName, fileName);
+                            file.Write(path, content);
+                            break;
+                        case "Modules":
+                            path += string.Format("Scripts\\Modules\\{0}\\{1}", directoryName, fileName);
+                            file.Write(path, content);
+                            break;
+                    }
                 }
                 res.isSuccess = true;
                 res.msg = "Successfully saved.";

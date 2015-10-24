@@ -228,9 +228,11 @@ namespace Jwtex
                 sb.AppendLine();
                 sb.Append(TAB1);
                 sb.AppendFormat("stateprovider.state('{0}'", GetStateName(item));
-                sb.Append(",{");
                 if (item.Abstract)
-                    sb.Append("abstract:true,");
+                    sb.Append(",{");
+                else
+                    sb.Append(",{abstract:false,");
+                
                 sb.AppendFormat(@"url:'/{0}'", item.LayoutName);
 
                 PathString = Root + string.Format("Scripts\\Layouts\\{0}\\{0}.html", item.LayoutName);

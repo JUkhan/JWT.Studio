@@ -2,8 +2,8 @@
 export default function config(stateprovider, routeProvider){
 	routeProvider.otherwise('root/nav1');
 
-	stateprovider.state('root',{abstract:true,url:'/root',templateUrl:'Scripts/Layouts/root/root.html',controller:'rootCtrl as vm'});
-	stateprovider.state('root.complex',{abstract:true,url:'/complex',templateUrl:'Scripts/Layouts/complex/complex.html',controller:'complexCtrl as vm'});
+	stateprovider.state('root',{url:'/root',templateUrl:'Scripts/Layouts/root/root.html',controller:'rootCtrl as vm'});
+	stateprovider.state('root.complex',{abstract:false,url:'/complex',templateUrl:'Scripts/Layouts/complex/complex.html',controller:'complexCtrl as vm'});
 
 	stateprovider.state('root.nav1',{url:'/nav1',templateUrl:'Scripts/Components/widget1/widget1.html',controller:'widget1Ctrl as vm',resolve:{
 	
