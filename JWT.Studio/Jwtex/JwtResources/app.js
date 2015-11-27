@@ -41,7 +41,7 @@
     var authData = localStorageService.get('authorizationData');
     if (authData) {	    
         //$.signalR.ajaxDefaults.headers = { Authorization: "Bearer " + authData.token };
-        jwtSvc.userName = authData.userName||'unknowen';
+        jwtSvc.userName = authData.userName||'unknowen'+new Date().getTime();
     } else {
         jwtSvc.userName = 'unknowen';
     }

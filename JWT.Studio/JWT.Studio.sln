@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Components\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{D821BDFA-6E9F-4C84-BA2E-B6CADB49AF11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ngEditor", "ngEditor\ngEditor.csproj", "{56612E3E-7384-4029-A063-530B4FFD0398}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{D821BDFA-6E9F-4C84-BA2E-B6CADB49AF11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D821BDFA-6E9F-4C84-BA2E-B6CADB49AF11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D821BDFA-6E9F-4C84-BA2E-B6CADB49AF11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56612E3E-7384-4029-A063-530B4FFD0398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56612E3E-7384-4029-A063-530B4FFD0398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56612E3E-7384-4029-A063-530B4FFD0398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56612E3E-7384-4029-A063-530B4FFD0398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

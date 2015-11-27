@@ -47,6 +47,10 @@ namespace jwt.CodeGen
             List<string> list = new List<string>();
             lock (locker)
             {
+                if (!DirectoryExists(path))
+                {
+                    CreateDirectory(path);
+                }
                 DirectoryInfo dir = new DirectoryInfo(path);
                 foreach (var item in dir.GetDirectories())
                 {

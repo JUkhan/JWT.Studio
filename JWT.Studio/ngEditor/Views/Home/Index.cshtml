@@ -1,0 +1,25 @@
+@{
+    ViewBag.Title = "Home Page";
+}
+<br>
+<div class="">
+	<form >
+		<div class="form-group"><label for="name">Project Name:</label> <input class="form-control" type="text" id="name" </div>
+		<div class="form-group"><label for="path">Path:</label> <input class="form-control" type="text" id="path" </div>
+		
+		<div class="form-group"> <label><input type="checkbox"  id="allowTemplate"> Allow Template</label> </div>
+		
+		<input class="btn btn-default" type="button" onClick="addProject()" value="Add Project">
+	</form>
+</div>
+<div class="projects">
+	<table class="table">
+		<thead>
+			<tr><th>Project Name</th><th>Path</th><th></th></tr>
+		</thead>
+		<tbody id="projects">
+			
+		</tbody>
+		
+	</table>
+</div>

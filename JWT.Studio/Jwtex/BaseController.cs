@@ -64,8 +64,9 @@ namespace Jwt.Controller
             JwtConfig config = null; //Session["Config"] as JwtConfig;
             if (config == null)
             {
+                
                 config = new JwtConfig();
-                config.Root = Server.MapPath("~");
+                config.Root = (Session["ROOT_PATH"] as string)?? Server.MapPath("~");
                 if (!config.Root.EndsWith("\\"))
                 {
                     config.Root += "\\";
