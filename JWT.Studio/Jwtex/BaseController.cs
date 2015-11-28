@@ -42,7 +42,8 @@ namespace Jwt.Controller
         }
         public string GetDefaultNavigation()
         {
-            return ConfigurationManager.AppSettings["DefaultNavigation"] ?? "root/login";
+            string start_page = Session["START_PAGE"] as string;
+            return string.IsNullOrEmpty(start_page)? ConfigurationManager.AppSettings["DefaultNavigation"] ?? "root/login":start_page;
         }
         public string StreamToString(Stream stream)
         {
@@ -67,6 +68,7 @@ namespace Jwt.Controller
                 
                 config = new JwtConfig();
                 config.Root = (Session["ROOT_PATH"] as string)?? Server.MapPath("~");
+                //config.Root = string.IsNullOrEmpty(EditorHelper.ROOT) ? Server.MapPath("~") : EditorHelper.ROOT;
                 if (!config.Root.EndsWith("\\"))
                 {
                     config.Root += "\\";

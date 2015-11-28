@@ -8,10 +8,16 @@ namespace ngEditor.Models
 {
     public class Project
     {
+        public Project()
+        {
+            startPage = "root/home";
+        }
         public string name { get; set; }
         public string path { get; set; }
 
         public bool allowTemplate { get; set; }
+
+        public string startPage { get; set; }
     }
     public class ProjectConfig
     {

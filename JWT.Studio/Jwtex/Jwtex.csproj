@@ -70,6 +70,7 @@
     <Compile Include="DummyData\DDManager.cs" />
     <Compile Include="DummyData\DDObject.cs" />
     <Compile Include="CodeGen\JwtFile.cs" />
+    <Compile Include="EditorHelper.cs" />
     <Compile Include="Hubs\FileInfo.cs" />
     <Compile Include="Hubs\HubController.cs" />
     <Compile Include="Hubs\JwtHub.cs" />

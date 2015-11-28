@@ -20,14 +20,18 @@ function addProject() {
     });
 }
 function loadProject(index) {
-    $.post(window.location.href + '/Home/LoadProject', projects[index], function () {
+    var data = projects[index];
+    data.startPage = $('#id-' + index).val() || 'root/home';
+    
+    $.post(window.location.href + '/Home/LoadProject', data, function () {
         window.location.href += '/jwtex';
     });
 }
 function renderTable() {
     var html = [];
     for (var i = 0; i < projects.length; i++) {
-        html.push('<tr><td>' + projects[i].name + '</td><td>' + projects[i].path + '</td><td><input type="button" class="btn btn-success" value="Load Project" onclick="loadProject(' + i + ')"></td></tr>');
+        html.push('<tr><td>' + projects[i].name + '</td><td>' + projects[i].path
+            + '</td><td><input type="text" id="id-' + i + '" value="' + projects[i].startPage + '"></td><td><input type="button" class="btn btn-success" value="Load Project" onclick="loadProject(' + i + ')"></td></tr>');
     }
 
     $('#projects').html(html.join(''));

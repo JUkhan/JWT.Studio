@@ -76,9 +76,9 @@ namespace ngEditor.Controllers
                 {
                     file.CreateDirectory(project.path);
                 }
-                
+
                 Deserialize();
-                var item = _projects.ProjectList.FirstOrDefault(x => x.name == project.name);
+                var item = _projects.ProjectList.FirstOrDefault(x => x.name.ToLower() == project.name.ToLower());
                 if (item != null)
                 {
                     return Json("Project already exist.");
@@ -87,7 +87,7 @@ namespace ngEditor.Controllers
                 Serialize();
                 if (project.allowTemplate)
                     ExtractContent(project);
-                else if(!file.DirectoryExists(project.path+"/Scripts"))
+                else if (!file.DirectoryExists(project.path + "/Scripts"))
                 {
                     file.CreateDirectory(project.path + "/Scripts");
                 }
@@ -127,13 +127,21 @@ namespace ngEditor.Controllers
             }
             catch (Exception ex)
             {
-               
+
             }
         }
 
         public JsonResult LoadProject(Project project)
         {
             Session["ROOT_PATH"] = project.path;
+            Session["START_PAGE"] = project.startPage;
+            Jwtex.EditorHelper.ROOT = project.path;
+            Jwtex.EditorHelper.START_PAGE = project.startPage;
+            Deserialize();
+            var item = _projects.ProjectList.FirstOrDefault(x => x.name == project.name);
+            if (item != null)
+                item.startPage = project.startPage;
+            Serialize();
             return Json("sas");
         }
         private void Deserialize()
